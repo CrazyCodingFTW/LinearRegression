@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//TODO: Split the data into Metadata and Data
 namespace LinearRegression.Contracts.ModelContracts
 {
+    /// <summary>
+    /// Use this to poin which data is wanted
+    /// </summary>
     public enum DataType { X, Y}
     public interface IAnlysis
     {

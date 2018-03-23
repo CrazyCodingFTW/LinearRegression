@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Made by the example: https://www.onceinawhitemoon.net/2017/05/wpf-entityframeworkcore-and-sqlite/
 namespace LinearRegression.Database
 {
     internal class LinearRegressionDbContext : DbContext
@@ -14,6 +15,7 @@ namespace LinearRegression.Database
 
         public LinearRegressionDbContext()
         {
+            //If new data is added use the command: 'Add-Migration InitialCreate' in the nuget package manager console
             SQLitePCL.Batteries.Init();
             this.Database.Migrate();
         }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO: Split the data into Metadata and Data
 namespace LinearRegression.Database.Model
 {
     class Analysis : IAnlysis
