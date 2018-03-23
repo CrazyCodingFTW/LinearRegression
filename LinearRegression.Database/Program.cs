@@ -14,26 +14,32 @@ namespace LinearRegression.Database
             double[] xData = { 1, 2, 3, 4.5 };
             double[] yData = { 4.5, 3, 2, 1 };
 
-            var a1 = new Analysis("A1","Test",DateTime.Now,"X",xData,"Y",yData);
-            var a2 = new Analysis("A2", "Test", DateTime.Now, "X", xData, "Y", yData);
+            //First the metadata is created
+            var analysisInfo = new AnalysisInformation(DateTime.Now, "TestAnalysis", "Meant for testing");
 
             using (var db = new LinearRegressionDbContext())
             {
-                db.AnalysisSet.AddRange(a1, a2);
+                //Then it is added to the DbSet and saved in order to get its Id incremented
+                db.AnalysisInformationSet.Add(analysisInfo);
                 db.SaveChanges();
-            }
 
-            var analysis = new List<Analysis>();
-            using (var db = new LinearRegressionDbContext())
-            {
-                analysis = db.AnalysisSet.ToList();
-            }
+                //After that the AnalysisData object is created. It will link the analysisInfo's id to itself
+                var analysisData = new AnalysisData("XTest", xData, "YTest", yData, analysisInfo);
 
-            foreach(var anal in analysis)
-            {
-                Console.WriteLine($"{anal.Id} {anal.Title} {anal.Descrioption} {anal.GetDateTimeFromString().ToString()} {anal.XMeaning} " +
-                    $"{string.Join("-", anal.GetDataFromStringObject(Contracts.ModelContracts.DataType.X))} {anal.YMeaning} " +
-                    $"{string.Join("-",anal.GetDataFromStringObject(Contracts.ModelContracts.DataType.Y))}");
+                //It also gets saved so its id gets incremented
+                db.AnalysisDataSet.Add(analysisData);
+                db.SaveChanges();
+
+                //Finally we link the analysis data id to the analysisInfo and save the changes
+                analysisInfo.AnalysisDataId = analysisData.Id;
+                db.SaveChanges();
+
+                Console.WriteLine(db.AnalysisDataSet.Count());
+
+                var ai = db.AnalysisInformationSet.First();
+                Console.WriteLine($"{ai.Id} {ai.GetDateTimeFromString().ToShortDateString()} {ai.Title} {ai.Descrioption} {ai.AnalysisDataId}");
+                var ad = db.AnalysisDataSet.Find(ai.AnalysisDataId);
+                Console.WriteLine($"{ad.Id} {ad.XMeaning} {ad.YMeaning}");
             }
         }
     }
