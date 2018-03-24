@@ -25,7 +25,7 @@ namespace LinearRegression.Database.ModelAdapters
         /// </summary>
         /// <typeparam name="TModelAdapter">The adapter which will take the entity</typeparam>
         /// <returns></returns>
-        public static IReadOnlyCollection<IModelAdapter<TDbEntity>> AllEntities<TModelAdapter>() where TModelAdapter : class, IModelAdapter<TDbEntity>
+        public static IReadOnlyCollection<IModelAdapter<TDbEntity>> GetAllEntities<TModelAdapter>() where TModelAdapter : class, IModelAdapter<TDbEntity>
         {
 
             List<IModelAdapter<TDbEntity>> adapterEntities = new List<IModelAdapter<TDbEntity>>();

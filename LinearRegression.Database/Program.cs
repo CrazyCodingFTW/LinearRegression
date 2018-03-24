@@ -41,7 +41,8 @@ namespace LinearRegression.Database
 
             //Getting an item from the database.
             //We can get an item by its ID
-            var itemById = AnalysisInformation.GetEntityById<AnalysisInformation>(1);
+            var firstEntityId = AnalysisInformation.GetAllEntities<AnalysisInformation>().First().Id;
+            var itemById = AnalysisInformation.GetEntityById<AnalysisInformation>(firstEntityId);
 
             //Each item keeps relation with its analysis data
             var itemByIdData = itemById.Data;
@@ -54,12 +55,12 @@ namespace LinearRegression.Database
 
 
             //And we can get all the items from the database
-            var collection = AnalysisData.AllEntities<AnalysisData>();
+            var collection = AnalysisData.GetAllEntities<AnalysisData>();
             foreach (var entity in collection)
                 DisplayData(((AnalysisData)entity).AnalysisInformation, entity as AnalysisData);
 
             //Finally but not least we can delete items like this
-            foreach (var item in AnalysisInformation.AllEntities<AnalysisInformation>())
+            foreach (var item in AnalysisInformation.GetAllEntities<AnalysisInformation>())
                 item.Delete();
 
             //It is important to mention that AnalysisData CANNOT be directly deleted!
