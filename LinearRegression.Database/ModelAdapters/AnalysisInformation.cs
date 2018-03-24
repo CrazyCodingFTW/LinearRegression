@@ -48,9 +48,11 @@ namespace LinearRegression.Database.ModelAdapters
 
         public override void Save()
         {
+            //If the entity is null, it means that there is no record of the entity (It is newly created)
             if(Entity is null)
                 this.Entity = new Model.AnalysisInformation(this.CreationDate, this.Title, this.Descrioption);
 
+            //If the entity has value, it will only be updated
             else
             {
                 this.Entity.AnalysisDataId = this.Data.Id;

@@ -27,6 +27,7 @@ namespace LinearRegression.Database.ModelAdapters
         /// </summary>
         /// <param name="ad"></param>
         public AnalysisData(Model.AnalysisData ad) :
+            //Exceptions may occur here if you try to save AnalysisInformation twice without saving any data to it. 
             this(ad.XMeaning, ad.GetDataFromStringObject(DataType.X), ad.YMeaning, ad.GetDataFromStringObject(DataType.Y), null)
         {
             this.Entity = ad;
@@ -65,9 +66,11 @@ namespace LinearRegression.Database.ModelAdapters
             if (this.AnalysisInformation is null || this.AnalysisInformation.Id <= 0)
                 throw new ArgumentException("Cannot set unsaved analysis information to the analysis data");
 
+            // If the AnalysisData adapter is newly created, it shouldn't be related with any entity
             if (Entity is null)
                 this.Entity = new Model.AnalysisData(this.XMeaning, this.XData, this.YMeaning, this.YData, this.AnalysisInformation.Entity);
 
+            //If there is entity related with the AnalysisData instance, it will get updated
             else
             {
                 Entity.XMeaning = this.XMeaning;

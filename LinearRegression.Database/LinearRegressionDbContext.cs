@@ -12,6 +12,7 @@ namespace LinearRegression.Database
     //TODO: Ensure Analysis information has relation with analysis data
     internal class LinearRegressionDbContext : DbContext
     {
+        //When adding new set please DO NAME the set as follows: [NameOfTheModelClass]Set
         public DbSet<AnalysisData> AnalysisDataSet { get; set; }
         public DbSet<AnalysisInformation> AnalysisInformationSet {get;set;}
 
