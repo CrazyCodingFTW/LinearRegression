@@ -35,7 +35,7 @@ namespace LinearRegression.Database.ModelAdapters
             get
             {
                 if(this.data is null)
-                    this.data = GetEntity<AnalysisData, Model.AnalysisData>(Entity.AnalysisDataId);
+                    this.data = GetEntityById<AnalysisData, Model.AnalysisData>(Entity.AnalysisDataId);
 
                 return this.data;
             }
@@ -46,25 +46,48 @@ namespace LinearRegression.Database.ModelAdapters
         public string Title { get; set; }
         public string Descrioption { get; set; }
 
-        protected override void OnSave()
+        public override void Save()
         {
             if(Entity is null)
                 this.Entity = new Model.AnalysisInformation(this.CreationDate, this.Title, this.Descrioption);
 
             else
             {
+                this.Entity.AnalysisDataId = this.Data.Id;
                 Entity.ConvertDatetimeToString(this.CreationDate);
                 Entity.Title = this.Title;
                 Entity.Descrioption = this.Descrioption;
+            }
+
+            using (var db = new LinearRegressionDbContext())
+            {
+                if (db.AnalysisInformationSet.Any(d => d.Id == Entity.Id))
+                    db.AnalysisInformationSet.Update(this.Entity);
+
+                else db.AnalysisInformationSet.Add(this.Entity);
+
+                db.SaveChanges();
+
+                //Update the id of the current instance to keep the relation
+                this.Id = Entity.Id;
             }
         }
 
         /// <summary>
         /// Deletes the information and the data related with it
         /// </summary>
-        protected override void OnDelete()
+        public override void Delete()
         {
-            this.Data.Delete();
+            using (var db = new LinearRegressionDbContext())
+            {
+                var dataEntity = this.Data.Entity;
+                db.AnalysisDataSet.Remove(dataEntity);
+                db.AnalysisInformationSet.Remove(this.Entity);
+
+                db.SaveChanges();
+            }
+
+            this.Data = null;
         }
     }
 }

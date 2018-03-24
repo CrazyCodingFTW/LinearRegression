@@ -17,42 +17,31 @@ namespace LinearRegression.Database.ModelAdapters
         /// </summary>
         internal abstract TDbEntity Entity { get; set; }
 
-        public void Delete()
-        {
-            using (var db = new LinearRegressionDbContext())
-            {
-                OnDelete();
-                var entitySet = GetEntitySet(db);
-                entitySet.Remove(Entity);
-
-                db.SaveChanges();
-            }
-        }
+        public abstract void Delete();
+        public abstract void Save();
 
         /// <summary>
-        /// Adds or updates an entity
+        /// Gets a list with all the entities
         /// </summary>
-        public void Save()
+        /// <typeparam name="TModelAdapter">The adapter which will take the entity</typeparam>
+        /// <returns></returns>
+        public static IReadOnlyCollection<IModelAdapter<TDbEntity>> AllEntities<TModelAdapter>() where TModelAdapter : class, IModelAdapter<TDbEntity>
         {
+
+            List<IModelAdapter<TDbEntity>> adapterEntities = new List<IModelAdapter<TDbEntity>>();
+
             using (var db = new LinearRegressionDbContext())
             {
-                OnSave();
-                var entitySet = GetEntitySet(db);
-
-                if (entitySet.Any(e => e.Id == Entity.Id))
+                var set = GetEntitySet(db);
+                foreach (var entity in set)
                 {
-                    var entity = entitySet.Find(this.Entity.Id);
-                    entitySet.Remove(entity);
-                    db.SaveChanges();
+                    var instance = Activator.CreateInstance(typeof(TModelAdapter), entity) as IModelAdapter<TDbEntity>;
+                    adapterEntities.Add(instance);
                 }
-
-                entitySet.Add(Entity);
-
-
-                db.SaveChanges();
             }
 
-            this.Id = Entity.Id;
+            return adapterEntities;
+
         }
 
         /// <summary>
@@ -61,7 +50,7 @@ namespace LinearRegression.Database.ModelAdapters
         /// <typeparam name="TModelAdapterEntity">The adapter which is going to extract the data from the entity</typeparam>
         /// <param name="id">The Id of the searched entity</param>
         /// <returns></returns>
-        public static TModelAdapterEntity GetEntity<TModelAdapterEntity>(long id) where TModelAdapterEntity : class, IModelAdapter<TDbEntity>
+        public static TModelAdapterEntity GetEntityById<TModelAdapterEntity>(long id) where TModelAdapterEntity : class, IModelAdapter<TDbEntity>
         {
             TModelAdapterEntity entityInstance;
             TDbEntity foundEntity;
@@ -78,13 +67,32 @@ namespace LinearRegression.Database.ModelAdapters
         }
 
         /// <summary>
+        /// Gets the first entity which meats a given condition
+        /// </summary>
+        /// <typeparam name="TModelAdapterEntity">The name of the adapter class which relates with the entity</typeparam>
+        /// <param name="function">Functiion to find an entity</param>
+        /// <returns></returns>
+        public static TModelAdapterEntity FindEntity<TModelAdapterEntity>(Func<TDbEntity, bool> function) where TModelAdapterEntity : class, IModelAdapter<TDbEntity>
+        {
+            TDbEntity entity;
+            using (var db = new LinearRegressionDbContext())
+            {
+                var set = GetEntitySet(db);
+                entity = set.Where(function).FirstOrDefault();
+            }
+
+            var entityAdapter = Activator.CreateInstance(typeof(TModelAdapterEntity), entity) as TModelAdapterEntity;
+            return entityAdapter;
+        }
+
+        /// <summary>
         /// Look into the database and find entity with the given id. The method is suitable when looking for foreign to this adapter entities
         /// </summary>
         /// <typeparam name="TModelAdapterEntity">The adapter which is going to extract the data from the entity</typeparam>
         /// <typeparam name="TReqDbEntity">The Model class of entity itself</typeparam>
         /// <param name="id">The Id of the searched entity</param>
         /// <returns></returns>
-        internal static TModelAdapterEntity GetEntity<TModelAdapterEntity, TReqDbEntity>(long id) where TModelAdapterEntity : class, IModelAdapter<TReqDbEntity> where TReqDbEntity : class, IDBEntity
+        internal static TModelAdapterEntity GetEntityById<TModelAdapterEntity, TReqDbEntity>(long id) where TModelAdapterEntity : class, IModelAdapter<TReqDbEntity> where TReqDbEntity : class, IDBEntity
         {
             TModelAdapterEntity entityInstance;
             TReqDbEntity foundEntity;
@@ -119,7 +127,7 @@ namespace LinearRegression.Database.ModelAdapters
         /// <typeparam name="ReqEntity">The required Model for which set it is looked for</typeparam>
         /// <param name="db"></param>
         /// <returns></returns>
-        internal static DbSet<ReqEntity> GetEntitySet<ReqEntity>(LinearRegressionDbContext db) where ReqEntity:class, IDBEntity
+        internal static DbSet<ReqEntity> GetEntitySet<ReqEntity>(LinearRegressionDbContext db) where ReqEntity : class, IDBEntity
         {
             var set = db.GetType()
            .GetProperty(typeof(ReqEntity).Name + "Set")
@@ -127,10 +135,6 @@ namespace LinearRegression.Database.ModelAdapters
 
             return set as DbSet<ReqEntity>;
         }
-
-
-        protected abstract void OnSave();
-        protected abstract void OnDelete();
 
     }
 }
