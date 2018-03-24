@@ -6,33 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//TODO: Split the data into Metadata and Data
 namespace LinearRegression.Database.Model
 {
-    class Analysis : IAnlysis
+    public class AnalysisData : IAnlysisData
     {
-        public Analysis()
-        {
+        public AnalysisData() { }
 
-        }
-
-        public Analysis(string title, string description, DateTime creationDate, string XMeaning, IEnumerable<double> XData, string YMeaning, IEnumerable<double> YData)
+        public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning, IEnumerable<double> yData, IAnalysisInformation analysisInformation)
         {
-            this.Title = title;
-            this.Descrioption = description;
-            ConvertDatetimeToString(creationDate);
-            this.XMeaning = XMeaning;
-            ConvertDataToStringObject(XData, DataType.X);
-            this.YMeaning = YMeaning;
-            ConvertDataToStringObject(YData, DataType.Y);
+            this.XMeaning = xMeaning;
+            ConvertDataToStringObject(xData, DataType.X);
+            this.YMeaning = yMeaning;
+            ConvertDataToStringObject(yData, DataType.Y);
+
+            if (analysisInformation.Id <= 0)
+                throw new ArgumentException("Cannot link unsaved AnalysisInformation object.");
+
+            this.AnalysisInformationId = analysisInformation.Id;
         }
 
 
         public long Id { get; set; }
-
-        public string CreationDate { get; set; }
-        public string Title { get; set; }
-        public string Descrioption { get; set; }
+        public long AnalysisInformationId { get; set; }
         public string XData { get; set; }
         public string XMeaning { get; set; }
         public string YData { get; set; }
@@ -54,11 +49,6 @@ namespace LinearRegression.Database.Model
             }
         }
 
-        public void ConvertDatetimeToString(DateTime date)
-        {
-            this.CreationDate = date.ToString("yyyy-MM-dd HH:mm:ss");
-        }
-
         public IEnumerable<double> GetDataFromStringObject(DataType dataType)
         {
             switch (dataType)
@@ -71,12 +61,6 @@ namespace LinearRegression.Database.Model
             }
 
             return null;
-        }
-
-        public DateTime GetDateTimeFromString()
-        {
-            var date = DateTime.ParseExact(this.CreationDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-            return date;
         }
     }
 }

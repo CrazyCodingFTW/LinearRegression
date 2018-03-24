@@ -10,7 +10,7 @@ using System;
 namespace LinearRegression.Database.Migrations
 {
     [DbContext(typeof(LinearRegressionDbContext))]
-    [Migration("20180323144900_InitialCreate")]
+    [Migration("20180323195001_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,16 +19,12 @@ namespace LinearRegression.Database.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
 
-            modelBuilder.Entity("LinearRegression.Database.Model.Analysis", b =>
+            modelBuilder.Entity("LinearRegression.Database.Model.AnalysisData", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CreationDate");
-
-                    b.Property<string>("Descrioption");
-
-                    b.Property<string>("Title");
+                    b.Property<long>("AnalysisInformationId");
 
                     b.Property<string>("XData");
 
@@ -40,7 +36,25 @@ namespace LinearRegression.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnalysisSet");
+                    b.ToTable("AnalysisDataSet");
+                });
+
+            modelBuilder.Entity("LinearRegression.Database.Model.AnalysisInformation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("AnalysisDataId");
+
+                    b.Property<string>("CreationDate");
+
+                    b.Property<string>("Descrioption");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnalysisInformationSet");
                 });
 #pragma warning restore 612, 618
         }

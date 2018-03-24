@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//TODO: Split the data into Metadata and Data
 namespace LinearRegression.Contracts.ModelContracts
 {
     /// <summary>
     /// Use this to poin which data is wanted
     /// </summary>
-    public enum DataType { X, Y}
-    public interface IAnlysis
+    public enum DataType { X, Y }
+    public interface IAnlysisData : IDBEntity
     {
-        long Id { get; set; }
-
-        /// <summary>
-        /// Represents the crateion date in string. Use ConvertDataToStringObject to get the datetime
-        /// </summary>
-        string CreationDate { get; set; }
-        string Title { get; set; }
-        string Descrioption { get; set; }
+        long AnalysisInformationId { get; set; }
 
         /// <summary>
         /// Represents an array with all the X values. Use ConvertDataToStringObject to get the array
@@ -44,18 +36,5 @@ namespace LinearRegression.Contracts.ModelContracts
         /// <param name="dataType">Chose which data do you want either X or Y</param>
         /// <returns></returns>
         IEnumerable<double> GetDataFromStringObject(DataType dataType);
-
-        /// <summary>
-        /// Sets the date value to the database string CreationDate
-        /// </summary>
-        /// <param name="date"></param>
-        void ConvertDatetimeToString(DateTime date);
-
-        /// <summary>
-        /// Gets the date from the CreationDate and converts it into DateTime
-        /// </summary>
-        /// <returns></returns>
-        DateTime GetDateTimeFromString();
-          
     }
 }

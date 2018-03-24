@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 //Made by the example: https://www.onceinawhitemoon.net/2017/05/wpf-entityframeworkcore-and-sqlite/
 namespace LinearRegression.Database
 {
+    //TODO: Ensure Analysis information has relation with analysis data
     internal class LinearRegressionDbContext : DbContext
     {
-        internal DbSet<Analysis> AnalysisSet { get; set; }
+        public DbSet<AnalysisData> AnalysisDataSet { get; set; }
+        public DbSet<AnalysisInformation> AnalysisInformationSet {get;set;}
 
         public LinearRegressionDbContext()
         {
