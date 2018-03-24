@@ -4,10 +4,8 @@ using System.Text;
 
 namespace LinearRegression.Contracts.ModelContracts
 {
-    public interface IAnalysisInformation
+    public interface IAnalysisInformation : IDBEntity
     {
-        long Id { get; set; }
-
         long AnalysisDataId { get; set; }
 
         /// <summary>

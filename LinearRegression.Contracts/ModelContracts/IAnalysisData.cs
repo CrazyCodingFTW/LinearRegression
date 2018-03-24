@@ -6,11 +6,9 @@ namespace LinearRegression.Contracts.ModelContracts
     /// <summary>
     /// Use this to poin which data is wanted
     /// </summary>
-    public enum DataType { X, Y}
-    public interface IAnlysisData
+    public enum DataType { X, Y }
+    public interface IAnlysisData : IDBEntity
     {
-        long Id { get; set; }
-
         long AnalysisInformationId { get; set; }
 
         /// <summary>
@@ -37,6 +35,6 @@ namespace LinearRegression.Contracts.ModelContracts
         /// </summary>
         /// <param name="dataType">Chose which data do you want either X or Y</param>
         /// <returns></returns>
-        IEnumerable<double> GetDataFromStringObject(DataType dataType);          
+        IEnumerable<double> GetDataFromStringObject(DataType dataType);
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LinearRegression.Database.Model
 {
-    class AnalysisData : IAnlysisData
+    public class AnalysisData : IAnlysisData
     {
         public AnalysisData() { }
 

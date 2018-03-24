@@ -164,6 +164,9 @@
       <DependentUpon>20180323195001_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\LinearRegressionDbContextModelSnapshot.cs" />
+    <Compile Include="ModelAdapters\AnalysisData.cs" />
+    <Compile Include="ModelAdapters\AnalysisInformation.cs" />
+    <Compile Include="ModelAdapters\ModelAdapter.cs" />
     <Compile Include="Model\AnalysisData.cs" />
     <Compile Include="Model\AnalysisInformation.cs" />
     <Compile Include="Program.cs" />

@@ -12,8 +12,8 @@ namespace LinearRegression.Database
     //TODO: Ensure Analysis information has relation with analysis data
     internal class LinearRegressionDbContext : DbContext
     {
-        internal DbSet<AnalysisData> AnalysisDataSet { get; set; }
-        internal DbSet<AnalysisInformation> AnalysisInformationSet {get;set;}
+        public DbSet<AnalysisData> AnalysisDataSet { get; set; }
+        public DbSet<AnalysisInformation> AnalysisInformationSet {get;set;}
 
         public LinearRegressionDbContext()
         {
