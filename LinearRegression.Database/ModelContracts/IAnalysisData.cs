@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LinearRegression.Contracts.ModelContracts
+namespace LinearRegression.Database.ModelContracts
 {
     /// <summary>
     /// Use this to poin which data is wanted

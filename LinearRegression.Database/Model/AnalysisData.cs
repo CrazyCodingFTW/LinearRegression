@@ -1,4 +1,4 @@
-﻿using LinearRegression.Contracts.ModelContracts;
+﻿using LinearRegression.Database.ModelContracts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LinearRegression.Contracts.ModelContracts
+namespace LinearRegression.Database.ModelContracts
 {
     public interface IAnalysisInformation : IDBEntity
     {

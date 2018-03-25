@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LinearRegression.Contracts.ModelContracts;
+using LinearRegression.Database.ModelContracts;
 using LinearRegression.Database.Model;
 
 namespace LinearRegression.Database.ModelAdapters
