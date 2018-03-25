@@ -15,7 +15,7 @@ namespace LinearRegression.Database.ModelAdapters
         /// <summary>
         /// Converts the ModelAdapter data to the related entity object
         /// </summary>
-        internal abstract TDbEntity Entity { get; set; }
+        public TDbEntity Entity { get; protected set; }
 
         public abstract void Delete();
         public abstract void Save();

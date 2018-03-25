@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LinearRegression.Contracts.ModelContracts;
 using LinearRegression.Database.Model;
 
 namespace LinearRegression.Database.ModelAdapters
@@ -27,8 +28,6 @@ namespace LinearRegression.Database.ModelAdapters
             Entity = ai;
             this.Id = ai.Id;
         }
-
-        internal override Model.AnalysisInformation Entity { get; set; }
 
         public  AnalysisData Data
         {

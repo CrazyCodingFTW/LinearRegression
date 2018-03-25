@@ -51,8 +51,6 @@ namespace LinearRegression.Database.ModelAdapters
         public IEnumerable<double> YData { get; set; }
         public string YMeaning { get; set; }
 
-        internal override Model.AnalysisData Entity { get; set; }
-
         /// <summary>
         /// The item cannot be deleted directly. Use the instance of AnalysisInformation
         /// </summary>
