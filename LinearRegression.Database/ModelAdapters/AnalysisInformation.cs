@@ -29,12 +29,15 @@ namespace LinearRegression.Database.ModelAdapters
             this.Id = ai.Id;
         }
 
-        public  AnalysisData Data
+        public AnalysisData Data
         {
             get
             {
-                if(this.data is null)
-                    this.data = GetEntityById<AnalysisData, Model.AnalysisData>(Entity.AnalysisDataId);
+                if (this.data is null)
+                {
+                    IModelController<LinearRegressionDbContext> controller = new ModelController();
+                    this.data = controller.GetEntityById<AnalysisData, Model.AnalysisData>(Entity.AnalysisDataId);
+                }
 
                 return this.data;
             }
@@ -45,10 +48,10 @@ namespace LinearRegression.Database.ModelAdapters
         public string Title { get; set; }
         public string Descrioption { get; set; }
 
-        public override void Save()
+        public override void Save(LinearRegressionDbContext db)
         {
             //If the entity is null, it means that there is no record of the entity (It is newly created)
-            if(Entity is null)
+            if (Entity is null)
                 this.Entity = new Model.AnalysisInformation(this.CreationDate, this.Title, this.Descrioption);
 
             //If the entity has value, it will only be updated
@@ -60,33 +63,28 @@ namespace LinearRegression.Database.ModelAdapters
                 Entity.Descrioption = this.Descrioption;
             }
 
-            using (var db = new LinearRegressionDbContext())
-            {
-                if (db.AnalysisInformationSet.Any(d => d.Id == Entity.Id))
-                    db.AnalysisInformationSet.Update(this.Entity);
+            if (db.AnalysisInformationSet.Any(d => d.Id == Entity.Id))
+                db.AnalysisInformationSet.Update(this.Entity);
 
-                else db.AnalysisInformationSet.Add(this.Entity);
+            else db.AnalysisInformationSet.Add(this.Entity);
 
-                db.SaveChanges();
+            db.SaveChanges();
 
-                //Update the id of the current instance to keep the relation
-                this.Id = Entity.Id;
-            }
+            //Update the id of the current instance to keep the relation
+            this.Id = Entity.Id;
+
         }
 
         /// <summary>
         /// Deletes the information and the data related with it
         /// </summary>
-        public override void Delete()
+        public override void Delete(LinearRegressionDbContext db)
         {
-            using (var db = new LinearRegressionDbContext())
-            {
-                var dataEntity = this.Data.Entity;
-                db.AnalysisDataSet.Remove(dataEntity);
-                db.AnalysisInformationSet.Remove(this.Entity);
+            var dataEntity = this.Data.Entity;
+            db.AnalysisDataSet.Remove(dataEntity);
+            db.AnalysisInformationSet.Remove(this.Entity);
 
-                db.SaveChanges();
-            }
+            db.SaveChanges();
 
             this.Data = null;
         }

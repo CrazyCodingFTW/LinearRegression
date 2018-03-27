@@ -39,7 +39,10 @@ namespace LinearRegression.Database.ModelAdapters
             get
             {
                 if (this.analysisInformation is null)
-                    this.analysisInformation = GetEntityById<AnalysisInformation, Model.AnalysisInformation>(this.Entity.AnalysisInformationId);
+                {
+                    IModelController<LinearRegressionDbContext> controller = new ModelController();
+                    this.analysisInformation = controller.GetEntityById<AnalysisInformation, Model.AnalysisInformation>(this.Entity.AnalysisInformationId);
+                }
 
                 return this.analysisInformation;
             }
@@ -59,7 +62,12 @@ namespace LinearRegression.Database.ModelAdapters
             throw new InvalidOperationException("The action cannot be done directly through this object. Please call Delete from the related AnalysisInformation instance!");
         }
 
-        public override void Save()
+        public override void Delete(LinearRegressionDbContext db)
+        {
+            this.Delete();
+        }
+
+        public override void Save(LinearRegressionDbContext db)
         {
             if (this.AnalysisInformation is null || this.AnalysisInformation.Id <= 0)
                 throw new ArgumentException("Cannot set unsaved analysis information to the analysis data");
@@ -77,18 +85,16 @@ namespace LinearRegression.Database.ModelAdapters
                 Entity.ConvertDataToStringObject(YData, DataType.Y);
             }
 
-            using (var db = new LinearRegressionDbContext())
-            {
-                if (db.AnalysisDataSet.Any(d => d.Id == Entity.Id))
-                    db.AnalysisDataSet.Update(this.Entity);
+            if (db.AnalysisDataSet.Any(d => d.Id == Entity.Id))
+                db.AnalysisDataSet.Update(this.Entity);
 
-                else db.AnalysisDataSet.Add(this.Entity);
+            else db.AnalysisDataSet.Add(this.Entity);
 
-                db.SaveChanges();
+            db.SaveChanges();
 
-                //Update the id of the current instance to keep the relation
-                this.Id = Entity.Id;
-            }
+            //Update the id of the current instance to keep the relation
+            this.Id = Entity.Id;
+
 
             this.AnalysisInformation.Data = this;
             this.AnalysisInformation.Save();

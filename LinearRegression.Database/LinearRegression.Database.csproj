@@ -167,10 +167,12 @@
     <Compile Include="ModelAdapters\AnalysisData.cs" />
     <Compile Include="ModelAdapters\AnalysisInformation.cs" />
     <Compile Include="ModelAdapters\ModelAdapter.cs" />
+    <Compile Include="ModelAdapters\ModelController.cs" />
     <Compile Include="ModelContracts\IAnalysisData.cs" />
     <Compile Include="ModelContracts\IAnalysisInformation.cs" />
     <Compile Include="ModelContracts\IDBEntity.cs" />
     <Compile Include="ModelContracts\IModelAdapter.cs" />
+    <Compile Include="ModelContracts\IModelController.cs" />
     <Compile Include="Model\AnalysisData.cs" />
     <Compile Include="Model\AnalysisInformation.cs" />
     <Compile Include="Program.cs" />

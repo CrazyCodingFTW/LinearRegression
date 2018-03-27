@@ -1,4 +1,5 @@
 ﻿using LinearRegression.Database.ModelAdapters;
+using LinearRegression.Database.ModelContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace LinearRegression.Database
         static void Main(string[] args)
         {
             //C.R.U.D. Example:
+
+            //To make queries to the database we instantiate the Model Adapter Controller
+            IModelController<LinearRegressionDbContext> controller = new ModelController();
 
             //X and Y data for two entities
             var x = new double[] { 1, 2, 3, 4, 5 };  //can be any kind of Enumerable collection
@@ -39,10 +43,13 @@ namespace LinearRegression.Database
             ad1.Save();
             ad2.Save();
 
+            //Get all the entities from analysis information
+            var allInformation = controller.GetAllEntities<AnalysisInformation, Model.AnalysisInformation>();
+
             //Getting an item from the database.
             //We can get an item by its ID
-            var firstEntityId = AnalysisInformation.GetAllEntities<AnalysisInformation>().First().Id;
-            var itemById = AnalysisInformation.GetEntityById<AnalysisInformation>(firstEntityId);
+            var firstEntityId = controller.GetAllEntities<AnalysisInformation, Model.AnalysisInformation>().First().Id; //As generic parameters we pass the Model Adapter class and the Model class itself
+            var itemById = controller.GetEntityById<AnalysisInformation, Model.AnalysisInformation>(firstEntityId);
 
             //Each item keeps relation with its analysis data
             var itemByIdData = itemById.Data;
@@ -50,18 +57,17 @@ namespace LinearRegression.Database
             DisplayData(itemById, itemByIdData);
 
             //We can also use a function to find an item
-            var anInfWhere = AnalysisInformation.FindEntity<AnalysisInformation>(ai => ai.Title == "Analysis2");
+            var anInfWhere = controller.FindEntity<AnalysisInformation, Model.AnalysisInformation>(ai => ai.Title == "Analysis2");
             DisplayData(anInfWhere, anInfWhere.Data);
 
 
             //And we can get all the items from the database
-            var collection = AnalysisData.GetAllEntities<AnalysisData>();
+            var collection = controller.GetAllEntities<AnalysisData, Model.AnalysisData>();
             foreach (var entity in collection)
                 DisplayData(((AnalysisData)entity).AnalysisInformation, entity as AnalysisData);
 
             //Finally but not least we can delete items like this
-            foreach (var item in AnalysisInformation.GetAllEntities<AnalysisInformation>())
-                item.Delete();
+            controller.DeleteAllEntities<AnalysisInformation, Model.AnalysisInformation>(allInformation);
 
             //It is important to mention that AnalysisData CANNOT be directly deleted!
         }
