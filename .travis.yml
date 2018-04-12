@@ -1,7 +1,7 @@
 language: csharp
 solution: LinearRegression.sln
 install:
-  - nuget restore solution-name.sln
+  - nuget restore LinearRegression.sln
   - nuget install NUnit.Runners -Version 3.10.1 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=LinearRegression.sln
