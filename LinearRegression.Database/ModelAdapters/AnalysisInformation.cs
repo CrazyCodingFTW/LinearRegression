@@ -11,6 +11,7 @@ namespace LinearRegression.Database.ModelAdapters
     public class AnalysisInformation : ModelAdapter<Model.AnalysisInformation>
     {
         private AnalysisData data;
+        private IModelController<LinearRegressionDbContext> controller;
 
         public AnalysisInformation(DateTime creationDate, string title, string description)
         {
@@ -23,8 +24,9 @@ namespace LinearRegression.Database.ModelAdapters
         /// Constructor for data mapping
         /// </summary>
         /// <param name="ai"></param>
-        public AnalysisInformation(Model.AnalysisInformation ai) : this(ai.GetDateTimeFromString(), ai.Title, ai.Descrioption)
+        public AnalysisInformation(Model.AnalysisInformation ai, IModelController<LinearRegressionDbContext> controller) : this(ai.GetDateTimeFromString(), ai.Title, ai.Descrioption)
         {
+            this.controller = controller;
             Entity = ai;
             this.Id = ai.Id;
         }
@@ -34,10 +36,7 @@ namespace LinearRegression.Database.ModelAdapters
             get
             {
                 if (this.data is null)
-                {
-                    IModelController<LinearRegressionDbContext> controller = new ModelController();
-                    this.data = controller.GetEntityById<AnalysisData, Model.AnalysisData>(Entity.AnalysisDataId);
-                }
+                    this.data = controller.GetEntityById<AnalysisData>(Entity.AnalysisDataId);                
 
                 return this.data;
             }

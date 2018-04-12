@@ -7,13 +7,8 @@ using System.Text;
 //And leaving just some basic functions to work with
 namespace LinearRegression.Database.ModelContracts
 {
-    public interface IModelAdapter<TDbEntity, TDbContext> : IDBEntity where TDbEntity : class, IDBEntity where TDbContext : DbContext
+    public interface IModelAdapter<TDbEntity, TDbContext> : IDBEntity, ISaveRemoveable<TDbContext> where TDbEntity : class, IDBEntity where TDbContext : DbContext
     {
         TDbEntity Entity { get; }
-        void Save();
-        void Save(TDbContext db);
-
-        void Delete();
-        void Delete(TDbContext db);
     }
 }

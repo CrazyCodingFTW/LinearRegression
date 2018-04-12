@@ -173,6 +173,7 @@
     <Compile Include="ModelContracts\IDBEntity.cs" />
     <Compile Include="ModelContracts\IModelAdapter.cs" />
     <Compile Include="ModelContracts\IModelController.cs" />
+    <Compile Include="ModelContracts\ISaveRemoveable.cs" />
     <Compile Include="Model\AnalysisData.cs" />
     <Compile Include="Model\AnalysisInformation.cs" />
     <Compile Include="Program.cs" />

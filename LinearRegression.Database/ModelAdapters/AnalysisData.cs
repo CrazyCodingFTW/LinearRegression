@@ -11,6 +11,7 @@ namespace LinearRegression.Database.ModelAdapters
     public class AnalysisData : ModelAdapter<Model.AnalysisData>
     {
         private AnalysisInformation analysisInformation;
+        private IModelController<LinearRegressionDbContext> controller;
 
         public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning, IEnumerable<double> yData, AnalysisInformation analysisInformation)
         {
@@ -26,10 +27,11 @@ namespace LinearRegression.Database.ModelAdapters
         /// Constructor for data mapping
         /// </summary>
         /// <param name="ad"></param>
-        public AnalysisData(Model.AnalysisData ad) :
+        public AnalysisData(Model.AnalysisData ad, IModelController<LinearRegressionDbContext> controller) :
             //Exceptions may occur here if you try to save AnalysisInformation twice without saving any data to it. 
             this(ad.XMeaning, ad.GetDataFromStringObject(DataType.X), ad.YMeaning, ad.GetDataFromStringObject(DataType.Y), null)
         {
+            this.controller = controller;
             this.Entity = ad;
             this.Id = ad.Id;
         }
@@ -39,10 +41,8 @@ namespace LinearRegression.Database.ModelAdapters
             get
             {
                 if (this.analysisInformation is null)
-                {
-                    IModelController<LinearRegressionDbContext> controller = new ModelController();
-                    this.analysisInformation = controller.GetEntityById<AnalysisInformation, Model.AnalysisInformation>(this.Entity.AnalysisInformationId);
-                }
+                    this.analysisInformation = controller.GetEntityById<AnalysisInformation>(this.Entity.AnalysisInformationId);
+                
 
                 return this.analysisInformation;
             }
