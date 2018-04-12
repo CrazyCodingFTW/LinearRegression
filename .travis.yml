@@ -1,9 +1,7 @@
 language: csharp
-script:
-  - xbuild /p:Configuration=LinearRegression.sln
 before_install:
   - sudo apt-get install nunit-console
 before_script:
   - nuget restore LinearRegression.sln
 after_script:
-  - nunit-console LinearRegression.Tests/bin/Debug/LinearRegression.Tests.dll
+  - nunit-console LinearRegression.Tests/bin/Release/LinearRegression.Tests.dll
