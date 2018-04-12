@@ -1,8 +1,9 @@
 language: csharp
-solution: LinearRegression.sln
-install:
-  - nuget restore LinearRegression.sln
-  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=LinearRegression.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./LinearRegression.Tests/bin/Release/LinearRegression.Tests.dll
+before_install:
+  - sudo apt-get install nunit-console
+before_script:
+  - nuget restore solution-name.sln
+after_script:
+  - nunit-console LinearRegression.Tests/bin/Debug/LinearRegression.Tests.dll
