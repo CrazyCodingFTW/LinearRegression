@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid x:Name="Grid">
+    <Grid x:Name="Grid" Background="#F8F8FF">
         <Grid.RowDefinitions>
             <RowDefinition Height="27*"/>
             <RowDefinition Height="209*"/>
@@ -19,7 +19,7 @@
             </StackPanel>
         </materialDesign:ColorZone>
 
-        <Frame Grid.Row="1" Name="PageFrame" NavigationUIVisibility="Hidden" Background="#F8F8FF">
+        <Frame Grid.Row="1" Name="PageFrame" NavigationUIVisibility="Hidden">
             
         </Frame>
     </Grid>
