@@ -4,9 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LinearRegression.App"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid x:Name="Grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="209*"/>
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone Mode="PrimaryDark" Padding="5" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+            <StackPanel Orientation="Horizontal">
+                <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                <TextBlock Name="PageTitleHolder" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="16 0 0 0" Text="Page name placeholder" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+            </StackPanel>
+        </materialDesign:ColorZone>
+
+        <Frame Grid.Row="1" Name="PageFrame" NavigationUIVisibility="Hidden" Background="#F8F8FF">
+            
+        </Frame>
     </Grid>
 </Window>

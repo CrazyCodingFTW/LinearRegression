@@ -4,6 +4,21 @@
              xmlns:local="clr-namespace:LinearRegression.App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!-- primary -->
+            <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#f9683a"/>
+            <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#bf360c"/>
+            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#870000"/>
+            <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#FFFFFF"/>
+            <!-- accent -->
+            <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#ff9100"/>
+            <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#FFFFFF"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

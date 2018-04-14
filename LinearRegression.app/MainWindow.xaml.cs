@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinearRegression.App.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace LinearRegression.App
         public MainWindow()
         {
             InitializeComponent();
+            PageFrame.Content = new HomeView(PageTitleHolder);
         }
     }
 }
