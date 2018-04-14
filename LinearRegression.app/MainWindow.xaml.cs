@@ -1,4 +1,7 @@
-﻿using LinearRegression.App.Views;
+﻿using LinearRegression.App.CustomControls;
+using LinearRegression.App.StaticData;
+using LinearRegression.App.Views;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +28,18 @@ namespace LinearRegression.App
         {
             InitializeComponent();
             PageFrame.Content = new HomeView(PageTitleHolder);
+
+            CurrentPage = typeof(HomeView);
+        }
+
+        public static Type CurrentPage { get; set; }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            var helpContent = HelpContentTexts.GetHelpContent(CurrentPage);
+            
+            var helpDialog = new CustomInformationDialog(helpContent);
+            DialogHost.Show(helpDialog);
         }
     }
 }
