@@ -26,14 +26,16 @@ namespace LinearRegression.App.Views
     /// </summary>
     public partial class NewAnalysis : Page, ICustomPage
     {
-        private IViewModel<IAnalysisDataRow> analysisViewModel;
+        private IViewModel<AnalysisDataRow> analysisViewModel;
 
         public NewAnalysis()
         {
             InitializeComponent();
 
-            analysisViewModel = new ViewModel<IAnalysisDataRow>();
+            analysisViewModel = new ViewModel<AnalysisDataRow>();
+
             DataGrid.ItemsSource = analysisViewModel.Data;
+            DataChart.ItemsSource = analysisViewModel.Data;
         }
 
         public string PageTitle => "New Analysis";
@@ -46,6 +48,14 @@ namespace LinearRegression.App.Views
             NavigationService.Navigate(homeView);
 
             DataGrid.Dispose();
+        }
+
+        private void DataGrid_AddNewRowInitiating(object sender, AddNewRowInitiatingEventArgs e)
+        {
+            var lastAnalysisDataIndex = this.analysisViewModel.Data.Any() ? this.analysisViewModel.Data.Last().Index + 1 : 1;
+
+            var newObject = new AnalysisDataRow(lastAnalysisDataIndex, 0, 0);
+            this.analysisViewModel.Data.Add(newObject);
         }
     }
 }

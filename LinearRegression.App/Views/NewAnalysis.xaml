@@ -21,7 +21,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBox Name="AnalysisTitle" Grid.Row="0" Grid.Column="0" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" SpellCheck.IsEnabled="True" md:HintAssist.Hint="Analysis Title" Height="Auto" Margin="10,5,10,5"/>
-        <TextBox Name="AnalysisDescription" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" SpellCheck.IsEnabled="True" md:HintAssist.Hint="Analysis Title" Height="Auto" Margin="10,0,50,5"/>
+        <TextBox Name="AnalysisDescription" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" SpellCheck.IsEnabled="True" md:HintAssist.Hint="Analysis Description" Height="Auto" Margin="10,0,50,5"/>
         <Grid Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2" Margin="15,20,15,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -34,22 +34,26 @@
                        AddNewRowPosition="Bottom"
                        AutoGenerateColumns="False" 
                        AllowEditing="True"
+                       NavigationMode="Cell"
                        EditTrigger="OnTap"
                        LiveDataUpdateMode="Default"
-                       Margin="0,0,10,0">
+                       ScrollViewer.CanContentScroll="True"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                       Margin="0,0,10,0" AddNewRowInitiating="DataGrid_AddNewRowInitiating">
                 <syncfusion:SfDataGrid.Columns>
                     <syncfusion:GridTextColumn HeaderText="№" MappingName="Index" AllowEditing="False" Width="30"/>
                     <syncfusion:GridTextColumn MappingName="X" AllowEditing="True"/>
                     <syncfusion:GridTextColumn MappingName="Y" AllowEditing="True"/>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
-            <syncfusion:SfChart Grid.Row="0" Grid.Column="1" Name="DataChart">
+            <syncfusion:SfChart Grid.Row="0" Grid.Column="1">
                 <syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:CategoryAxis />
+                    <syncfusion:NumericalAxis Header="X"/>
                 </syncfusion:SfChart.PrimaryAxis>
                 <syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:NumericalAxis/>
+                    <syncfusion:NumericalAxis Header="Y"/>
                 </syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:ScatterSeries Name="DataChart" Interior="#870000" ListenPropertyChange="True" ScatterHeight="10" ScatterWidth="10" XBindingPath="X" YBindingPath="Y"/>
             </syncfusion:SfChart>
         </Grid>
         <DockPanel Grid.Row="3" Grid.Column="0" Margin="10,5,10,5">

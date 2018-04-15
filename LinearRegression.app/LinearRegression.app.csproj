@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Models\AnalysisDataRow.cs" />
     <Compile Include="Models\HelpContent.cs" />
+    <Compile Include="Models\NotificationObject.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
