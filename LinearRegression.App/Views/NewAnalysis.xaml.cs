@@ -40,7 +40,9 @@ namespace LinearRegression.App.Views
 
         public string PageTitle => "New Analysis";
 
-        public IHelpContent HelpContent => throw new NotImplementedException();
+        public IHelpContent HelpContent =>
+            new HelpContent(this.PageTitle, 
+                $"In this page you are able to create your Linear Rehression analysis. Fill in the forms and your X and Y data by clicking the add new row line. After you're done click 'Compute', to save and compute your data.");
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {

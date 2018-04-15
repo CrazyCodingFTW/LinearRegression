@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LinearRegression.App"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         mc:Ignorable="d"
         Title="MainWindow" Height="Auto" Width="Auto">
     <Window.Resources>

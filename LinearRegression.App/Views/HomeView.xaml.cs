@@ -35,7 +35,7 @@ namespace LinearRegression.App.Views
         public string PageTitle => "Home";
 
         public IHelpContent HelpContent => 
-            new HelpContent("Home",
+            new HelpContent(this.PageTitle,
                 $"In the home view you have three options to choose from:{Environment.NewLine}{Environment.NewLine}New Analysis - creates new Linear Regression analysis{Environment.NewLine}{Environment.NewLine}History - browse previous analysis{Environment.NewLine}{Environment.NewLine}Export Data - Choose analysis to export into Excel");
 
         /// <summary>
