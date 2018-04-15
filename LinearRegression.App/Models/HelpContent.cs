@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinearRegression.App.StaticData
+namespace LinearRegression.App.Models
 {
     public class HelpContent : IHelpContent
     {

@@ -82,14 +82,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Contracts\ICustomPage.cs" />
     <Compile Include="Contracts\IHelpContent.cs" />
     <Compile Include="CustomControls\CustomInformationDialog.xaml.cs">
       <DependentUpon>CustomInformationDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StaticData\HelpContent.cs" />
-    <Compile Include="StaticData\HelpContentTexts.cs" />
+    <Compile Include="Models\HelpContent.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewAnalysis.xaml.cs">
+      <DependentUpon>NewAnalysis.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomControls\CustomInformationDialog.xaml">
       <SubType>Designer</SubType>
@@ -108,6 +111,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Fonts\" />
+    <Folder Include="StaticData\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\new-analysis-card-image.jpg" />

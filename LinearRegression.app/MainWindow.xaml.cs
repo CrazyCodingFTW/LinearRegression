@@ -1,5 +1,5 @@
-﻿using LinearRegression.App.CustomControls;
-using LinearRegression.App.StaticData;
+﻿using LinearRegression.App.Contracts;
+using LinearRegression.App.CustomControls;
 using LinearRegression.App.Views;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -24,22 +24,32 @@ namespace LinearRegression.App
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Page currentPage;
+
         public MainWindow()
         {
             InitializeComponent();
-            PageFrame.Content = new HomeView(PageTitleHolder);
-
-            CurrentPage = typeof(HomeView);
+            PageFrame.Content = new HomeView();
         }
-
-        public static Type CurrentPage { get; set; }
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            var helpContent = HelpContentTexts.GetHelpContent(CurrentPage);
-            
-            var helpDialog = new CustomInformationDialog(helpContent);
-            DialogHost.Show(helpDialog);
+            try
+            {
+                var helpContent = ((ICustomPage)this.currentPage).HelpContent;
+
+                var helpDialog = new CustomInformationDialog(helpContent);
+                DialogHost.Show(helpDialog);
+            }
+            catch (Exception) { }
+        }
+
+        private void PageFrame_ContentRendered(object sender, EventArgs e)
+        {
+            var page = PageFrame.Content;
+            this.currentPage = page as Page;
+
+            PageTitleHolder.Text = ((ICustomPage)page).PageTitle;
         }
     }
 }

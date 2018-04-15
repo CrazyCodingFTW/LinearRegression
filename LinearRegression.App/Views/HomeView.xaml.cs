@@ -1,4 +1,6 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using LinearRegression.App.Contracts;
+using LinearRegression.App.Models;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +21,22 @@ namespace LinearRegression.App.Views
     /// <summary>
     /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class HomeView : Page
+    public partial class HomeView : Page, ICustomPage
     {
         private const ShadowDepth DarkShadowDepth = ShadowDepth.Depth4;
 
         private ShadowDepth defaultShadowDepth;
 
-        public HomeView(TextBlock pageTitleHolder)
+        public HomeView()
         {
             InitializeComponent();
-
-            var thisName = this.GetType().Name;
-            pageTitleHolder.Text = thisName.Substring(0, thisName.LastIndexOf("View"));
         }
+
+        public string PageTitle => "Home";
+
+        public IHelpContent HelpContent => 
+            new HelpContent("Home",
+                $"In the home view you have three options to choose from:{Environment.NewLine}{Environment.NewLine}New Analysis - creates new Linear Regression analysis{Environment.NewLine}{Environment.NewLine}History - browse previous analysis{Environment.NewLine}{Environment.NewLine}Export Data - Choose analysis to export into Excel");
 
         /// <summary>
         /// Make the shadow of a card darken when hoover
@@ -57,6 +62,12 @@ namespace LinearRegression.App.Views
             var card = sender as Card;
 
             ShadowAssist.SetShadowDepth(card, this.defaultShadowDepth);
+        }
+
+        private void NewAnalysisCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var newAnalysis = new NewAnalysis();
+            NavigationService.Navigate(newAnalysis);
         }
     }
 }
