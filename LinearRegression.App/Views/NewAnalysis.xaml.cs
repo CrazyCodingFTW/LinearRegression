@@ -23,9 +23,6 @@ using System.Windows.Threading;
 
 namespace LinearRegression.App.Views
 {
-    /// <summary>
-    /// Interaction logic for NewAnalysis.xaml
-    /// </summary>
     public partial class NewAnalysis : Page, ICustomPage
     {
         private IViewModel<AnalysisDataRow> analysisViewModel;

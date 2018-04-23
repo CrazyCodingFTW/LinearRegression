@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LinearRegression.App.CustomControls"
              mc:Ignorable="d" 
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="350" d:DesignWidth="400">
+             d:DesignHeight="300" d:DesignWidth="450">
     <Grid>
         <md:DialogHost >
             <md:DialogHost.Content>
@@ -20,7 +20,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="AssignVariableMeaningTitle" Text=" meaning:" Grid.Column="0" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Stretch" Padding="5,10,5,10"/>
-                    <TextBox Name="MeaningTextField" md:HintAssist.Hint="Floating Hint" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Name="MeaningTextField" md:HintAssist.Hint="Floating Hint" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,40"/>
                     <DockPanel Grid.Row="2" Grid.Column="0">
                         <Button Name="ConfirmButton" DockPanel.Dock="Right" Height="auto" Width="auto" HorizontalAlignment="Right" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatButton}" Click="ConfirmButton_OnClick">CONFIRM</Button>
                         <Button Name="CancelButton" DockPanel.Dock="Right" Height="auto" Width="auto" HorizontalAlignment="Right" Command="{x:Static md:DialogHost.CloseDialogCommand}" Margin="0,0,5,0" Style="{StaticResource MaterialDesignFlatButton}" Click="CancelButton_Click">CANCEL</Button>
