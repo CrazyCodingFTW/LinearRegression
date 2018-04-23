@@ -101,6 +101,9 @@
     <Compile Include="CustomControls\CustomInformationDialog.xaml.cs">
       <DependentUpon>CustomInformationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\CustomXYMeaningPrompt.xaml.cs">
+      <DependentUpon>CustomXYMeaningPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\AnalysisDataRow.cs" />
     <Compile Include="Models\HelpContent.cs" />
     <Compile Include="Models\NotificationObject.cs" />
@@ -112,6 +115,10 @@
       <DependentUpon>NewAnalysis.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomControls\CustomInformationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomXYMeaningPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

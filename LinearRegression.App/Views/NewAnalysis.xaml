@@ -54,25 +54,28 @@
                        RowStyle="{StaticResource rowStyle}"
                        HeaderStyle="{StaticResource headerStyle}"            
                        Margin="0,0,10,0" AddNewRowInitiating="DataGrid_AddNewRowInitiating">
+                <!--TODO: Create an alert box which prompts the user to enter the meaning of X/Y values-->
                 <syncfusion:SfDataGrid.Columns>
                     <syncfusion:GridTextColumn HeaderText="№" MappingName="Index" AllowEditing="False" Width="30"/>
-                    <syncfusion:GridTextColumn MappingName="X" AllowEditing="True"/>
-                    <syncfusion:GridTextColumn MappingName="Y" AllowEditing="True"/>
+                    <syncfusion:GridNumericColumn x:Name="XColumn" MappingName="X" HeaderText="X" AllowEditing="True"/>
+                    <syncfusion:GridNumericColumn x:Name="YColumn" MappingName="Y" HeaderText="Y" AllowEditing="True"/>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
             <syncfusion:SfChart Grid.Row="0" Grid.Column="1">
                 <syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:NumericalAxis Header="X"/>
+                    <syncfusion:NumericalAxis x:Name="XAxis" Header="X"/>
                 </syncfusion:SfChart.PrimaryAxis>
                 <syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:NumericalAxis Header="Y"/>
+                    <syncfusion:NumericalAxis x:Name="YAxis" Header="Y"/>
                 </syncfusion:SfChart.SecondaryAxis>
                 <syncfusion:ScatterSeries Name="DataChart" Interior="{StaticResource PrimaryHueDarkBrush}" ListenPropertyChange="True" ScatterHeight="10" ScatterWidth="10" XBindingPath="X" YBindingPath="Y"/>
             </syncfusion:SfChart>
         </Grid>
         <DockPanel Grid.Row="3" Grid.Column="0" Margin="10,5,10,5">
-            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Compute" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100" ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"/>
-            <Button x:Name="CancelButton" DockPanel.Dock="Right" Margin="0,0,20,0" Content="Cancel" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100" ToolTip="Resource name: MaterialDesignRaisedLightButton" Click="CancelButton_Click"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,5,0" Click="ChangeX_Click">CHANGE X</Button>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Click="ChangeY_Click">CHANGE Y</Button>
+            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Compute" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100"/>
+            <Button x:Name="CancelButton" DockPanel.Dock="Right" Margin="0,0,20,0" Content="Cancel" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100" Click="CancelButton_Click"/>
         </DockPanel>
     </Grid>
 </Page>
