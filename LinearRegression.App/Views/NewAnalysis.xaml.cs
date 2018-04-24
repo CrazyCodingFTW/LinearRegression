@@ -86,28 +86,25 @@ namespace LinearRegression.App.Views
             this.analysisViewModel.Data.Add(newObject);
         }
 
-        private async void ChangeX_Click(object sender, RoutedEventArgs e)
+        private async void ChangeBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.xyMeaningPrompt = new CustomXYMeaningPrompt(CustomXYMeaningPrompt.Variables.X);
+            if (sender == ChangeXBtn)
+                this.xyMeaningPrompt = new CustomXYMeaningPrompt(CustomXYMeaningPrompt.Variables.X);
+
+            else if (sender == ChangeYBtn)
+                this.xyMeaningPrompt = new CustomXYMeaningPrompt(CustomXYMeaningPrompt.Variables.Y);
 
             //Await waits for the dialog to close. Otherwise the methods after will execute before the dialog closing, resulting in unchanged data
             await DialogHost.Show(this.xyMeaningPrompt);
 
             if (this.xyMeaningPrompt.ClosedWithConfirmation)
-                this.XHeader = xyMeaningPrompt.EnteredText;
+            {
+                if (sender == ChangeXBtn)
+                    this.XHeader = xyMeaningPrompt.EnteredText;
 
-            xyMeaningPrompt = null;
-        }
-
-        private async void ChangeY_Click(object sender, RoutedEventArgs e)
-        {
-            this.xyMeaningPrompt = new CustomXYMeaningPrompt(CustomXYMeaningPrompt.Variables.Y);
-
-            //Await waits for the dialog to close. Otherwise the methods after will execute before the dialog closing, resulting in unchanged data
-            await DialogHost.Show(this.xyMeaningPrompt);
-
-            if (this.xyMeaningPrompt.ClosedWithConfirmation)
-                this.YHeader = xyMeaningPrompt.EnteredText;
+                else if (sender == ChangeYBtn)
+                    this.YHeader = xyMeaningPrompt.EnteredText;
+            }
 
             xyMeaningPrompt = null;
         }
