@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace LinearRegression.App.Views
 {
-    /// <summary>
-    /// Interaction logic for ComputedAnalysis.xaml
-    /// </summary>
     public partial class ComputedAnalysis : Page, ICustomPage
     {
         private IAnalysisModel analysisModel;
@@ -30,7 +27,7 @@ namespace LinearRegression.App.Views
             this.analysisModel = analysisModel;
         }
 
-        public string PageTitle => "Computational results";
+        public string PageTitle => analysisModel.Title;
 
         public IHelpContent HelpContent => throw new NotImplementedException();
     }
