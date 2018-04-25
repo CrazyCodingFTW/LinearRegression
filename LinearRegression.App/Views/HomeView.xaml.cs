@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace LinearRegression.App.Views
 {
-    /// <summary>
-    /// Interaction logic for HomeView.xaml
-    /// </summary>
     public partial class HomeView : Page, ICustomPage
     {
         private const ShadowDepth DarkShadowDepth = ShadowDepth.Depth4;

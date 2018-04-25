@@ -98,6 +98,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Contracts\IAnalysisDataRow.cs" />
+    <Compile Include="Contracts\IAnalysisModel.cs" />
     <Compile Include="Contracts\ICustomPage.cs" />
     <Compile Include="Contracts\IHelpContent.cs" />
     <Compile Include="Contracts\IViewModel.cs" />
@@ -107,10 +108,14 @@
     <Compile Include="CustomControls\CustomXYMeaningPrompt.xaml.cs">
       <DependentUpon>CustomXYMeaningPrompt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Analysis.cs" />
     <Compile Include="Models\AnalysisDataRow.cs" />
     <Compile Include="Models\HelpContent.cs" />
     <Compile Include="Models\NotificationObject.cs" />
     <Compile Include="Models\ViewModel.cs" />
+    <Compile Include="Views\ComputedAnalysis.xaml.cs">
+      <DependentUpon>ComputedAnalysis.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
@@ -137,6 +142,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ComputedAnalysis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

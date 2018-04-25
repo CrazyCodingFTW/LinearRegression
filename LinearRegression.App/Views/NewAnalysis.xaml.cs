@@ -7,6 +7,7 @@ using Syncfusion.UI.Xaml.Grid.Helpers;
 using Syncfusion.UI.Xaml.ScrollAxis;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,8 +48,8 @@ namespace LinearRegression.App.Views
             private set
             {
                 this.xHeader = value;
-                XColumn.HeaderText = xyMeaningPrompt.EnteredText;
-                XAxis.Header = xyMeaningPrompt.EnteredText;
+                XColumn.HeaderText = value == "X" ? value : value + " (X)";
+                XAxis.Header = value == "X" ? value : value + " (X)";
             }
         }
 
@@ -58,8 +59,8 @@ namespace LinearRegression.App.Views
             private set
             {
                 this.yHeader = value;
-                YColumn.HeaderText = xyMeaningPrompt.EnteredText;
-                YAxis.Header = xyMeaningPrompt.EnteredText;
+                YColumn.HeaderText = value == "Y" ? value : value + " (Y)";
+                YAxis.Header = value == "Y" ? value : value + " (Y)";
             }
         }
 
@@ -86,12 +87,12 @@ namespace LinearRegression.App.Views
             this.analysisViewModel.Data.Add(newObject);
         }
 
-        private async void ChangeBtn_Click(object sender, RoutedEventArgs e)
+        private async void ChangeBtn_Click(object btn, RoutedEventArgs e)
         {
-            if (sender == ChangeXBtn)
+            if (btn == ChangeXBtn)
                 this.xyMeaningPrompt = new CustomXYMeaningPrompt(CustomXYMeaningPrompt.Variables.X);
 
-            else if (sender == ChangeYBtn)
+            else if (btn == ChangeYBtn)
                 this.xyMeaningPrompt = new CustomXYMeaningPrompt(CustomXYMeaningPrompt.Variables.Y);
 
             //Await waits for the dialog to close. Otherwise the methods after will execute before the dialog closing, resulting in unchanged data
@@ -99,14 +100,28 @@ namespace LinearRegression.App.Views
 
             if (this.xyMeaningPrompt.ClosedWithConfirmation)
             {
-                if (sender == ChangeXBtn)
+                if (btn == ChangeXBtn)
                     this.XHeader = xyMeaningPrompt.EnteredText;
 
-                else if (sender == ChangeYBtn)
+                else if (btn == ChangeYBtn)
                     this.YHeader = xyMeaningPrompt.EnteredText;
             }
 
             xyMeaningPrompt = null;
+        }
+
+        private void ComputeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var title = AnalysisTitle.Text;
+            var description = AnalysisDescription.Text;
+
+            //TODO: Manage a way to send the newly created data to the database here...
+            //TODO: Manage a way to inject this object
+            var analysis = new Analysis(title, description, XHeader, YHeader, this.analysisViewModel.Data);
+            
+            var resultsPage = new ComputedAnalysis(analysis);
+
+            NavigationService.Navigate(resultsPage);
         }
     }
 }
