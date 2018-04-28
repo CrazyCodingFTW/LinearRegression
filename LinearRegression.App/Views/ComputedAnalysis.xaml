@@ -3,12 +3,54 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:LinearRegression.App.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ComputedAnalysis">
 
-    <Grid>
-        
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <md:Card Grid.Row="0" Grid.Column="0" Height="auto" Width="auto"  Margin="10" Background="{DynamicResource MaterialDesignBackground}">
+                <StackPanel Orientation="Vertical">
+                    <Expander x:Name="AnalysisInformationExpander" HorizontalAlignment="Stretch" Header="Analysis information" Expanded="AnalysisInformationExpander_Expanded">
+                        <Grid Height="auto" Width="auto">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Margin="25,5,25,5" Orientation="Horizontal">
+                                <TextBlock Text="Title:" Margin="0,0,10,0"  Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                <TextBox x:Name="TitleField" Style="{StaticResource MaterialDesignTextBox}" Height="auto" Width="auto" IsEnabled="False"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="25,5,25,5" Orientation="Vertical">
+                                <TextBlock Text="Description:"  Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                <TextBox x:Name="DescriptionField" Style="{StaticResource MaterialDesignTextBox}" Height="auto" Width="auto" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto"/>
+                            </StackPanel>
+                            <StackPanel  Grid.Row="2" Grid.Column="0" Margin="25,5,25,15" Orientation="Horizontal">
+                                <TextBlock Text="Creation date:" Margin="0,0,10,0"  Style="{StaticResource MaterialDesignSubheadingTextBlock}"/>
+                                <TextBox x:Name="CreationDateField" Style="{StaticResource MaterialDesignTextBox}" Height="auto" Width="auto" IsEnabled="False"/>
+                            </StackPanel>
+                        </Grid>
+                    </Expander>
+                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                    <Expander x:Name="CommonAnalysisData" Header="Common Analysis Data" HorizontalAlignment="Stretch" Expanded="CommonAnalysisData_Expanded">
+                        <Frame x:Name="CADPage" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="25,5,25,5">
+
+                        </Frame>
+                    </Expander>
+                </StackPanel>
+            </md:Card>
+        </Grid>
+    </ScrollViewer>
 </Page>

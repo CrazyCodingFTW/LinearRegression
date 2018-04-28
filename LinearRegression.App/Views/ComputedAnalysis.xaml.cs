@@ -1,4 +1,5 @@
 ﻿using LinearRegression.App.Contracts;
+using LinearRegression.App.Views.ComputedAnalysisPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,19 @@ namespace LinearRegression.App.Views
         public string PageTitle => analysisModel.Title;
 
         public IHelpContent HelpContent => throw new NotImplementedException();
+
+        private void AnalysisInformationExpander_Expanded(object sender, RoutedEventArgs e)
+        {
+            TitleField.Text = this.analysisModel.Title;
+            DescriptionField.Text = this.analysisModel.Description;
+            CreationDateField.Text = this.analysisModel.CreationDate.ToString();
+        }
+
+        private void CommonAnalysisData_Expanded(object sender, RoutedEventArgs e)
+        {
+            var commonData = new CommonAnalysisDataPage(analysisModel);
+
+            CADPage.Content = commonData;
+        }
     }
 }

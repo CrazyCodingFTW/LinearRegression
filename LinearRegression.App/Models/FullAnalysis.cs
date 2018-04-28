@@ -35,6 +35,8 @@ namespace LinearRegression.App.Models
         {
             this.XMeaning = xMeaning;
             this.YMeaning = yMeaning;
+
+            this.Data = new ObservableCollection<IAnalysisDataRow>(data);
         }
 
         public ObservableCollection<IAnalysisDataRow> Data { get; private set; }

@@ -7,5 +7,12 @@ using System.Threading.Tasks;
 
 namespace LinearRegression.App.Contracts
 {
-    public interface IFullAnalysis : IAnalysisMetadata, IAnalysisData { }
+    public interface IAnalysisData
+    {
+        string XMeaning { get; }
+
+        string YMeaning { get; }
+
+        ObservableCollection<IAnalysisDataRow> Data { get; }
+    }
 }

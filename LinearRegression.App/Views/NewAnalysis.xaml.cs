@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,6 +48,9 @@ namespace LinearRegression.App.Views
             get => this.xHeader;
             private set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                    value = "X";
+
                 this.xHeader = value;
                 XColumn.HeaderText = value == "X" ? value : value + " (X)";
                 XAxis.Header = value == "X" ? value : value + " (X)";
@@ -58,6 +62,9 @@ namespace LinearRegression.App.Views
             get => this.yHeader;
             private set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                    value = "Y";
+
                 this.yHeader = value;
                 YColumn.HeaderText = value == "Y" ? value : value + " (Y)";
                 YAxis.Header = value == "Y" ? value : value + " (Y)";

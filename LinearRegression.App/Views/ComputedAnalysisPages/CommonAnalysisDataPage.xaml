@@ -1,0 +1,58 @@
+﻿<Page x:Class="LinearRegression.App.Views.ComputedAnalysisPages.CommonAnalysisDataPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LinearRegression.App.Views.ComputedAnalysisPages"
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+      mc:Ignorable="d" 
+      d:DesignHeight="350" d:DesignWidth="800"
+      Title="CommonAnalysisDataPage">
+    <Page.Resources>
+        <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="alteringRowStyle">
+            <Setter Property="Background" Value="#c9b1b1"/>
+        </Style>
+        <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="rowStyle">
+            <Setter Property="Background" Value="#efdada"/>
+        </Style>
+        <Style TargetType="syncfusion:GridHeaderCellControl" x:Key="headerStyle">
+            <Setter Property="Background" Value="#870000"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <syncfusion:SfDataGrid Grid.Row="0" Grid.Column="0" x:Name="DataGrid"
+                       AutoGenerateColumns="False" 
+                       NavigationMode="Cell"
+                       LiveDataUpdateMode="Default"
+                       ScrollViewer.CanContentScroll="True"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                       AlternatingRowStyle="{StaticResource alteringRowStyle}"
+                       RowStyle="{StaticResource rowStyle}"
+                       HeaderStyle="{StaticResource headerStyle}"            
+                       Margin="10" >
+            <syncfusion:SfDataGrid.Columns>
+                <syncfusion:GridTextColumn HeaderText="№" MappingName="Index" AllowEditing="False" Width="30"/>
+                <syncfusion:GridNumericColumn x:Name="XColumn" MappingName="X" HeaderText="X" AllowEditing="True"/>
+                <syncfusion:GridNumericColumn x:Name="YColumn" MappingName="Y" HeaderText="Y" AllowEditing="True"/>
+            </syncfusion:SfDataGrid.Columns>
+        </syncfusion:SfDataGrid>
+        <syncfusion:SfChart Grid.Row="0" Grid.Column="1" Margin="10">
+            <syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:NumericalAxis x:Name="XAxis" Header="X"/>
+            </syncfusion:SfChart.PrimaryAxis>
+            <syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:NumericalAxis x:Name="YAxis" Header="Y"/>
+            </syncfusion:SfChart.SecondaryAxis>
+            <syncfusion:ScatterSeries Name="DataChart" Interior="{StaticResource PrimaryHueDarkBrush}" ListenPropertyChange="True" ScatterHeight="10" ScatterWidth="10" XBindingPath="X" YBindingPath="Y"/>
+        </syncfusion:SfChart>
+    </Grid>
+</Page>

@@ -54,7 +54,6 @@
                        RowStyle="{StaticResource rowStyle}"
                        HeaderStyle="{StaticResource headerStyle}"            
                        Margin="0,0,10,0" AddNewRowInitiating="DataGrid_AddNewRowInitiating">
-                <!--TODO: Create an alert box which prompts the user to enter the meaning of X/Y values-->
                 <syncfusion:SfDataGrid.Columns>
                     <syncfusion:GridTextColumn HeaderText="№" MappingName="Index" AllowEditing="False" Width="30"/>
                     <syncfusion:GridNumericColumn x:Name="XColumn" MappingName="X" HeaderText="X" AllowEditing="True"/>
