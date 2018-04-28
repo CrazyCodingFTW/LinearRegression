@@ -117,7 +117,7 @@ namespace LinearRegression.App.Views
 
             //TODO: Manage a way to send the newly created data to the database here...
             //TODO: Manage a way to inject this object
-            var analysis = new Analysis(title, description, XHeader, YHeader, this.analysisViewModel.Data);
+            var analysis = new FullAnalysis(title, description, XHeader, YHeader, this.analysisViewModel.Data);
             
             var resultsPage = new ComputedAnalysis(analysis);
 

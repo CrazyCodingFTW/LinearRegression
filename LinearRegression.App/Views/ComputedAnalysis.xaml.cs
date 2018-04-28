@@ -18,9 +18,9 @@ namespace LinearRegression.App.Views
 {
     public partial class ComputedAnalysis : Page, ICustomPage
     {
-        private IAnalysisModel analysisModel;
+        private IFullAnalysis analysisModel;
 
-        public ComputedAnalysis(IAnalysisModel analysisModel)
+        public ComputedAnalysis(IFullAnalysis analysisModel)
         {
             InitializeComponent();
 

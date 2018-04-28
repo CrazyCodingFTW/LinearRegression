@@ -98,7 +98,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Contracts\IAnalysisDataRow.cs" />
-    <Compile Include="Contracts\IAnalysisModel.cs" />
+    <Compile Include="Contracts\IAnalysisMetadata.cs" />
+    <Compile Include="Contracts\IFullAnalysis.cs" />
     <Compile Include="Contracts\ICustomPage.cs" />
     <Compile Include="Contracts\IHelpContent.cs" />
     <Compile Include="Contracts\IViewModel.cs" />
@@ -108,7 +109,8 @@
     <Compile Include="CustomControls\CustomXYMeaningPrompt.xaml.cs">
       <DependentUpon>CustomXYMeaningPrompt.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Analysis.cs" />
+    <Compile Include="Models\AnalysisMetadata.cs" />
+    <Compile Include="Models\FullAnalysis.cs" />
     <Compile Include="Models\AnalysisDataRow.cs" />
     <Compile Include="Models\HelpContent.cs" />
     <Compile Include="Models\NotificationObject.cs" />
