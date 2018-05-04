@@ -32,6 +32,7 @@ namespace LinearRegression.Database.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AnalysisDataId = table.Column<long>(nullable: false),
+                    CommentIDs = table.Column<string>(nullable: true),
                     CreationDate = table.Column<string>(nullable: true),
                     Descrioption = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
@@ -39,6 +40,21 @@ namespace LinearRegression.Database.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AnalysisInformationSet", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CommentSet",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AnalysisInformationID = table.Column<long>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentSet", x => x.Id);
                 });
         }
 
@@ -49,6 +65,9 @@ namespace LinearRegression.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "AnalysisInformationSet");
+
+            migrationBuilder.DropTable(
+                name: "CommentSet");
         }
     }
 }

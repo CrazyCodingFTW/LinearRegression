@@ -11,24 +11,19 @@ namespace LinearRegression.Database.ModelAdapters
     public class AnalysisInformation : ModelAdapter<Model.AnalysisInformation>
     {
         private AnalysisData data;
-        private IModelController<LinearRegressionDbContext> controller;
 
-        public AnalysisInformation(DateTime creationDate, string title, string description)
+        public AnalysisInformation(DateTime creationDate, string title, string description, IModelController<LinearRegressionDbContext> controller) : base(controller)
         {
             this.CreationDate = creationDate;
             this.Title = title;
             this.Descrioption = description;
         }
 
-        /// <summary>
-        /// Constructor for data mapping
-        /// </summary>
-        /// <param name="ai"></param>
-        public AnalysisInformation(Model.AnalysisInformation ai, IModelController<LinearRegressionDbContext> controller) : this(ai.GetDateTimeFromString(), ai.Title, ai.Descrioption)
+        public AnalysisInformation(Model.AnalysisInformation ai, IModelController<LinearRegressionDbContext> controller) : base(ai, controller)
         {
-            this.controller = controller;
-            Entity = ai;
-            this.Id = ai.Id;
+            this.CreationDate = ai.GetDateTimeFromString();
+            this.Title = ai.Title;
+            this.Descrioption = ai.Descrioption;
         }
 
         public AnalysisData Data
@@ -36,16 +31,30 @@ namespace LinearRegression.Database.ModelAdapters
             get
             {
                 if (this.data is null)
-                    this.data = controller.GetEntityById<AnalysisData>(Entity.AnalysisDataId);                
+                    this.data = this.Controller.GetEntityById<AnalysisData>(Entity.AnalysisDataId);
 
                 return this.data;
             }
 
             set => this.data = value;
         }
+
         public DateTime CreationDate { get; set; }
+
         public string Title { get; set; }
+
         public string Descrioption { get; set; }
+
+        public IReadOnlyCollection<Comment> Comments
+        {
+            get
+            {
+                if (this.Id == 0)
+                    throw new InvalidOperationException("You must save the entity before working with its comments");
+
+                else return this.Controller.GetAllEntities<Comment>().Where(c => c.AnalysisInformationId == this.Id).ToList();
+            }
+        }
 
         public override void Save(LinearRegressionDbContext db)
         {
@@ -82,6 +91,8 @@ namespace LinearRegression.Database.ModelAdapters
             var dataEntity = this.Data.Entity;
             db.AnalysisDataSet.Remove(dataEntity);
             db.AnalysisInformationSet.Remove(this.Entity);
+
+            db.CommentSet.RemoveRange(this.Comments.Select(c => c.Entity).ToArray());
 
             db.SaveChanges();
 

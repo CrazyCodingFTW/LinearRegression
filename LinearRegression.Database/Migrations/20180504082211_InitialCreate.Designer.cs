@@ -10,7 +10,7 @@ using System;
 namespace LinearRegression.Database.Migrations
 {
     [DbContext(typeof(LinearRegressionDbContext))]
-    [Migration("20180323195001_InitialCreate")]
+    [Migration("20180504082211_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,8 @@ namespace LinearRegression.Database.Migrations
 
                     b.Property<long>("AnalysisDataId");
 
+                    b.Property<string>("CommentIDs");
+
                     b.Property<string>("CreationDate");
 
                     b.Property<string>("Descrioption");
@@ -55,6 +57,22 @@ namespace LinearRegression.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AnalysisInformationSet");
+                });
+
+            modelBuilder.Entity("LinearRegression.Database.Model.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("AnalysisInformationID");
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommentSet");
                 });
 #pragma warning restore 612, 618
         }

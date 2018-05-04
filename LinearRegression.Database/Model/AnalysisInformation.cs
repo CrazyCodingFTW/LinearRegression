@@ -17,6 +17,7 @@ namespace LinearRegression.Database.Model
             ConvertDatetimeToString(creationDate);
             this.Title = title;
             this.Descrioption = description;
+            this.CommentIDs = string.Empty;
         }
 
         public long Id { get; set; }
@@ -24,6 +25,7 @@ namespace LinearRegression.Database.Model
         public string CreationDate { get; set; }
         public string Title { get; set; }
         public string Descrioption { get; set; }
+        public string CommentIDs { get; set; }
 
         public DateTime GetDateTimeFromString()
         {
@@ -36,5 +38,23 @@ namespace LinearRegression.Database.Model
             this.CreationDate = date.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        public long[] GetCommentIds()
+        {
+            var commentIds = this.CommentIDs.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            return commentIds.Any() ? commentIds.Select(long.Parse).ToArray() : new long[0];
+        }
+
+        public void AddComment(IComment comment)
+        {
+            if (!this.GetCommentIds().Contains(comment.Id))
+                this.CommentIDs += $"{this.CommentIDs} {comment.Id}";
+        }
+
+        public void RemoveComment(IComment comment)
+        {
+            var commentIds = GetCommentIds().Where(id => id != comment.Id);
+            this.CommentIDs = string.Join(" ", commentIds);
+        }
     }
 }

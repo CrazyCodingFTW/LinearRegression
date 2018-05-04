@@ -11,9 +11,8 @@ namespace LinearRegression.Database.ModelAdapters
     public class AnalysisData : ModelAdapter<Model.AnalysisData>
     {
         private AnalysisInformation analysisInformation;
-        private IModelController<LinearRegressionDbContext> controller;
 
-        public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning, IEnumerable<double> yData, AnalysisInformation analysisInformation)
+        public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning, IEnumerable<double> yData, AnalysisInformation analysisInformation, IModelController<LinearRegressionDbContext> controller) : base(controller)
         {
             this.XMeaning = xMeaning;
             this.XData = xData;
@@ -27,13 +26,12 @@ namespace LinearRegression.Database.ModelAdapters
         /// Constructor for data mapping
         /// </summary>
         /// <param name="ad"></param>
-        public AnalysisData(Model.AnalysisData ad, IModelController<LinearRegressionDbContext> controller) :
-            //Exceptions may occur here if you try to save AnalysisInformation twice without saving any data to it. 
-            this(ad.XMeaning, ad.GetDataFromStringObject(DataType.X), ad.YMeaning, ad.GetDataFromStringObject(DataType.Y), null)
+        public AnalysisData(Model.AnalysisData ad, IModelController<LinearRegressionDbContext> controller) : base(ad, controller)
         {
-            this.controller = controller;
-            this.Entity = ad;
-            this.Id = ad.Id;
+            this.XMeaning = ad.XMeaning;
+            this.XData = ad.GetDataFromStringObject(DataType.X);
+            this.YMeaning = ad.YMeaning;
+            this.YData = ad.GetDataFromStringObject(DataType.Y);
         }
 
         public AnalysisInformation AnalysisInformation
@@ -41,8 +39,8 @@ namespace LinearRegression.Database.ModelAdapters
             get
             {
                 if (this.analysisInformation is null)
-                    this.analysisInformation = controller.GetEntityById<AnalysisInformation>(this.Entity.AnalysisInformationId);
-                
+                    this.analysisInformation = Controller.GetEntityById<AnalysisInformation>(this.Entity.AnalysisInformationId);
+
 
                 return this.analysisInformation;
             }

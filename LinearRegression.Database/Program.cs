@@ -27,8 +27,8 @@ namespace LinearRegression.Database
             //Creating the entities.
 
             //First we create the AnalysisInformation entity. It is important to mention that we use Database.ModelAdapters not Database.Model
-            var ai1 = new AnalysisInformation(DateTime.Now, "Analysis1", "Test entity");
-            var ai2 = new AnalysisInformation(DateTime.Now, "Analysis2", "Test entity");
+            var ai1 = new AnalysisInformation(DateTime.Now, "Analysis1", "Test entity", controller);
+            var ai2 = new AnalysisInformation(DateTime.Now, "Analysis2", "Test entity", controller);
 
             //IT IS A MUST TO SAVE ALL THE CREATED ENTITIES RIGHT AFTER CREATION!!!!
             //That way they get their ID incremented
@@ -36,15 +36,22 @@ namespace LinearRegression.Database
             ai2.Save();
 
             //Right after that we are able to link the AnalysisData to the AnalysisInformation. For the perpouse we again use the class from Database.ModelAdapters
-            var ad1 = new AnalysisData("X", x, "Y", y, ai1);
-            var ad2 = new AnalysisData("X", x1, "Y", y1, ai2);
+            var ad1 = new AnalysisData("X", x, "Y", y, ai1, controller);
+            var ad2 = new AnalysisData("X", x1, "Y", y1, ai2, controller);
 
             //After that we immediately save the changes
             ad1.Save();
             ad2.Save();
 
+            //Data can have comments added to it
+            var comment = new Comment(ai1.Id, "Benchi", "Sednal na edno druvo", controller);
+            comment.Save();
+
             //Get all the entities from analysis information
             var allInformation = controller.GetAllEntities<AnalysisInformation>();
+
+            //To retrieve comments just ask for them
+            Console.WriteLine(allInformation.First().Comments.First().Content);
 
             //Getting an item from the database.
             //We can get an item by its ID
@@ -67,7 +74,7 @@ namespace LinearRegression.Database
                 DisplayData(entity.AnalysisInformation, entity as AnalysisData);
 
             //Finally but not least we can delete items like this
-            controller.DeleteAllEntities<AnalysisInformation>(allInformation);
+            controller.DeleteAllEntities(allInformation);
 
             //It is important to mention that AnalysisData CANNOT be directly deleted!
         }

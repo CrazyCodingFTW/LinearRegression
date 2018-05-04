@@ -159,23 +159,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LinearRegressionDbContext.cs" />
-    <Compile Include="Migrations\20180323195001_InitialCreate.cs" />
-    <Compile Include="Migrations\20180323195001_InitialCreate.designer.cs">
-      <DependentUpon>20180323195001_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\20180504082211_InitialCreate.cs" />
+    <Compile Include="Migrations\20180504082211_InitialCreate.designer.cs">
+      <DependentUpon>20180504082211_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\LinearRegressionDbContextModelSnapshot.cs" />
     <Compile Include="ModelAdapters\AnalysisData.cs" />
     <Compile Include="ModelAdapters\AnalysisInformation.cs" />
+    <Compile Include="ModelAdapters\Comment.cs" />
     <Compile Include="ModelAdapters\ModelAdapter.cs" />
     <Compile Include="ModelAdapters\ModelController.cs" />
+    <Compile Include="ModelContracts\IAnalysisCalculations.cs" />
     <Compile Include="ModelContracts\IAnalysisData.cs" />
     <Compile Include="ModelContracts\IAnalysisInformation.cs" />
+    <Compile Include="ModelContracts\IComment.cs" />
     <Compile Include="ModelContracts\IDBEntity.cs" />
     <Compile Include="ModelContracts\IModelAdapter.cs" />
     <Compile Include="ModelContracts\IModelController.cs" />
     <Compile Include="ModelContracts\ISaveRemoveable.cs" />
     <Compile Include="Model\AnalysisData.cs" />
     <Compile Include="Model\AnalysisInformation.cs" />
+    <Compile Include="Model\Comment.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -45,6 +45,8 @@ namespace LinearRegression.Database.Migrations
 
                     b.Property<long>("AnalysisDataId");
 
+                    b.Property<string>("CommentIDs");
+
                     b.Property<string>("CreationDate");
 
                     b.Property<string>("Descrioption");
@@ -54,6 +56,22 @@ namespace LinearRegression.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AnalysisInformationSet");
+                });
+
+            modelBuilder.Entity("LinearRegression.Database.Model.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("AnalysisInformationID");
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommentSet");
                 });
 #pragma warning restore 612, 618
         }
