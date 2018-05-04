@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//Made by the example: https://www.onceinawhitemoon.net/2017/05/wpf-entityframeworkcore-and-sqlite/
+//Made like this example: https://www.onceinawhitemoon.net/2017/05/wpf-entityframeworkcore-and-sqlite/
 namespace LinearRegression.Database
 {
     public class LinearRegressionDbContext : DbContext

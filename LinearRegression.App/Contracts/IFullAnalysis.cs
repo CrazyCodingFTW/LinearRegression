@@ -7,5 +7,7 @@ using System.Threading.Tasks;
 
 namespace LinearRegression.App.Contracts
 {
-    public interface IFullAnalysis : IAnalysisMetadata, IAnalysisData { }
+    public interface IFullAnalysis<TAnalysisDataRow> 
+        : IAnalysisMetadata, IAnalysisData<TAnalysisDataRow> 
+        where TAnalysisDataRow : class, IAnalysisDataRow { }
 }

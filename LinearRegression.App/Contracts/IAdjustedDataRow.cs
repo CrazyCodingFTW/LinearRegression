@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace LinearRegression.App.Contracts
 {
-    public interface ICustomPage
+    public interface IAdjustedDataRow : IAnalysisDataRow
     {
-        IServiceProvider Services { get; }
-
-        string PageTitle { get; }
-
-        IHelpContent HelpContent { get; }
+        double AdjustedY { get; }
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace LinearRegression.App.Contracts
 {
-    public interface IAnalysisData
+    public interface IAnalysisData<TAnalysisDataRow> where TAnalysisDataRow : class, IAnalysisDataRow
     {
         string XMeaning { get; }
 
         string YMeaning { get; }
 
-        ObservableCollection<IAnalysisDataRow> Data { get; }
+        ObservableCollection<TAnalysisDataRow> Data { get; }
     }
 }

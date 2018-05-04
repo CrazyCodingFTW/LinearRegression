@@ -40,9 +40,10 @@
                        HeaderStyle="{StaticResource headerStyle}"            
                        Margin="10" >
             <syncfusion:SfDataGrid.Columns>
-                <syncfusion:GridTextColumn HeaderText="№" MappingName="Index" AllowEditing="False" Width="30"/>
-                <syncfusion:GridNumericColumn x:Name="XColumn" MappingName="X" HeaderText="X" AllowEditing="True"/>
-                <syncfusion:GridNumericColumn x:Name="YColumn" MappingName="Y" HeaderText="Y" AllowEditing="True"/>
+                <syncfusion:GridTextColumn HeaderText="№" MappingName="Index" Width="30"/>
+                <syncfusion:GridNumericColumn x:Name="XColumn" MappingName="X" HeaderText="X"/>
+                <syncfusion:GridNumericColumn x:Name="YColumn" MappingName="Y" HeaderText="Y"/>
+                <syncfusion:GridNumericColumn x:Name="AdjustedY" MappingName="AdjustedY" HeaderText="Y&#x0302;"/>
             </syncfusion:SfDataGrid.Columns>
         </syncfusion:SfDataGrid>
         <syncfusion:SfChart Grid.Row="0" Grid.Column="1" Margin="10">

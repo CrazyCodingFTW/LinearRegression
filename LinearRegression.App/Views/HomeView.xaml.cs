@@ -24,9 +24,11 @@ namespace LinearRegression.App.Views
 
         private ShadowDepth defaultShadowDepth;
 
-        public HomeView()
+        public HomeView(IServiceProvider services)
         {
             InitializeComponent();
+
+            this.Services = services;
         }
 
         public string PageTitle => "Home";
@@ -34,6 +36,8 @@ namespace LinearRegression.App.Views
         public IHelpContent HelpContent => 
             new HelpContent(this.PageTitle,
                 $"In the home view you have three options to choose from:{Environment.NewLine}{Environment.NewLine}New Analysis - creates new Linear Regression analysis{Environment.NewLine}{Environment.NewLine}History - browse previous analysis{Environment.NewLine}{Environment.NewLine}Export Data - Choose analysis to export into Excel");
+
+        public IServiceProvider Services { get; }
 
         /// <summary>
         /// Make the shadow of a card darken when hoover
@@ -63,7 +67,7 @@ namespace LinearRegression.App.Views
 
         private void NewAnalysisCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var newAnalysis = new NewAnalysis();
+            var newAnalysis = new NewAnalysis(this.Services);
             NavigationService.Navigate(newAnalysis);
         }
     }

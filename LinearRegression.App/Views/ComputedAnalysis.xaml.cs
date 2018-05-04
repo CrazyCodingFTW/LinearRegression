@@ -1,4 +1,5 @@
 ﻿using LinearRegression.App.Contracts;
+using LinearRegression.App.Contracts.Services;
 using LinearRegression.App.Views.ComputedAnalysisPages;
 using System;
 using System.Collections.Generic;
@@ -19,18 +20,21 @@ namespace LinearRegression.App.Views
 {
     public partial class ComputedAnalysis : Page, ICustomPage
     {
-        private IFullAnalysis analysisModel;
+        private IFullAnalysis<IAnalysisDataRow> analysisModel;
 
-        public ComputedAnalysis(IFullAnalysis analysisModel)
+        public ComputedAnalysis(IServiceProvider services, IFullAnalysis<IAnalysisDataRow> analysisModel)
         {
             InitializeComponent();
 
+            this.Services = services;
             this.analysisModel = analysisModel;
         }
 
         public string PageTitle => analysisModel.Title;
 
         public IHelpContent HelpContent => throw new NotImplementedException();
+
+        public IServiceProvider Services { get; }
 
         private void AnalysisInformationExpander_Expanded(object sender, RoutedEventArgs e)
         {
@@ -41,7 +45,8 @@ namespace LinearRegression.App.Views
 
         private void CommonAnalysisData_Expanded(object sender, RoutedEventArgs e)
         {
-            var commonData = new CommonAnalysisDataPage(analysisModel);
+            var analysisLogicService = Services.GetService(typeof(IAnalysisLogicService)) as IAnalysisLogicService;
+            var commonData = new CommonAnalysisDataPage(analysisLogicService, analysisModel);
 
             CADPage.Content = commonData;
         }

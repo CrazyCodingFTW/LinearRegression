@@ -33,9 +33,11 @@ namespace LinearRegression.App.Views
         private string xHeader = "X";
         private string yHeader = "Y";
 
-        public NewAnalysis()
+        public NewAnalysis(IServiceProvider services)
         {
             InitializeComponent();
+
+            this.Services = services;
 
             analysisViewModel = new ViewModel<AnalysisDataRow>();
 
@@ -78,9 +80,11 @@ namespace LinearRegression.App.Views
                 $"In this page you are able to create your Linear Rehression analysis. Fill in the forms and your X and Y data by clicking the add new row line. After you're done click 'Compute', to save and compute your data." +
                 $"{Environment.NewLine}To change the meanings of your X/Y data, click the \"Change X/Y\" buttons.");
 
+        public IServiceProvider Services { get; }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            var homeView = new HomeView();
+            var homeView = new HomeView(this.Services);
             NavigationService.Navigate(homeView);
 
             DataGrid.Dispose();
@@ -124,9 +128,10 @@ namespace LinearRegression.App.Views
 
             //TODO: Manage a way to send the newly created data to the database here...
             //TODO: Manage a way to inject this object
-            var analysis = new FullAnalysis(title, description, XHeader, YHeader, this.analysisViewModel.Data);
+            var analysis = new FullAnalysis<IAnalysisDataRow>(title, description, XHeader, YHeader, this.analysisViewModel.Data);
             
-            var resultsPage = new ComputedAnalysis(analysis);
+
+            var resultsPage = new ComputedAnalysis(this.Services, analysis);
 
             NavigationService.Navigate(resultsPage);
         }

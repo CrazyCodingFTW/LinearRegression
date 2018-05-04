@@ -1,4 +1,5 @@
 ﻿using LinearRegression.App.Contracts;
+using LinearRegression.App.Contracts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,15 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
 {
     public partial class CommonAnalysisDataPage : Page
     {
-        private IAnalysisData analysisData;
+        private IAnalysisData<IAdjustedDataRow> analysisData;
+        private IAnalysisLogicService analysisLogicService;
 
-        public CommonAnalysisDataPage(IAnalysisData analysisData)
+        public CommonAnalysisDataPage(IAnalysisLogicService analysisLogicService, IAnalysisData<IAnalysisDataRow> modelAnalysisData)
         {
-            this.analysisData = analysisData;
+            this.analysisLogicService = analysisLogicService;
+
+            //TODO: Implement!
+            this.analysisData = analysisLogicService.GetAdjustedData(modelAnalysisData);
 
             InitializeComponent();
 
