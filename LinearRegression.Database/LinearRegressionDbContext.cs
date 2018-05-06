@@ -15,6 +15,7 @@ namespace LinearRegression.Database
         public DbSet<AnalysisData> AnalysisDataSet { get; set; }
         public DbSet<AnalysisInformation> AnalysisInformationSet { get; set; }
         public DbSet<Comment> CommentSet { get; set; }
+        public DbSet<AnalysisCalculations> AnalysisCalculationsSet { get; set; }
 
         public LinearRegressionDbContext()
         {

@@ -89,6 +89,16 @@ namespace LinearRegression.Database.ModelAdapters
         public override void Delete(LinearRegressionDbContext db)
         {
             var dataEntity = this.Data.Entity;
+
+            //Some calculations may not be saved to the data which will result into an exceprion. Saving calculations is not requird so such exceptions are handled.
+            try
+            {
+                var analysisCalculatinosEntity = this.Data.AnalysisCalculations.Entity;
+
+                db.AnalysisCalculationsSet.Remove(analysisCalculatinosEntity);
+            }
+            catch (Exception) { }
+
             db.AnalysisDataSet.Remove(dataEntity);
             db.AnalysisInformationSet.Remove(this.Entity);
 

@@ -38,7 +38,7 @@ namespace LinearRegression.Database.Model
             this.CreationDate = date.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        public long[] GetCommentIds()
+        public IEnumerable<long> GetCommentIds()
         {
             var commentIds = this.CommentIDs.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 

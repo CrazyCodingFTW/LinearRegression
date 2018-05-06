@@ -18,10 +18,46 @@ namespace LinearRegression.Database.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
 
+            modelBuilder.Entity("LinearRegression.Database.Model.AnalysisCalculations", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AdjustedY");
+
+                    b.Property<long>("AnalysisDataID");
+
+                    b.Property<double>("AverageErrorB0");
+
+                    b.Property<double>("AverageErrorB1");
+
+                    b.Property<double>("B0");
+
+                    b.Property<double>("B1");
+
+                    b.Property<double>("ExplainedDispersion");
+
+                    b.Property<double>("FEmpirical");
+
+                    b.Property<double>("FTheoretical");
+
+                    b.Property<double>("MaximalErrorB0");
+
+                    b.Property<double>("MaximalErrorB1");
+
+                    b.Property<double>("ResidualDispersion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnalysisCalculationsSet");
+                });
+
             modelBuilder.Entity("LinearRegression.Database.Model.AnalysisData", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<long>("AnalysisCalculationsId");
 
                     b.Property<long>("AnalysisInformationId");
 

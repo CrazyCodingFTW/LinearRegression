@@ -159,11 +159,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LinearRegressionDbContext.cs" />
-    <Compile Include="Migrations\20180504082211_InitialCreate.cs" />
-    <Compile Include="Migrations\20180504082211_InitialCreate.designer.cs">
-      <DependentUpon>20180504082211_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\20180506163646_InitialCreate.cs" />
+    <Compile Include="Migrations\20180506163646_InitialCreate.designer.cs">
+      <DependentUpon>20180506163646_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\LinearRegressionDbContextModelSnapshot.cs" />
+    <Compile Include="ModelAdapters\AnalysisCalculations.cs" />
     <Compile Include="ModelAdapters\AnalysisData.cs" />
     <Compile Include="ModelAdapters\AnalysisInformation.cs" />
     <Compile Include="ModelAdapters\Comment.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="ModelContracts\IModelAdapter.cs" />
     <Compile Include="ModelContracts\IModelController.cs" />
     <Compile Include="ModelContracts\ISaveRemoveable.cs" />
+    <Compile Include="Model\AnalysisCalculations.cs" />
     <Compile Include="Model\AnalysisData.cs" />
     <Compile Include="Model\AnalysisInformation.cs" />
     <Compile Include="Model\Comment.cs" />

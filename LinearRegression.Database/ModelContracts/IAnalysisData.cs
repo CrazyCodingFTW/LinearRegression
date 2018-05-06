@@ -11,6 +11,8 @@ namespace LinearRegression.Database.ModelContracts
     {
         long AnalysisInformationId { get; set; }
 
+        long AnalysisCalculationsId { get; set; }
+
         /// <summary>
         /// Represents an array with all the X values. Use ConvertDataToStringObject to get the array
         /// </summary>

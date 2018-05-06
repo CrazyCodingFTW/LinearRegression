@@ -53,6 +53,16 @@ namespace LinearRegression.Database
             //To retrieve comments just ask for them
             Console.WriteLine(allInformation.First().Comments.First().Content);
 
+            //Calculations can also be added to the analysis to save time on the next opening
+            var calculation = new AnalysisCalculations(ad2, new double[] { 1.2, 3.6, 5.4 }, 12.3, 15.5, 1.36, 1478.5, 323, 4, 6, 44, 66, 88, controller);
+            calculation.Save();
+
+            //Calculation is obtained by asking the related AnalysisData for it
+            var calcObtained = ad2.AnalysisCalculations;
+
+            //Lets check if it works
+            Console.WriteLine(string.Join(" ", calcObtained.AdjustedY));
+
             //Getting an item from the database.
             //We can get an item by its ID
             var firstEntityId = controller.GetAllEntities<AnalysisInformation>().First().Id; //As generic parameters we pass the Model Adapter class and the Model class itself
@@ -76,7 +86,7 @@ namespace LinearRegression.Database
             //Finally but not least we can delete items like this
             controller.DeleteAllEntities(allInformation);
 
-            //It is important to mention that AnalysisData CANNOT be directly deleted!
+            //It is important to mention that AnalysisData and AnalysisCalculations CANNOT be directly deleted! You must delete AnalysisInformation which will trigger all other deletions.
         }
 
         public static void DisplayData(AnalysisInformation ai, AnalysisData ad)

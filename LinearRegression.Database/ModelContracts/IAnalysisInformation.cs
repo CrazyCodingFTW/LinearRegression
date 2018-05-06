@@ -32,7 +32,7 @@ namespace LinearRegression.Database.ModelContracts
         /// Splits the comments ids into convenient to use array
         /// </summary>
         /// <returns></returns>
-        long[] GetCommentIds();
+        IEnumerable<long> GetCommentIds();
 
         /// <summary>
         /// Gets the Id of the comment and adds it to the comment ids string

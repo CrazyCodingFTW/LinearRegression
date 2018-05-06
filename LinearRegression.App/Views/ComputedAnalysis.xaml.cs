@@ -28,6 +28,8 @@ namespace LinearRegression.App.Views
 
             this.Services = services;
             this.analysisModel = analysisModel;
+
+            //TODO: Find if the data had allready been computed and provide the computational data instead of computing it again. It is a good idea to make such constructors.
         }
 
         public string PageTitle => analysisModel.Title;

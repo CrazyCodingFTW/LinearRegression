@@ -32,6 +32,7 @@ namespace LinearRegression.Database.Model
         public string XMeaning { get; set; }
         public string YData { get; set; }
         public string YMeaning { get; set; }
+        public long AnalysisCalculationsId { get; set; }
 
         public void ConvertDataToStringObject(IEnumerable<double> data, DataType dataType)
         {

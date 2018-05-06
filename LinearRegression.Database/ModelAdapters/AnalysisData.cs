@@ -11,6 +11,7 @@ namespace LinearRegression.Database.ModelAdapters
     public class AnalysisData : ModelAdapter<Model.AnalysisData>
     {
         private AnalysisInformation analysisInformation;
+        private AnalysisCalculations analysisCalculations;
 
         public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning, IEnumerable<double> yData, AnalysisInformation analysisInformation, IModelController<LinearRegressionDbContext> controller) : base(controller)
         {
@@ -47,6 +48,18 @@ namespace LinearRegression.Database.ModelAdapters
 
             set => this.analysisInformation = value;
         }
+
+        public AnalysisCalculations AnalysisCalculations
+        {
+            get
+            {
+                if (this.Id == 0)
+                    throw new InvalidOperationException("In order to have analysis calculations, you must first save your analysis!");
+
+                else return this.Controller.GetEntityById<AnalysisCalculations>(this.Entity.AnalysisCalculationsId);
+            }
+        }
+
         public IEnumerable<double> XData { get; set; }
         public string XMeaning { get; set; }
         public IEnumerable<double> YData { get; set; }
@@ -83,10 +96,10 @@ namespace LinearRegression.Database.ModelAdapters
                 Entity.ConvertDataToStringObject(YData, DataType.Y);
             }
 
-            if (db.AnalysisDataSet.Any(d => d.Id == Entity.Id))
-                db.AnalysisDataSet.Update(this.Entity);
+            if (db.AnalysisDataSet.Any(d => d == Entity))
+                db.Update(this.Entity);
 
-            else db.AnalysisDataSet.Add(this.Entity);
+            else db.Add(this.Entity);
 
             db.SaveChanges();
 
