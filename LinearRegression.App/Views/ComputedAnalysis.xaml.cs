@@ -52,5 +52,20 @@ namespace LinearRegression.App.Views
 
             CADPage.Content = commonData;
         }
+
+        private void AdequacyData_Expanded(object sender, RoutedEventArgs e)
+        {
+            //TODO: Create a model which recognizes only this sort of data
+        }
+
+        private void AMError_Expanded(object sender, RoutedEventArgs e)
+        {
+            //TODO: Create a model which recognizes only this sort of data
+        }
+
+        private void Comments_Expanded(object sender, RoutedEventArgs e)
+        {
+            //TODO: Create a model which recognizes only this sort of data
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace LinearRegression.App.Contracts
 {
     public interface IAnalysisMetadata
     {
+        long DatabaseId { get; set; }
+
         string Title { get; }
 
         string Description { get; }

@@ -18,8 +18,8 @@ namespace LinearRegression.App.Models
         /// <param name="xMeaning"></param>
         /// <param name="yMeaning"></param>
         /// <param name="data"></param>
-        public FullAnalysis(string title, string description, string xMeaning, string yMeaning, IEnumerable<TAnalysisDataRow> data)
-            : this(title, description, xMeaning, yMeaning, DateTime.Now, data) { }
+        public FullAnalysis(long databaseMetadataId, string title, string description, string xMeaning, string yMeaning, IEnumerable<TAnalysisDataRow> data)
+            : this(databaseMetadataId, title, description, xMeaning, yMeaning, DateTime.Now, data) { }
 
         /// <summary>
         /// Creates analysis model by giving the ability to be modified once
@@ -30,8 +30,8 @@ namespace LinearRegression.App.Models
         /// <param name="yMeaning"></param>
         /// <param name="creationDate"></param>
         /// <param name="data"></param>
-        public FullAnalysis(string title, string description, string xMeaning, string yMeaning, DateTime creationDate, IEnumerable<TAnalysisDataRow> data)
-            : base(title, description, creationDate)
+        public FullAnalysis(long databaseMetadataId, string title, string description, string xMeaning, string yMeaning, DateTime creationDate, IEnumerable<TAnalysisDataRow> data)
+            : base(databaseMetadataId, title, description, creationDate)
         {
             this.XMeaning = xMeaning;
             this.YMeaning = yMeaning;

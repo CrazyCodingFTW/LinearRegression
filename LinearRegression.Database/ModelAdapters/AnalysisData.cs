@@ -11,7 +11,6 @@ namespace LinearRegression.Database.ModelAdapters
     public class AnalysisData : ModelAdapter<Model.AnalysisData>
     {
         private AnalysisInformation analysisInformation;
-        private AnalysisCalculations analysisCalculations;
 
         public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning, IEnumerable<double> yData, AnalysisInformation analysisInformation, IModelController<LinearRegressionDbContext> controller) : base(controller)
         {

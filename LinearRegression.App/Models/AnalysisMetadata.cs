@@ -15,8 +15,9 @@ namespace LinearRegression.App.Models
         /// <param name="title"></param>
         /// <param name="description"></param>
         /// <param name="creationDate"></param>
-        public AnalysisMetadata(string title, string description, DateTime creationDate)
+        public AnalysisMetadata(long databaseID, string title, string description, DateTime creationDate)
         {
+            this.DatabaseId = databaseID;
             this.Title = title;
             this.Description = description;
             this.CreationDate = creationDate;
@@ -27,15 +28,14 @@ namespace LinearRegression.App.Models
         /// </summary>
         /// <param name="title"></param>
         /// <param name="description"></param>
-        public AnalysisMetadata(string title, string description):this(title, description, DateTime.Now)
-        {
-
-        }
+        public AnalysisMetadata(long databaseID, string title, string description) : this(databaseID, title, description, DateTime.Now) { }
 
         public string Title { get; protected set; }
 
         public string Description { get; protected set; }
 
         public DateTime CreationDate { get; protected set; }
+
+        public long DatabaseId { get; set; }
     }
 }

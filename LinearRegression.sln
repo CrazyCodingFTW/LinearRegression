@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearRegression.Database",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearRegression.App", "LinearRegression.App\LinearRegression.App.csproj", "{FA5CC0CC-91DB-4D60-94A9-6022A717B6AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearRegression.Tests", "LinearRegression.Tests\LinearRegression.Tests.csproj", "{5853E32C-0B9A-4C91-B323-7516B09E143F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearRegression.Tests", "LinearRegression.Tests\LinearRegression.Tests.csproj", "{5853E32C-0B9A-4C91-B323-7516B09E143F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

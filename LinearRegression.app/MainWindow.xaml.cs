@@ -2,7 +2,11 @@
 using LinearRegression.App.Contracts.Services;
 using LinearRegression.App.CustomControls;
 using LinearRegression.App.Models;
+using LinearRegression.App.ServiceAdapters;
 using LinearRegression.App.Views;
+using LinearRegression.Database;
+using LinearRegression.Database.ModelAdapters;
+using LinearRegression.Database.ModelContracts;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -64,27 +68,14 @@ namespace LinearRegression.App
         {
             var services = new ServiceCollection();
 
-            var analysisServiceMock = new Mock<IAnalysisLogicService>();
-
-            //Only for testing
-            analysisServiceMock.Setup(asm => asm.GetAdjustedData(It.IsAny<IAnalysisData<IAnalysisDataRow>>())).Returns<IAnalysisData<IAnalysisDataRow>>(adr=> 
-            {
-                
-                var collection = new ObservableCollection<IAdjustedDataRow>();
-
-                foreach (var row in adr.Data)
-                    collection.Add(new AdjustedDataRow(row.Index, row.X, row.Y, row.Y));
-
-                var ad = new FullAnalysis<IAdjustedDataRow>("bla", "bla", "X", "Y", collection);
-
-                return ad;
-            });
-
-            //TODO: Replace with working service!
-            services.AddSingleton(analysisServiceMock.Object);
+            services.AddSingleton<IModelController<LinearRegressionDbContext>>(new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model"));
+            services.AddSingleton<IDatabaseService>(sp=>new DatabaseService(sp));
+            services.AddSingleton<IAnalysisLogicService>(sp=>new AnalysisLogicService(sp));
 
             var serviceProvider = services.BuildServiceProvider();
             return serviceProvider;
         }
+
+
     }
 }

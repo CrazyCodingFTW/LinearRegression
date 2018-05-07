@@ -45,9 +45,19 @@
                     </Expander>
                     <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
                     <Expander x:Name="CommonAnalysisData" Header="Common Analysis Data" HorizontalAlignment="Stretch" Expanded="CommonAnalysisData_Expanded">
-                        <Frame x:Name="CADPage" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="25,5,25,5">
-
-                        </Frame>
+                        <Frame x:Name="CADPage" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="25,5,25,5"/>
+                    </Expander>
+                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                    <Expander x:Name="AdequacyData" Header="Model Adequacy" HorizontalAlignment="Stretch" Expanded="AdequacyData_Expanded">
+                        <Frame x:Name="ModelAdequacyDataPage" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="25,5,25,5"/>
+                    </Expander>
+                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                    <Expander x:Name="AMError" Header="Average and Maximal Errors" HorizontalAlignment="Stretch" Expanded="AMError_Expanded">
+                        <Frame x:Name="AMErrorPage" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="25,5,25,5"/>
+                    </Expander>
+                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                    <Expander x:Name="Comments" Header="Comments" HorizontalAlignment="Stretch" Expanded="Comments_Expanded">
+                        <Frame x:Name="CommentsPage" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="25,5,25,5"/>
                     </Expander>
                 </StackPanel>
             </md:Card>

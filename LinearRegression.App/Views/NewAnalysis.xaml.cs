@@ -1,4 +1,5 @@
 ﻿using LinearRegression.App.Contracts;
+using LinearRegression.App.Contracts.Services;
 using LinearRegression.App.CustomControls;
 using LinearRegression.App.Models;
 using MaterialDesignThemes.Wpf;
@@ -8,6 +9,7 @@ using Syncfusion.UI.Xaml.ScrollAxis;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -126,9 +128,14 @@ namespace LinearRegression.App.Views
             var title = AnalysisTitle.Text;
             var description = AnalysisDescription.Text;
 
-            //TODO: Manage a way to send the newly created data to the database here...
-            var analysis = new FullAnalysis<IAnalysisDataRow>(title, description, XHeader, YHeader, this.analysisViewModel.Data);
-            
+            var analysis = new FullAnalysis<IAnalysisDataRow>(0, title, description, XHeader, YHeader, this.analysisViewModel.Data);
+
+            var dbService = this.Services.GetService(typeof(IDatabaseService)) as IDatabaseService;
+            var returnedID = dbService.SaveEntity(analysis);
+
+            //Make sure the data is saved
+            if (returnedID != analysis.DatabaseId || analysis.DatabaseId == 0)
+                throw new IOException("The data does not get saved to the database!");
 
             var resultsPage = new ComputedAnalysis(this.Services, analysis);
 
