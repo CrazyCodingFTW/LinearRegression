@@ -339,7 +339,7 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Documents\Visual Studio 2017\Projects\LinearRegression.BusinessLogic\BusinessLogic\LinearRegression.BusinessLogic.csproj">
+    <ProjectReference Include="..\LinearRegression.BusinessLogic\BusinessLogic\LinearRegression.BusinessLogic.csproj">
       <Project>{367d4a3a-cdd2-4b95-9535-c9acd12914f0}</Project>
       <Name>LinearRegression.BusinessLogic</Name>
     </ProjectReference>
