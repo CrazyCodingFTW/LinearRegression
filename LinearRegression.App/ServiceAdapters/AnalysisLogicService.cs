@@ -16,18 +16,27 @@ namespace LinearRegression.App.ServiceAdapters
 
         public IAnalysisData<IAdjustedDataRow> GetAdjustedData(IAnalysisData<IAnalysisDataRow> rawAnalysisModel)
         {
+            //Return X,Y and Y^ - adjusted Y.
+
             //TODO: First check if the database contains the analysis
-            //var xdata = rawAnalysisModel.Data.Select(d => d.X).ToArray();
-            //var ydata = rawAnalysisModel.Data.Select(d => d.Y).ToArray();
+            var xdata = rawAnalysisModel.Data.Select(d => d.X).ToArray();
+            var ydata = rawAnalysisModel.Data.Select(d => d.Y).ToArray();
 
             //List<double> ys = NikiService.GetAdjustedY(xdata, ydata);
 
-            //var collection = new ObservableCollection<IAdjustedDataRow>();
+            //Creating business logic object to use the business logic methods!!!
+            var businessLogicObject = new LinearRegression.BusinessLogic.LinearRegression(xdata.ToList(),ydata.ToList());
 
-            //for (int i = 0; i < ys.Count; i++)
-            //    collection.Add(new AdjustedDataRow(i + 1, xdata[i], ydata[i], ys[i]));
+            //Getting the adjusted Y values.
+            var adjustedYValues = businessLogicObject.GetAdjustedYsValues();
 
-            //return new FullAnalysis<IAdjustedDataRow>(12, null, null, null, null, collection);
+            //Creating observable collection with Xs, Ys and adjusted Ys.
+            var collection = new ObservableCollection<IAdjustedDataRow>();
+
+            for (int i = 0; i < adjustedYValues.Count; i++)
+                collection.Add(new AdjustedDataRow(i + 1, xdata[i], ydata[i], adjustedYValues[i]));
+
+            return new FullAnalysis<IAdjustedDataRow>(12, null, null, null, null, collection);
 
             //TODO: use calculations to get the adjusted data table or check if it already exists in the database
             throw new NotImplementedException();
