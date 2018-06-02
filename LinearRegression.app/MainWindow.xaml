@@ -33,10 +33,7 @@
                         </StackPanel>
                     </DockPanel>
                 </md:ColorZone>
-
-                <Frame Grid.Row="1" Name="PageFrame" NavigationUIVisibility="Hidden" ContentRendered="PageFrame_ContentRendered">
-
-                </Frame>
+                <Frame Grid.Row="1" Name="PageFrame" NavigationUIVisibility="Hidden" ContentRendered="PageFrame_ContentRendered"/>
             </Grid>
         </md:DialogHost>
     </Grid>

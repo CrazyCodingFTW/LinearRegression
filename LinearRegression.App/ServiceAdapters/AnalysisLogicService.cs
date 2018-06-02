@@ -16,6 +16,7 @@ namespace LinearRegression.App.ServiceAdapters
 
         public IAnalysisData<IAdjustedDataRow> GetAdjustedData(IAnalysisData<IAnalysisDataRow> rawAnalysisModel)
         {
+            //TODO: First check if the database contains the analysis
             //var xdata = rawAnalysisModel.Data.Select(d => d.X).ToArray();
             //var ydata = rawAnalysisModel.Data.Select(d => d.Y).ToArray();
 

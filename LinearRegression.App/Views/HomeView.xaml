@@ -34,7 +34,7 @@
                 <TextBlock  Grid.Column="0" Grid.Row="2" Text="New Analysis" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Style="{StaticResource MaterialDesignDisplay1TextBlock}"/>
             </Grid>
         </md:Card>
-        <md:Card Grid.Row="0" Grid.Column="1" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20,20,20,20" Background="#fdede7" Name="SavedAnalysisCard" MouseEnter="Card_MouseEnter" MouseLeave="Card_MouseLeave">
+        <md:Card Grid.Row="0" Grid.Column="1" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20,20,20,20" Background="#fdede7" Name="SavedAnalysisCard" MouseEnter="Card_MouseEnter" MouseLeave="Card_MouseLeave" MouseLeftButtonDown="SavedAnalysisCard_MouseLeftButtonDown">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200*"/>

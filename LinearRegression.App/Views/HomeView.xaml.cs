@@ -33,7 +33,7 @@ namespace LinearRegression.App.Views
 
         public string PageTitle => "Home";
 
-        public IHelpContent HelpContent => 
+        public IHelpContent HelpContent =>
             new HelpContent(this.PageTitle,
                 $"In the home view you have three options to choose from:{Environment.NewLine}{Environment.NewLine}New Analysis - creates new Linear Regression analysis{Environment.NewLine}{Environment.NewLine}History - browse previous analysis{Environment.NewLine}{Environment.NewLine}Export Data - Choose analysis to export into Excel");
 
@@ -65,10 +65,16 @@ namespace LinearRegression.App.Views
             ShadowAssist.SetShadowDepth(card, this.defaultShadowDepth);
         }
 
-        private void NewAnalysisCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void NewAnalysisCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
+            NavigateToPage<NewAnalysis>();
+
+        private void SavedAnalysisCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
+            NavigateToPage<HistoryView>();
+
+        private void NavigateToPage<TPage>() where TPage : Page, ICustomPage
         {
-            var newAnalysis = new NewAnalysis(this.Services);
-            NavigationService.Navigate(newAnalysis);
+            var pageInstance = Activator.CreateInstance(typeof(TPage), this.Services) as TPage;
+            NavigationService.Navigate(pageInstance);
         }
     }
 }

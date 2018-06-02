@@ -14,5 +14,7 @@ namespace LinearRegression.App.Contracts.Services
         /// <param name="analysisModel">The newly created entity</param>
         /// <returns>The id given from the database</returns>
         long SaveEntity(IFullAnalysis<IAnalysisDataRow> analysisModel);
+
+        IList<IAnalysisMetadata> GetAllEntities();
     }
 }

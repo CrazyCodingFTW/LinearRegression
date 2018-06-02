@@ -55,7 +55,8 @@ namespace LinearRegression.App.Views
 
         private void AdequacyData_Expanded(object sender, RoutedEventArgs e)
         {
-            //TODO: Create a model which recognizes only this sort of data
+            var adData = new DataAdequacyPage();
+            AdequacyData.Content = adData;
         }
 
         private void AMError_Expanded(object sender, RoutedEventArgs e)

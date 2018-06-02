@@ -1,5 +1,6 @@
 ﻿using LinearRegression.App.Contracts;
 using LinearRegression.App.Contracts.Services;
+using LinearRegression.App.Models;
 using LinearRegression.Database;
 using LinearRegression.Database.ModelAdapters;
 using LinearRegression.Database.ModelContracts;
@@ -28,6 +29,18 @@ namespace LinearRegression.App.ServiceAdapters
             SaveAnalysisData(analysisModel, analysisInformation);
 
             return analysisInformation.Id;
+        }
+
+        public IList<IAnalysisMetadata> GetAllEntities()
+        {
+            var allEntities = this.controller.GetAllEntities<AnalysisInformation>();
+
+            var collection = new List<IAnalysisMetadata>();
+            foreach (var entity in allEntities)
+                collection.Add(new AnalysisMetadata(entity.Id, entity.Title, entity.Descrioption, entity.CreationDate));
+
+
+            return collection;
         }
 
         private AnalysisInformation SaveAnalysisInformation(IAnalysisMetadata amd)

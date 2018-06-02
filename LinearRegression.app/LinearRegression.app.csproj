@@ -229,6 +229,12 @@
     <Compile Include="Views\ComputedAnalysisPages\CommonAnalysisDataPage.xaml.cs">
       <DependentUpon>CommonAnalysisDataPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ComputedAnalysisPages\DataAdequacyPage.xaml.cs">
+      <DependentUpon>DataAdequacyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryView.xaml.cs">
+      <DependentUpon>HistoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
@@ -260,6 +266,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ComputedAnalysisPages\CommonAnalysisDataPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ComputedAnalysisPages\DataAdequacyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
