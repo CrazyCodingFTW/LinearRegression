@@ -21,12 +21,15 @@ namespace LinearRegression.App.Views
     public partial class ComputedAnalysis : Page, ICustomPage
     {
         private IFullAnalysis<IAnalysisDataRow> analysisModel;
+        private IAnalysisLogicService analysisLogicService;
 
         public ComputedAnalysis(IServiceProvider services, IFullAnalysis<IAnalysisDataRow> analysisModel)
         {
             InitializeComponent();
-
             this.Services = services;
+
+            this.analysisLogicService = Services.GetService(typeof(IAnalysisLogicService)) as IAnalysisLogicService;
+
             this.analysisModel = analysisModel;
 
             //TODO: Find if the data had allready been computed and provide the computational data instead of computing it again. It is a good idea to make such constructors.
@@ -47,7 +50,6 @@ namespace LinearRegression.App.Views
 
         private void CommonAnalysisData_Expanded(object sender, RoutedEventArgs e)
         {
-            var analysisLogicService = Services.GetService(typeof(IAnalysisLogicService)) as IAnalysisLogicService;
             var commonData = new CommonAnalysisDataPage(analysisLogicService, analysisModel);
 
             CADPage.Content = commonData;
@@ -55,8 +57,8 @@ namespace LinearRegression.App.Views
 
         private void AdequacyData_Expanded(object sender, RoutedEventArgs e)
         {
-            var adData = new DataAdequacyPage();
-            AdequacyData.Content = adData;
+            var adData = new DataAdequacyPage(analysisLogicService.GetFullAnalysisAdjustedData(analysisModel));
+            ModelAdequacyDataPage.Content = adData;
         }
 
         private void AMError_Expanded(object sender, RoutedEventArgs e)

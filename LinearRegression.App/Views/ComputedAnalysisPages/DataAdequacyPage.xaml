@@ -20,9 +20,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TextBlock>1. Zero and Alternative hypotesis</TextBlock>
-            <TextBlock>&#009;H0: </TextBlock>
-            <TextBlock>&#009;H1: </TextBlock>
+            <TextBlock FontWeight="Bold">1. Zero and Alternative hypothesis</TextBlock>
+            <TextBlock x:Name="ZeroHypothesis" Padding="10,0,0,0"/>
+            <TextBlock x:Name="AlternativeHypothesis" Padding="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold">2: Alpha level:</TextBlock>
+            <TextBlock x:Name="AlphaLevel" Padding="25,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold">3: Decide the testing method:</TextBlock>
+            <TextBlock x:Name="PreferredTest" Padding="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>

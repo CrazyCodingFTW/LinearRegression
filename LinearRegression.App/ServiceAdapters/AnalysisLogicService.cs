@@ -30,7 +30,23 @@ namespace LinearRegression.App.ServiceAdapters
             //return new FullAnalysis<IAdjustedDataRow>(12, null, null, null, null, collection);
 
             //TODO: use calculations to get the adjusted data table or check if it already exists in the database
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            //TODO: Find adjusted values
+            var adjustedDataRows = new ObservableCollection<IAdjustedDataRow>();
+            foreach (var row in rawAnalysisModel.Data)
+                adjustedDataRows.Add(new AdjustedDataRow(row.Index, row.X, row.Y, row.Y));
+
+            var adjustedAnalysis = new AdjustedAnalysis(rawAnalysisModel.XMeaning, rawAnalysisModel.YMeaning, adjustedDataRows);
+            return adjustedAnalysis;
+        }
+
+        public IFullAnalysis<IAdjustedDataRow> GetFullAnalysisAdjustedData(IFullAnalysis<IAnalysisDataRow> fullRawAnalysisModel)
+        {
+            var adjustedData = GetAdjustedData(fullRawAnalysisModel);
+            var fullAnalysisCast = (FullAnalysis<IAnalysisDataRow>)fullRawAnalysisModel;
+            var fullAdjusted = new FullAnalysis<IAdjustedDataRow>(fullAnalysisCast.DatabaseId, fullRawAnalysisModel.Title, fullRawAnalysisModel.Description, fullRawAnalysisModel.XMeaning, fullRawAnalysisModel.YMeaning, adjustedData.Data);
+            return fullAdjusted;
         }
     }
 }
