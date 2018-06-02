@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinearRegression.BusinessLogic
 {
-    public interface ILinearRegression
+    public interface IRegression
     {
         double Parameter0 { get; }
         double Parameter1 { get; }

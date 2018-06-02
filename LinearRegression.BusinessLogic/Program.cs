@@ -44,7 +44,7 @@ namespace LinearRegression.BusinessLogic
             //Console.WriteLine(lr.Item1);
 
             ////using my class LinearRgression to get the parameters
-            LinearRegression lr2 = new LinearRegression(x2, y2);
+            Regression lr2 = new Regression(x2, y2);
             //Console.WriteLine(lr2.Parameter0);
             //Console.WriteLine(lr2.Parameter1);
 

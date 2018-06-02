@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LinearRegression.BusinessLogic
 {
-   public class LinearRegression : ILinearRegression
+    public class Regression : IRegression
     {
         private List<double> XValues;
         private List<double> YValues;
@@ -34,12 +34,12 @@ namespace LinearRegression.BusinessLogic
             }
         }
 
-        public LinearRegression()
+        public Regression()
         {
 
         }
 
-        public LinearRegression(List<double> XValues, List<double> YValues)
+        public Regression(List<double> XValues, List<double> YValues)
         {
             this.XValues = XValues;
             this.YValues = YValues;
@@ -134,12 +134,12 @@ namespace LinearRegression.BusinessLogic
             var B0 = parametersOfEquation[0, 0];
             var B1 = parametersOfEquation[1, 0];
 
-            return (B0,B1);
+            return (B0, B1);
 
         }
 
         //We need this method in order to use the parameters for the Matrix class methods.
-        private double [,] GetRegressionEquationParametersAsArray()
+        private double[,] GetRegressionEquationParametersAsArray()
         {
             var firstParameterOfEquation = this.GetRegressionEquation().firstParameter;
             var secondParameterOfEquation = this.GetRegressionEquation().secondParameter;
@@ -347,7 +347,7 @@ namespace LinearRegression.BusinessLogic
             double averageErrorOfSecondParameter = Math.Sqrt(unexplainedDisperssion * invertedXTrX[1, 1]);
 
             //Returning the two average errors
-            return ( averageErrorOfFirstParameter, averageErrorOfSecondParameter );
+            return (averageErrorOfFirstParameter, averageErrorOfSecondParameter);
         }
 
         public (double maximumErrorOfFirstParameter, double maximumErrorOfSecondParameter) GetMaximumErrorOfParameters()
@@ -361,7 +361,7 @@ namespace LinearRegression.BusinessLogic
             var maximumErrorOfFirstParam = averageErrorOfParameters.averageErrorOfFirstParameter * zScore;
             var maximumErrorOfSecondParam = averageErrorOfParameters.averageErrorOfSecondParameter * zScore;
 
-            
+
             return (maximumErrorOfFirstParam, maximumErrorOfSecondParam);
         }
 
