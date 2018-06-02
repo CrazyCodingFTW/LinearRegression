@@ -12,7 +12,9 @@ namespace LinearRegression.Database.ModelAdapters
     {
         private AnalysisInformation analysisInformation;
 
-        public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning, IEnumerable<double> yData, AnalysisInformation analysisInformation, IModelController<LinearRegressionDbContext> controller) : base(controller)
+        public AnalysisData(string xMeaning, IEnumerable<double> xData, string yMeaning,
+            IEnumerable<double> yData, AnalysisInformation analysisInformation,
+            IModelController<LinearRegressionDbContext> controller) : base(controller)
         {
             this.XMeaning = xMeaning;
             this.XData = xData;
