@@ -1,4 +1,5 @@
 ﻿using LinearRegression.App.Contracts;
+using LinearRegression.Database.ModelContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,21 +23,47 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
     public partial class DataAdequacyPage : Page
     {
         private IFullAnalysis<IAdjustedDataRow> analysisData;
+        private IAnalysisCalculations calculations;
 
-        public DataAdequacyPage(IFullAnalysis<IAdjustedDataRow> analysisData)
+        public DataAdequacyPage(IFullAnalysis<IAdjustedDataRow> analysisData, IAnalysisCalculations calculations)
         {
             InitializeComponent();
             this.analysisData = analysisData;
+            this.calculations = calculations;
 
             GenerateStrings();
         }
 
         private void GenerateStrings()
         {
+            //1.
             ZeroHypothesis.Text = $"H0: There is no statistically significant difference between the {analysisData.XMeaning} and {analysisData.YMeaning} and the model is indadequate.";
             AlternativeHypothesis.Text = $"H1: There is statistically significant difference between the {analysisData.XMeaning} and {analysisData.YMeaning} and the model is indadequate";
+            
+            //2.
             AlphaLevel.Text = $"\x3b1 = 0.05";
+
+            //3.
             PreferredTest.Text = "F - test";
+
+            //4.
+            B0Output.Text = $"B0: {calculations.B0}";
+            B1Output.Text = $"B1: {calculations.B1}";
+
+            ExplainedDispersionOutput.Text = $"Explained dispersion: {calculations.ExplainedDispersion}";
+            ResidualDispersionOutput.Text = $"Residual dispersion: {calculations.ResidualDispersion}";
+
+            NumberOfUnits.Text = $"Number of units (n): {analysisData.Data.Count}";
+            NumberOfParameters.Text = "Number of parameters: 2";
+
+            //5.
+            FResult.Text = $"F: {calculations.FEmpirical}";
+
+            //7.
+            TheoreticalFOutput.Text = $"Ft: {calculations.FTheoretical}";
+
+            //8.
+            ConclusionOutput.Text = $"Acording to the analysis the model is {(calculations.FEmpirical > calculations.FTheoretical ? "adequate" : "inadequate")}.";
         }
     }
 }

@@ -26,11 +26,36 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TextBlock FontWeight="Bold">2: Alpha level:</TextBlock>
-            <TextBlock x:Name="AlphaLevel" Padding="25,0,0,0"/>
+            <TextBlock x:Name="AlphaLevel" Padding="10,0,0,0"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TextBlock FontWeight="Bold">3: Decide the testing method:</TextBlock>
             <TextBlock x:Name="PreferredTest" Padding="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold">4. Gathering data for the analysis:</TextBlock>
+            <TextBlock x:Name="B0Output" Padding="10,0,0,0"/>
+            <TextBlock x:Name="B1Output" Padding="10,0,0,0"/>
+            <TextBlock x:Name="ExplainedDispersionOutput" Padding="10,0,0,0"/>
+            <TextBlock x:Name="ResidualDispersionOutput" Padding="10,0,0,0"/>
+            <TextBlock x:Name="NumberOfUnits" Padding="10,0,0,0"/>
+            <TextBlock x:Name="NumberOfParameters" Padding="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold">5. Calculating the result of the F-Test</TextBlock>
+            <TextBlock x:Name="FResult" Padding="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold">6. Defining critical area:</TextBlock>
+            <TextBlock Padding="10,0,0,0">Two-sided</TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold">7. Theoretical F:</TextBlock>
+            <TextBlock x:Name="TheoreticalFOutput" Padding="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="7" Margin="0,10,0,0" Orientation="Vertical" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold">8. Conclusion:</TextBlock>
+            <TextBlock x:Name="ConclusionOutput" Margin="0,10,0,0" />
         </StackPanel>
     </Grid>
 </Page>

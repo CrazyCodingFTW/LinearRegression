@@ -57,13 +57,19 @@ namespace LinearRegression.App.Views
 
         private void AdequacyData_Expanded(object sender, RoutedEventArgs e)
         {
-            var adData = new DataAdequacyPage(analysisLogicService.GetFullAnalysisAdjustedData(analysisModel));
+            var adjustedData = analysisLogicService.GetFullAnalysisAdjustedData(analysisModel);
+            var calculations = analysisLogicService.GetAnalysisCalculations(analysisModel);
+            var adData = new DataAdequacyPage(adjustedData, calculations);
+
             ModelAdequacyDataPage.Content = adData;
         }
 
         private void AMError_Expanded(object sender, RoutedEventArgs e)
         {
-            //TODO: Create a model which recognizes only this sort of data
+            var calculations = analysisLogicService.GetAnalysisCalculations(analysisModel);
+            var amErrorsPage = new AverageAndMaximalErrorsPage(calculations);
+
+            AMErrorPage.Content = amErrorsPage;
         }
 
         private void Comments_Expanded(object sender, RoutedEventArgs e)

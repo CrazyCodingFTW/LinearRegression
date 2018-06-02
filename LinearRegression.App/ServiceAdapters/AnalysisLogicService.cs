@@ -1,6 +1,7 @@
 ﻿using LinearRegression.App.Contracts;
 using LinearRegression.App.Contracts.Services;
 using LinearRegression.App.Models;
+using LinearRegression.Database.ModelContracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,6 +49,12 @@ namespace LinearRegression.App.ServiceAdapters
 
             var adjustedAnalysis = new AdjustedAnalysis(rawAnalysisModel.XMeaning, rawAnalysisModel.YMeaning, adjustedDataRows);
             return adjustedAnalysis;
+        }
+
+        public IAnalysisCalculations GetAnalysisCalculations(IFullAnalysis<IAnalysisDataRow> analysis)
+        {
+            //TODO: Check if the data had already been calculated or generate new calculations.
+            throw new NotImplementedException();
         }
 
         public IFullAnalysis<IAdjustedDataRow> GetFullAnalysisAdjustedData(IFullAnalysis<IAnalysisDataRow> fullRawAnalysisModel)

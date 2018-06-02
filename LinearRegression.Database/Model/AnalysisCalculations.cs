@@ -76,7 +76,7 @@ namespace LinearRegression.Database.Model
 
         public double MaximalErrorB0 { get; set; }
 
-        public double MaximalErrorB1 { get; set ; }
+        public double MaximalErrorB1 { get; set; }
 
         public IEnumerable<double> GetAdjustedYArray()
         {

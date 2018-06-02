@@ -1,4 +1,5 @@
 ﻿
+using LinearRegression.Database.ModelContracts;
 using System.Collections.Generic;
 
 namespace LinearRegression.App.Contracts.Services
@@ -7,5 +8,7 @@ namespace LinearRegression.App.Contracts.Services
     {
         IAnalysisData<IAdjustedDataRow> GetAdjustedData(IAnalysisData<IAnalysisDataRow> rawAnalysisModel);
         IFullAnalysis<IAdjustedDataRow> GetFullAnalysisAdjustedData(IFullAnalysis<IAnalysisDataRow>  fullRawAnalysisModel);
+
+        IAnalysisCalculations GetAnalysisCalculations(IFullAnalysis<IAnalysisDataRow> analysis);
     }
 }
