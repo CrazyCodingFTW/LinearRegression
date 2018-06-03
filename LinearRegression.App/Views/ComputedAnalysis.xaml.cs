@@ -1,5 +1,6 @@
 ﻿using LinearRegression.App.Contracts;
 using LinearRegression.App.Contracts.Services;
+using LinearRegression.App.Models;
 using LinearRegression.App.Views.ComputedAnalysisPages;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,10 @@ namespace LinearRegression.App.Views
 
         private void Comments_Expanded(object sender, RoutedEventArgs e)
         {
-            //TODO: Create a model which recognizes only this sort of data
+            var fullAnalysis = (FullAnalysis<IAnalysisDataRow>)analysisModel;
+            var dbService = Services.GetService(typeof(IDatabaseService)) as IDatabaseService;
+            var commentsPage = new CommentsViewPage(analysisModel.DatabaseId, dbService);
+            CommentsPage.Content = commentsPage;
         }
     }
 }

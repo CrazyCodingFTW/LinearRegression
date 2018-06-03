@@ -43,6 +43,41 @@ namespace LinearRegression.App.ServiceAdapters
             return collection;
         }
 
+        public IReadOnlyCollection<IComment> GetAnalysisComments(long analysisInformationId)
+        {
+            List<IComment> comments = controller
+                .GetAllEntities<Comment>()
+                .Where(c => c.AnalysisInformationId == analysisInformationId)
+                .Select(c=>(IComment)c.Entity)
+                .ToList();
+
+            return comments.AsReadOnly();
+        }
+
+        public IComment AddComment(long analysisInformationId, string user, string content)
+        {
+            var newComment = new Comment(analysisInformationId, user, content, controller);
+            newComment.Save();
+            return newComment.Entity;
+        }
+
+        public IFullAnalysis<IAnalysisDataRow> GetFullAnalysis(long analysisDataId)
+        {
+            var analysisInfo = controller.GetEntityById<AnalysisInformation>(analysisDataId);
+
+            var analysisData = analysisInfo.Data;
+            var xArray = analysisData.XData.ToArray();
+            var yArray = analysisData.YData.ToArray();
+
+            var analysisDataSet = new List<IAnalysisDataRow>();
+            for (int i = 0; i < xArray.Length; i++)
+                analysisDataSet.Add(new AnalysisDataRow(i + 1, xArray[i], yArray[i]));
+
+
+            var fullAnalysis = new FullAnalysis<IAnalysisDataRow>(analysisDataId, analysisInfo.Title, analysisInfo.Descrioption, analysisData.XMeaning, analysisData.YMeaning, analysisDataSet);
+            return fullAnalysis;
+        }
+
         private AnalysisInformation SaveAnalysisInformation(IAnalysisMetadata amd)
         {
             var ad = new AnalysisInformation(amd.CreationDate, amd.Title, amd.Description, this.controller);

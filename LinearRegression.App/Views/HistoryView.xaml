@@ -15,7 +15,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="AnalysisMetadataList" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <ListView x:Name="AnalysisMetadataList" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" PreviewMouseLeftButtonUp="AnalysisMetadataList_PreviewMouseLeftButtonUp">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Title}" Header="Title" />
