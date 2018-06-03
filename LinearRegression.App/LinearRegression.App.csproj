@@ -233,6 +233,9 @@
     <Compile Include="Views\ComputedAnalysis.xaml.cs">
       <DependentUpon>ComputedAnalysis.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ComputedAnalysisPages\AverageAndMaximalErrorsPage.xaml.cs">
+      <DependentUpon>AverageAndMaximalErrorsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ComputedAnalysisPages\CommonAnalysisDataPage.xaml.cs">
       <DependentUpon>CommonAnalysisDataPage.xaml</DependentUpon>
     </Compile>
@@ -269,6 +272,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ComputedAnalysis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ComputedAnalysisPages\AverageAndMaximalErrorsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

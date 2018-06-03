@@ -12,7 +12,7 @@ namespace LinearRegression.BusinessLogic
         double Parameter1 { get; }
         (double firstParameter, double secondParameter) GetRegressionEquation();
         List<double> GetAdjustedYsValues();
-        bool CheckAdequacyOfModel();
+        (double residualDispersion, double explainedDispersion, double fEmpirical, double fTheoretical, bool isModelAdecuate) CheckAdequacyOfModel();
         (double averageErrorOfFirstParameter, double averageErrorOfSecondParameter) GetAverageErrorOfParameters();
         (double maximumErrorOfFirstParameter, double maximumErrorOfSecondParameter) GetMaximumErrorOfParameters();
         (double lowerBoundOfFirstParameter, double upperBoundOfFirstParameter, double lowerBoundOfSecondParameter, double upperBoundOfSecondParameter) GetIntervalsOfRegressionParameters();

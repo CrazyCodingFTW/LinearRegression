@@ -176,44 +176,53 @@ namespace LinearRegression.BusinessLogic
             return theoriticalValues;
         }
 
-        public bool CheckAdequacyOfModel()
+        public (double residualDispersion, double explainedDispersion, double fEmpirical, double fTheoretical, bool isModelAdecuate) CheckAdequacyOfModel()
         {
             double alpha = 0.05D;
 
-            double unexplainedDeviation = this.GetUnexplainedDeviation();
+            double residualDeviation = this.GetResidualDeviation();
             double explainedDeviation = this.GetExplainedDeviation();
 
             //Formula is S2 / (n - p); p -> the number of parameters of the regression equation. Always 2!!!
-            double unexplainedDisperssion = unexplainedDeviation / (this.XValues.Count - 2);
+            double residualDisperssion = residualDeviation / (this.XValues.Count - 2);
 
             //Formula is S1 / (p-1); p -> the number of parameters of the regression equation. Always 2!!!
             double explainedDisperssion = explainedDeviation / (2 - 1);
 
             //Fem
-            double FEmpiricaly = (explainedDisperssion > unexplainedDisperssion) ? (explainedDisperssion / unexplainedDisperssion) : (unexplainedDisperssion / explainedDisperssion);
+            double FEmpiricaly = (explainedDisperssion > residualDisperssion) ? (explainedDisperssion / residualDisperssion) : (residualDisperssion / explainedDisperssion);
 
             //Calculating the degrees of freedom for the F-distribution theoritical value.
-            double firstDegreeOfFreedom = (explainedDisperssion > unexplainedDisperssion) ? 1 : (this.XValues.Count - 2);
-            double secondDegreeOfFreedom = (explainedDisperssion > unexplainedDisperssion) ? (this.XValues.Count - 2) : 1;
+            double firstDegreeOfFreedom = (explainedDisperssion > residualDisperssion) ? 1 : (this.XValues.Count - 2);
+            double secondDegreeOfFreedom = (explainedDisperssion > residualDisperssion) ? (this.XValues.Count - 2) : 1;
 
             //Getting the F-Distiribution critical value.
             FisherSnedecor fDistibution = new FisherSnedecor(1, 1);
             double FTheoretically = FisherSnedecor.InvCDF(firstDegreeOfFreedom, secondDegreeOfFreedom, (1.00 - alpha));
             //Console.WriteLine($"F-Test (df1 = {1}, df2 = {8}, alpha = {0.05}) = {FisherSnedecor.InvCDF(firstDegreeOfFreedom, secondDegreeOfFreedom, 1 - alpha)}");
 
+            bool isModelAdecuate = (FEmpiricaly > FTheoretically) ? true : false;
+
+            return (residualDisperssion,explainedDisperssion,FEmpiricaly,FTheoretically,isModelAdecuate);
+            
+           // throw new NotImplementedException();
+
+            
+
             //Checking to see which hypothesis is correct
-            if (FEmpiricaly > FTheoretically)
-            {
-                return true;//H1: model is adecuate.
-            }
-            else
-            {
-                return false;//H0: model IS NOT adecuate.
-            }
+            //if (FEmpiricaly > FTheoretically)
+            //{
+            //    return true;//H1: model is adecuate.
+            //}
+            //else
+            //{
+            //    return false;//H0: model IS NOT adecuate.
+            //}
+
 
         }
 
-        private double GetUnexplainedDeviation()
+        private double GetResidualDeviation()
         {
             //The formula is this: Y'Y - B'X'Y
 
@@ -329,22 +338,22 @@ namespace LinearRegression.BusinessLogic
                 );
 
             //If model is not adecuate 
-            if (!this.CheckAdequacyOfModel())
+            if (!this.CheckAdequacyOfModel().isModelAdecuate)
             {
                 throw new InvalidOperationException();
             }
 
             //Getting the unexplained deviation in order to get the unexpected disperssion.
-            double unexplainedDeviation = this.GetUnexplainedDeviation();
+            double residualDeviation = this.GetResidualDeviation();
 
             // Formula is S2 / n - p->the number of parameters of the regression equation.
-            double unexplainedDisperssion = unexplainedDeviation / (this.XValues.Count - 2);
+            double residualDisperssion = residualDeviation / (this.XValues.Count - 2);
 
             //Calculating the averege error of first parameter: sqrt(σ2^2 * C00)
-            double averageErrorOfFirstParameter = Math.Sqrt(unexplainedDisperssion * invertedXTrX[0, 0]);
+            double averageErrorOfFirstParameter = Math.Sqrt(residualDisperssion * invertedXTrX[0, 0]);
 
             //Calculating the averege error of second parameter: sqrt(σ2^2 * C11)
-            double averageErrorOfSecondParameter = Math.Sqrt(unexplainedDisperssion * invertedXTrX[1, 1]);
+            double averageErrorOfSecondParameter = Math.Sqrt(residualDisperssion * invertedXTrX[1, 1]);
 
             //Returning the two average errors
             return (averageErrorOfFirstParameter, averageErrorOfSecondParameter);

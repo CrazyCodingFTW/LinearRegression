@@ -1,6 +1,8 @@
 ﻿using LinearRegression.App.Contracts;
 using LinearRegression.App.Contracts.Services;
 using LinearRegression.App.Models;
+using LinearRegression.Database;
+using LinearRegression.Database.ModelAdapters;
 using LinearRegression.Database.ModelContracts;
 using System;
 using System.Collections.Generic;
@@ -29,7 +31,7 @@ namespace LinearRegression.App.ServiceAdapters
             //var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(),ydata.ToList());
 
             //Getting the adjusted Y values.
-            //var adjustedYValues = businessLogicObject.GetAdjustedYsValues();
+           // var adjustedYValues = businessLogicObject.GetAdjustedYsValues();
 
             //Creating observable collection with Xs, Ys and adjusted Ys.
             //var collection = new ObservableCollection<IAdjustedDataRow>();
@@ -54,11 +56,103 @@ namespace LinearRegression.App.ServiceAdapters
         public IAnalysisCalculations GetAnalysisCalculations(IFullAnalysis<IAnalysisDataRow> analysis)
         {
             //TODO: Check if the data had already been calculated or generate new calculations.
-            throw new NotImplementedException();
+            var xdata = analysis.Data.Select(d => d.X).ToArray();
+            var ydata = analysis.Data.Select(d => d.Y).ToArray();
+
+            // var databaseId = analysis.DatabaseId;
+
+            var controller = new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model");
+
+            //var analysisInfo = new AnalysisInformation(analysis.CreationDate,analysis.Title,analysis.Description,controller);
+
+            //var analysisData = new AnalysisData(analysis.XMeaning, xdata, analysis.YMeaning, ydata, analysisInfo, controller);
+
+            //analysisInfo.Data = analysisData;
+
+            var fullAnalysis = (FullAnalysis<IAnalysisDataRow>)analysis;
+
+            var analysisInfo = controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId);
+            var analysisData = analysisInfo.Data;
+
+            //TODO: Check if the calculations has already been calculated and is in the database.
+            if (controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId) != null)
+            {
+                //var analysisCalculations = controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId);
+               // return analysisCalculations.Entity;
+
+                try
+                {
+                    var calculations = controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId);
+                    return calculations.Entity;
+                }
+                catch(Exception)
+                {
+                    var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(), ydata.ToList());
+
+                    var b0 = businessLogicObject.Parameter0;//businessLogicObject.GetRegressionEquation().firstParameter;
+                    var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
+
+                    var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
+
+                    double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
+                    double explainedDispersion = businessLogicObject.CheckAdequacyOfModel().explainedDispersion;
+                    double fEmpirical = businessLogicObject.CheckAdequacyOfModel().fEmpirical;
+                    double fTheoretical = businessLogicObject.CheckAdequacyOfModel().fTheoretical;
+
+                    double averageErrorB0 = businessLogicObject.GetAverageErrorOfParameters().averageErrorOfFirstParameter;
+                    double averageErrorB1 = businessLogicObject.GetAverageErrorOfParameters().averageErrorOfSecondParameter;
+
+                    double maximalErrorB0 = businessLogicObject.GetMaximumErrorOfParameters().maximumErrorOfFirstParameter;
+                    double maximalErrorB1 = businessLogicObject.GetMaximumErrorOfParameters().maximumErrorOfSecondParameter;
+
+                    AnalysisCalculations c = new AnalysisCalculations(analysisData,adjustedYs,b0,b1,residualDispersion,explainedDispersion,
+                        fEmpirical,fTheoretical,averageErrorB0,averageErrorB1,maximalErrorB0,maximalErrorB1,controller);
+
+                    c.Save();
+                    return c.Entity;
+                }
+            }
+            else
+            {
+                
+                var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(), ydata.ToList());
+
+                var b0 = businessLogicObject.Parameter0;//businessLogicObject.GetRegressionEquation().firstParameter;
+                var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
+
+                var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
+
+                double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
+                double explainedDispersion = businessLogicObject.CheckAdequacyOfModel().explainedDispersion;
+                double fEmpirical = businessLogicObject.CheckAdequacyOfModel().fEmpirical;
+                double fTheoretical = businessLogicObject.CheckAdequacyOfModel().fTheoretical;
+
+                double averageErrorB0 = businessLogicObject.GetAverageErrorOfParameters().averageErrorOfFirstParameter;
+                double averageErrorB1 = businessLogicObject.GetAverageErrorOfParameters().averageErrorOfSecondParameter;
+
+                double maximalErrorB0 = businessLogicObject.GetMaximumErrorOfParameters().maximumErrorOfFirstParameter;
+                double maximalErrorB1 = businessLogicObject.GetMaximumErrorOfParameters().maximumErrorOfSecondParameter;
+
+                var calculation = new AnalysisCalculations(
+                        analysisData, adjustedYs, b0, b1, residualDispersion, explainedDispersion,
+                        fEmpirical, fTheoretical, averageErrorB0, averageErrorB1, maximalErrorB0, maximalErrorB1, controller
+                    );
+
+                calculation.Save();
+
+                return calculation.Entity;
+
+
+            }
+
+            
+
+            //throw new NotImplementedException();
         }
 
         public IFullAnalysis<IAdjustedDataRow> GetFullAnalysisAdjustedData(IFullAnalysis<IAnalysisDataRow> fullRawAnalysisModel)
         {
+            //Returns all things from the regression analysis + adjusted Ys
             var adjustedData = GetAdjustedData(fullRawAnalysisModel);
             var fullAnalysisCast = (FullAnalysis<IAnalysisDataRow>)fullRawAnalysisModel;
             var fullAdjusted = new FullAnalysis<IAdjustedDataRow>(fullAnalysisCast.DatabaseId, fullRawAnalysisModel.Title, fullRawAnalysisModel.Description, fullRawAnalysisModel.XMeaning, fullRawAnalysisModel.YMeaning, adjustedData.Data);
