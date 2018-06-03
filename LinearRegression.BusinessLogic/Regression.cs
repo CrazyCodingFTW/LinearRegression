@@ -201,6 +201,27 @@ namespace LinearRegression.BusinessLogic
             double FTheoretically = FisherSnedecor.InvCDF(firstDegreeOfFreedom, secondDegreeOfFreedom, (1.00 - alpha));
             //Console.WriteLine($"F-Test (df1 = {1}, df2 = {8}, alpha = {0.05}) = {FisherSnedecor.InvCDF(firstDegreeOfFreedom, secondDegreeOfFreedom, 1 - alpha)}");
 
+
+            if (residualDisperssion <= 0 || residualDisperssion == null)
+            {
+                residualDisperssion = 0;
+            }
+
+            if (explainedDisperssion <= 0 || explainedDisperssion == null)
+            {
+                explainedDisperssion = 0;
+            }
+
+            if (FEmpiricaly <= 0 || FEmpiricaly == null)
+            {
+                FEmpiricaly = 0;
+            }
+
+            if (FTheoretically <= 0 || FTheoretically == null)
+            {
+                FTheoretically = 0;
+            }
+
             bool isModelAdecuate = (FEmpiricaly > FTheoretically) ? true : false;
 
             return (residualDisperssion,explainedDisperssion,FEmpiricaly,FTheoretically,isModelAdecuate);
@@ -340,7 +361,8 @@ namespace LinearRegression.BusinessLogic
             //If model is not adecuate 
             if (!this.CheckAdequacyOfModel().isModelAdecuate)
             {
-                throw new InvalidOperationException();
+                //throw new InvalidOperationException();
+                return (0.0, 0.0);
             }
 
             //Getting the unexplained deviation in order to get the unexpected disperssion.

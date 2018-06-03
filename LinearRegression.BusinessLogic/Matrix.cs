@@ -29,7 +29,8 @@ namespace LinearRegression.BusinessLogic
         {
             if (matrixA.Columns != matrixB.Rows)
             {
-                throw new InvalidOperationException();
+                //throw new InvalidOperationException();
+                return new double[,] { {0.0D} };
             }
 
             int resultMatrixRows = matrixA.Rows;
@@ -74,7 +75,8 @@ namespace LinearRegression.BusinessLogic
 
             if (determinant == 0)
             {
-                throw new InvalidOperationException();
+                //throw new InvalidOperationException();
+                return new double[,] { { 0.0D } };
             }
 
             int[,] adjustedQuantitiesArray = new int[,]
