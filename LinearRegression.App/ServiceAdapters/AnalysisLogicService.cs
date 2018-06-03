@@ -17,6 +17,10 @@ namespace LinearRegression.App.ServiceAdapters
     {
         public AnalysisLogicService(IServiceProvider serviceProvider) : base(serviceProvider) { }
 
+        private bool areAdjustedYsCalculated = false;
+
+        private ModelController<LinearRegressionDbContext> controller = new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model");
+
         public IAnalysisData<IAdjustedDataRow> GetAdjustedData(IAnalysisData<IAnalysisDataRow> rawAnalysisModel)
         {
             //Return X,Y and Y^ - adjusted Y.
@@ -31,7 +35,7 @@ namespace LinearRegression.App.ServiceAdapters
             //var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(),ydata.ToList());
 
             //Getting the adjusted Y values.
-           // var adjustedYValues = businessLogicObject.GetAdjustedYsValues();
+            // var adjustedYValues = businessLogicObject.GetAdjustedYsValues();
 
             //Creating observable collection with Xs, Ys and adjusted Ys.
             //var collection = new ObservableCollection<IAdjustedDataRow>();
@@ -45,6 +49,11 @@ namespace LinearRegression.App.ServiceAdapters
             //throw new NotImplementedException();
 
             //TODO: Find adjusted values
+            if (true)
+            {
+
+            }
+
             var adjustedDataRows = new ObservableCollection<IAdjustedDataRow>();
             foreach (var row in rawAnalysisModel.Data)
                 adjustedDataRows.Add(new AdjustedDataRow(row.Index, row.X, row.Y, row.Y));
@@ -61,7 +70,7 @@ namespace LinearRegression.App.ServiceAdapters
 
             // var databaseId = analysis.DatabaseId;
 
-            var controller = new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model");
+            controller = new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model");
 
             //var analysisInfo = new AnalysisInformation(analysis.CreationDate,analysis.Title,analysis.Description,controller);
 
@@ -93,6 +102,7 @@ namespace LinearRegression.App.ServiceAdapters
                     var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
 
                     var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
+                    this.areAdjustedYsCalculated = true;
 
                     double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
                     double explainedDispersion = businessLogicObject.CheckAdequacyOfModel().explainedDispersion;
@@ -121,6 +131,8 @@ namespace LinearRegression.App.ServiceAdapters
                 var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
 
                 var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
+                this.areAdjustedYsCalculated = true;
+
 
                 double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
                 double explainedDispersion = businessLogicObject.CheckAdequacyOfModel().explainedDispersion;
