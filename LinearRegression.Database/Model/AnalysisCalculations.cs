@@ -39,7 +39,7 @@ namespace LinearRegression.Database.Model
             this.ExplainedDispersion = explainedDispersion;
 
             this.FEmpirical = fEmpirical;
-            this.FTheoretical = FTheoretical;
+            this.FTheoretical = fTheoretical;
 
             this.AverageErrorB0 = avgErrorB0;
             this.AverageErrorB1 = avgErrorB1;
