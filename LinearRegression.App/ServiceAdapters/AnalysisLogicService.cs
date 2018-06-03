@@ -17,9 +17,11 @@ namespace LinearRegression.App.ServiceAdapters
     {
         public AnalysisLogicService(IServiceProvider serviceProvider) : base(serviceProvider) { }
 
-        private bool areAdjustedYsCalculated = false;
-
         private ModelController<LinearRegressionDbContext> controller = new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model");
+
+        private List<double> adjustedYsList = new List<double>();
+
+        private bool areAdjustedYsCalculated = false;
 
         public IAnalysisData<IAdjustedDataRow> GetAdjustedData(IAnalysisData<IAnalysisDataRow> rawAnalysisModel)
         {
@@ -49,7 +51,17 @@ namespace LinearRegression.App.ServiceAdapters
             //throw new NotImplementedException();
 
             //TODO: Find adjusted values
-            if (true)
+
+            var fullAnalysis = (FullAnalysis<IAnalysisDataRow>)rawAnalysisModel;
+
+            var analysisInfo = controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId);
+            var analysisData = analysisInfo.Data;
+
+            if (controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId) != null)
+            {
+
+            }
+            else
             {
 
             }
@@ -103,6 +115,7 @@ namespace LinearRegression.App.ServiceAdapters
 
                     var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
                     this.areAdjustedYsCalculated = true;
+                    //adjustedYsList = adjustedYs.ToList();
 
                     double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
                     double explainedDispersion = businessLogicObject.CheckAdequacyOfModel().explainedDispersion;
@@ -132,6 +145,7 @@ namespace LinearRegression.App.ServiceAdapters
 
                 var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
                 this.areAdjustedYsCalculated = true;
+                //adjustedYsList = adjustedYs.ToList();
 
 
                 double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
