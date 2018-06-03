@@ -51,10 +51,13 @@ namespace LinearRegression.App.Views
         private void AnalysisMetadataList_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = ((ListView)sender).SelectedItem as IAnalysisMetadata;
-            var fullAnalysis = dbService.GetFullAnalysis(selectedItem.DatabaseId);
-            var computedAnalysisPage = new ComputedAnalysis(Services, fullAnalysis);
+            if(selectedItem!=null)
+            {
+                var fullAnalysis = dbService.GetFullAnalysis(selectedItem.DatabaseId);
+                var computedAnalysisPage = new ComputedAnalysis(Services, fullAnalysis);
 
-            NavigationService.Navigate(computedAnalysisPage);
+                NavigationService.Navigate(computedAnalysisPage);
+            }
         }
     }
 }
