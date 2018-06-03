@@ -24,6 +24,9 @@ namespace LinearRegression.App.Views
     public partial class HistoryView : Page, ICustomPage
     {
         private IDatabaseService dbService;
+        private Button searchButton;
+        private TextBox searchBox;
+        private ObservableCollection<IAnalysisMetadata> data;
 
         public HistoryView(IServiceProvider services)
         {
@@ -34,6 +37,12 @@ namespace LinearRegression.App.Views
             this.dbService = this.Services.GetService(typeof(IDatabaseService)) as IDatabaseService;
 
             LoadDataFromDatabase();
+
+            var mainWindow = services.GetService(typeof(MainWindow)) as MainWindow;
+            this.searchButton = mainWindow.FindBtn;
+            this.searchBox = mainWindow.SearchBox;
+
+            searchButton.Click += OnSearchBtnClick;
         }
 
         public IServiceProvider Services { get; }
@@ -44,19 +53,45 @@ namespace LinearRegression.App.Views
 
         private void LoadDataFromDatabase()
         {
-            var oc = new ObservableCollection<IAnalysisMetadata>(this.dbService.GetAllEntities());
-            AnalysisMetadataList.ItemsSource = oc;
+            data = new ObservableCollection<IAnalysisMetadata>(this.dbService.GetAllEntities());
+            AnalysisMetadataList.ItemsSource = data;
         }
 
         private void AnalysisMetadataList_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = ((ListView)sender).SelectedItem as IAnalysisMetadata;
+
             if(selectedItem!=null)
             {
                 var fullAnalysis = dbService.GetFullAnalysis(selectedItem.DatabaseId);
                 var computedAnalysisPage = new ComputedAnalysis(Services, fullAnalysis);
 
                 NavigationService.Navigate(computedAnalysisPage);
+            }
+        }
+
+        private void OnSearchBtnClick(object sender, EventArgs e)
+        {
+            PerformSearch();
+        }
+
+        private async void PerformSearch()
+        {
+            var keyword = searchBox.Text.ToLower();
+            if (string.IsNullOrEmpty(keyword))
+                LoadDataFromDatabase();
+            else
+            {
+                var foundData = new ObservableCollection<IAnalysisMetadata>();
+                foreach (var item in data)
+                {
+                    if (item.Title.ToLower().Contains(keyword))
+                        foundData.Add(item);
+                }
+
+                data = foundData;
+
+                AnalysisMetadataList.ItemsSource = data;
             }
         }
     }
