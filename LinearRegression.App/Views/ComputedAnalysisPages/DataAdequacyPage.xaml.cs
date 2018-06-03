@@ -47,20 +47,20 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
             PreferredTest.Text = "F - test";
 
             //4.
-            B0Output.Text = $"B0: {calculations.B0}";
-            B1Output.Text = $"B1: {calculations.B1}";
+            B0Output.Text = $"B0: {calculations.B0:F3}";
+            B1Output.Text = $"B1: {calculations.B1:F3}";
 
-            ExplainedDispersionOutput.Text = $"Explained dispersion: {calculations.ExplainedDispersion}";
-            ResidualDispersionOutput.Text = $"Residual dispersion: {calculations.ResidualDispersion}";
+            ExplainedDispersionOutput.Text = $"Explained dispersion: {calculations.ExplainedDispersion:F3}";
+            ResidualDispersionOutput.Text = $"Residual dispersion: {calculations.ResidualDispersion:F3}";
 
-            NumberOfUnits.Text = $"Number of units (n): {analysisData.Data.Count}";
+            NumberOfUnits.Text = $"Number of units (n): {analysisData.Data.Count:F3}";
             NumberOfParameters.Text = "Number of parameters: 2";
 
             //5.
-            FResult.Text = $"F: {calculations.FEmpirical}";
+            FResult.Text = $"F: {calculations.FEmpirical:F3}";
 
             //7.
-            TheoreticalFOutput.Text = $"Ft: {calculations.FTheoretical}";
+            TheoreticalFOutput.Text = $"Ft: {calculations.FTheoretical:F3}";
 
             //8.
             ConclusionOutput.Text = $"Acording to the analysis the model is {(calculations.FEmpirical > calculations.FTheoretical ? "adequate" : "inadequate")}.";

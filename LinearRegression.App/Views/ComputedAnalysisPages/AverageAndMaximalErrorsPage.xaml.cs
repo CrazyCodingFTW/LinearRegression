@@ -33,11 +33,11 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
 
         private void ShowsData()
         {
-            AverageErrorB0Output.Text += calculations.AverageErrorB0;
-            AverageErrorB1Output.Text += calculations.AverageErrorB1;
+            AverageErrorB0Output.Text += calculations.AverageErrorB0.ToString("F3");
+            AverageErrorB1Output.Text += calculations.AverageErrorB1.ToString("F3");
 
-            MaximalErrorB0Output.Text += calculations.MaximalErrorB0;
-            MaximalErrorB1Output.Text += calculations.MaximalErrorB1;
+            MaximalErrorB0Output.Text += calculations.MaximalErrorB0.ToString("F3");
+            MaximalErrorB1Output.Text += calculations.MaximalErrorB1.ToString("F3");
         }
     }
 }
