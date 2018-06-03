@@ -82,7 +82,7 @@ namespace LinearRegression.App.ServiceAdapters
 
                 try
                 {
-                    var calculations = controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId);
+                    var calculations = analysisData.AnalysisCalculations;
                     return calculations.Entity;
                 }
                 catch(Exception)
