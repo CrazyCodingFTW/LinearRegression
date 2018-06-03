@@ -61,6 +61,8 @@ namespace LinearRegression.App
             var page = PageFrame.Content;
             this.currentPage = page as Page;
 
+            HomeButton.Visibility = page is HomeView ? Visibility.Hidden : Visibility.Visible;
+
             PageTitleHolder.Text = ((ICustomPage)page).PageTitle;
         }
 
@@ -76,6 +78,9 @@ namespace LinearRegression.App
             return serviceProvider;
         }
 
-
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            PageFrame.Content = new HomeView(this.services);
+        }
     }
 }
