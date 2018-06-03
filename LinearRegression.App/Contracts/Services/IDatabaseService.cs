@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinearRegression.Database.ModelContracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,11 @@ namespace LinearRegression.App.Contracts.Services
         long SaveEntity(IFullAnalysis<IAnalysisDataRow> analysisModel);
 
         IList<IAnalysisMetadata> GetAllEntities();
+
+        IReadOnlyCollection<IComment> GetAnalysisComments(long analysisInformationId);
+
+        IComment AddComment(long analysisInformationId, string user, string content);
+
+        IFullAnalysis<IAnalysisDataRow> GetFullAnalysis(long analysisDataId);
     }
 }

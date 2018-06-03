@@ -28,7 +28,6 @@
                             <md:PackIcon Kind="Help" Height="24" Width="24" />
                         </Button>
                         <StackPanel Orientation="Horizontal">
-                            <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
                             <TextBlock Name="PageTitleHolder" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="16 0 0 0" Text="Page name placeholder" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
                         </StackPanel>
                     </DockPanel>

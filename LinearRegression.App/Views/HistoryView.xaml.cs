@@ -47,5 +47,14 @@ namespace LinearRegression.App.Views
             var oc = new ObservableCollection<IAnalysisMetadata>(this.dbService.GetAllEntities());
             AnalysisMetadataList.ItemsSource = oc;
         }
+
+        private void AnalysisMetadataList_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var selectedItem = ((ListView)sender).SelectedItem as IAnalysisMetadata;
+            var fullAnalysis = dbService.GetFullAnalysis(selectedItem.DatabaseId);
+            var computedAnalysisPage = new ComputedAnalysis(Services, fullAnalysis);
+
+            NavigationService.Navigate(computedAnalysisPage);
+        }
     }
 }

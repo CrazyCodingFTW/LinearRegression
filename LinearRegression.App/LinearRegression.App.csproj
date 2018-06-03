@@ -213,6 +213,9 @@
     <Compile Include="Contracts\Services\IAnalysisLogicService.cs" />
     <Compile Include="Contracts\Services\IDatabaseService.cs" />
     <Compile Include="Contracts\Services\IService.cs" />
+    <Compile Include="CustomControls\CustomCommentCard.xaml.cs">
+      <DependentUpon>CustomCommentCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomInformationDialog.xaml.cs">
       <DependentUpon>CustomInformationDialog.xaml</DependentUpon>
     </Compile>
@@ -233,9 +236,6 @@
     <Compile Include="Views\ComputedAnalysis.xaml.cs">
       <DependentUpon>ComputedAnalysis.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ComputedAnalysisPages\AverageAndMaximalErrorsPage.xaml.cs">
-      <DependentUpon>AverageAndMaximalErrorsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ComputedAnalysisPages\CommonAnalysisDataPage.xaml.cs">
       <DependentUpon>CommonAnalysisDataPage.xaml</DependentUpon>
     </Compile>
@@ -251,6 +251,10 @@
     <Compile Include="Views\NewAnalysis.xaml.cs">
       <DependentUpon>NewAnalysis.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CustomCommentCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CustomInformationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -272,10 +276,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ComputedAnalysis.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ComputedAnalysisPages\AverageAndMaximalErrorsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
