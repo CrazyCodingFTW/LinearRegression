@@ -39,7 +39,7 @@ namespace LinearRegression.App
         public MainWindow()
         {
             InitializeComponent();
-            this.services = ConfigureServices();
+            this.services = ConfigureServices(this);
 
             PageFrame.Content = new HomeView(this.services);
         }
@@ -63,16 +63,19 @@ namespace LinearRegression.App
 
             HomeButton.Visibility = page is HomeView ? Visibility.Hidden : Visibility.Visible;
 
+            SearchUI.Visibility = page is HistoryView ? Visibility.Visible : Visibility.Hidden;
+
             PageTitleHolder.Text = ((ICustomPage)page).PageTitle;
         }
 
-        private static IServiceProvider ConfigureServices()
+        private static IServiceProvider ConfigureServices(MainWindow mainWindowInstance)
         {
             var services = new ServiceCollection();
 
             services.AddSingleton<IModelController<LinearRegressionDbContext>>(new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model"));
             services.AddSingleton<IDatabaseService>(sp=>new DatabaseService(sp));
             services.AddSingleton<IAnalysisLogicService>(sp=>new AnalysisLogicService(sp));
+            services.AddSingleton(mainWindowInstance);
 
             var serviceProvider = services.BuildServiceProvider();
             return serviceProvider;
