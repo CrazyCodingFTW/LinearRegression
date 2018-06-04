@@ -63,7 +63,7 @@ namespace LinearRegression.App
 
             HomeButton.Visibility = page is HomeView ? Visibility.Hidden : Visibility.Visible;
 
-            SearchUI.Visibility = page is HistoryView ? Visibility.Visible : Visibility.Hidden;
+            SearchUI.Visibility = page is HistoryView || page is ExportDataView ? Visibility.Visible : Visibility.Hidden;
 
             PageTitleHolder.Text = ((ICustomPage)page).PageTitle;
         }

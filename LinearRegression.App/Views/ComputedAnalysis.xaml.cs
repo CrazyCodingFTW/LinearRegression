@@ -38,7 +38,11 @@ namespace LinearRegression.App.Views
 
         public string PageTitle => analysisModel.Title;
 
-        public IHelpContent HelpContent => throw new NotImplementedException();
+        public IHelpContent HelpContent => new HelpContent(
+                "Computed analyisis page",
+                "This page is made to show you the results of your analysis\n" +
+                "Click on any of the expanders to see what the results are."
+            );
 
         public IServiceProvider Services { get; }
 

@@ -1,5 +1,7 @@
 ﻿using LinearRegression.App.Contracts;
 using LinearRegression.App.Contracts.Services;
+using LinearRegression.App.CustomControls;
+using LinearRegression.App.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,9 +26,6 @@ namespace LinearRegression.App.Views
     public partial class HistoryView : Page, ICustomPage
     {
         private IDatabaseService dbService;
-        private Button searchButton;
-        private TextBox searchBox;
-        private ObservableCollection<IAnalysisMetadata> data;
 
         public HistoryView(IServiceProvider services)
         {
@@ -36,28 +35,21 @@ namespace LinearRegression.App.Views
 
             this.dbService = this.Services.GetService(typeof(IDatabaseService)) as IDatabaseService;
 
-            LoadDataFromDatabase();
-
-            var mainWindow = services.GetService(typeof(MainWindow)) as MainWindow;
-            this.searchButton = mainWindow.FindBtn;
-            this.searchBox = mainWindow.SearchBox;
-
-            searchButton.Click += OnSearchBtnClick;
+            MainGrid.Children.Add(new AnalysisListView(services, OnItemSelect));
         }
 
         public IServiceProvider Services { get; }
 
         public string PageTitle => "History";
 
-        public IHelpContent HelpContent => throw new NotImplementedException();
+        public IHelpContent HelpContent => new HelpContent(
+                "Browse history",
+                "On this page you can view every analysis you have ever made and see its results.\n" +
+                "You can also use the searchbar to filter the results by title"
+            );
 
-        private void LoadDataFromDatabase()
-        {
-            data = new ObservableCollection<IAnalysisMetadata>(this.dbService.GetAllEntities());
-            AnalysisMetadataList.ItemsSource = data;
-        }
 
-        private void AnalysisMetadataList_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void OnItemSelect(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = ((ListView)sender).SelectedItem as IAnalysisMetadata;
 
@@ -67,31 +59,6 @@ namespace LinearRegression.App.Views
                 var computedAnalysisPage = new ComputedAnalysis(Services, fullAnalysis);
 
                 NavigationService.Navigate(computedAnalysisPage);
-            }
-        }
-
-        private void OnSearchBtnClick(object sender, EventArgs e)
-        {
-            PerformSearch();
-        }
-
-        private async void PerformSearch()
-        {
-            var keyword = searchBox.Text.ToLower();
-            if (string.IsNullOrEmpty(keyword))
-                LoadDataFromDatabase();
-            else
-            {
-                var foundData = new ObservableCollection<IAnalysisMetadata>();
-                foreach (var item in data)
-                {
-                    if (item.Title.ToLower().Contains(keyword))
-                        foundData.Add(item);
-                }
-
-                data = foundData;
-
-                AnalysisMetadataList.ItemsSource = data;
             }
         }
     }

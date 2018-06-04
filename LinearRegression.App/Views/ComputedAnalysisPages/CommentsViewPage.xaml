@@ -28,7 +28,7 @@
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
                     <TextBlock Margin="5,0,0,0">Content:</TextBlock>
                     <TextBox x:Name="CommentContentTextBlock" TextWrapping="Wrap" HorizontalAlignment="Stretch" md:HintAssist.Hint="Enter text here" Margin="5,3,5,5" />
-                    <Button x:Name="SubmitCommentBtn" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Click="SubmitCommentBtn_Click">
+                    <Button x:Name="SubmitCommentBtn" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Submit the comment" Click="SubmitCommentBtn_Click">
                         SUBMIT                        
                     </Button>
                 </StackPanel>

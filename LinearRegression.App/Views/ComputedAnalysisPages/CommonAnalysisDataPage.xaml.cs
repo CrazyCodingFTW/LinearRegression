@@ -1,7 +1,9 @@
 ﻿using LinearRegression.App.Contracts;
 using LinearRegression.App.Contracts.Services;
+using LinearRegression.App.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +28,6 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
         {
             this.analysisLogicService = analysisLogicService;
 
-            //TODO: Implement!
             this.analysisData = analysisLogicService.GetAdjustedData(modelAnalysisData);
 
             InitializeComponent();
@@ -36,8 +37,10 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
 
         private void InitializeContent()
         {
-            DataGrid.ItemsSource = this.analysisData.Data;
-            DataChart.ItemsSource = this.analysisData.Data;
+            //Performing this conversion becasue of data not being displyed in excel export
+            var collection = new ObservableCollection<AdjustedDataRow>(this.analysisData.Data.Cast<AdjustedDataRow>());
+            DataGrid.ItemsSource = collection;
+            DataChart.ItemsSource = collection;
 
             var xHeader = this.analysisData.XMeaning == "X" ? this.analysisData.XMeaning : this.analysisData.XMeaning + " (X)";
             var yHeader = this.analysisData.YMeaning == "Y" ? this.analysisData.YMeaning : this.analysisData.YMeaning + " (Y)";

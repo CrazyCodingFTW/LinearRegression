@@ -43,7 +43,7 @@
                                         <Button Style="{DynamicResource MaterialDesignToolButton}">
                                             <md:PackIcon Kind="Magnify" Opacity=".56" />
                                         </Button>
-                                        <TextBox Grid.Column="1" x:Name="SearchBox" Margin="8 0 0 0" md:HintAssist.Hint="Build a search bar" 
+                                        <TextBox Grid.Column="1" x:Name="SearchBox" Margin="8 0 0 0" md:HintAssist.Hint="Search by title" 
                                      md:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0"
                                      MinWidth="200" VerticalAlignment="Center" />
                                     </Grid>

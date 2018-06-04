@@ -71,6 +71,9 @@ namespace LinearRegression.App.Views
         private void SavedAnalysisCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
             NavigateToPage<HistoryView>();
 
+        private void ExportAnalysisCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
+            NavigateToPage<ExportDataView>();
+
         private void NavigateToPage<TPage>() where TPage : Page, ICustomPage
         {
             var pageInstance = Activator.CreateInstance(typeof(TPage), this.Services) as TPage;
