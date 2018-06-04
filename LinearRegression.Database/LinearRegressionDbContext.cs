@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,8 @@ namespace LinearRegression.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=AnalysisDatabase.sqlite");
+            var databasePath = Directory.CreateDirectory($@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\LinearRegression\Database");
+            optionsBuilder.UseSqlite($@"Data Source={databasePath.FullName}\AnalysisDatabase.sqlite");
         }
     }
 }

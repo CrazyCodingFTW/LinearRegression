@@ -5,17 +5,18 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LinearRegression.App.Views.ComputedAnalysisPages"
       xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+      xmlns:sfgrid="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.SfGrid.WPF" 
       mc:Ignorable="d" 
       d:DesignHeight="350" d:DesignWidth="800"
       Title="CommonAnalysisDataPage">
     <Page.Resources>
-        <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="alteringRowStyle">
+        <Style TargetType="sfgrid:VirtualizingCellsControl" x:Key="alteringRowStyle">
             <Setter Property="Background" Value="#c9b1b1"/>
         </Style>
-        <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="rowStyle">
+        <Style TargetType="sfgrid:VirtualizingCellsControl" x:Key="rowStyle">
             <Setter Property="Background" Value="#efdada"/>
         </Style>
-        <Style TargetType="syncfusion:GridHeaderCellControl" x:Key="headerStyle">
+        <Style TargetType="sfgrid:GridHeaderCellControl" x:Key="headerStyle">
             <Setter Property="Background" Value="#870000"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
@@ -29,7 +30,7 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <syncfusion:SfDataGrid Grid.Row="0" Grid.Column="0" x:Name="DataGrid"
+        <sfgrid:SfDataGrid Grid.Row="0" Grid.Column="0" x:Name="DataGrid"
                        AutoGenerateColumns="False" 
                        NavigationMode="Cell"
                        LiveDataUpdateMode="Default"
@@ -45,7 +46,7 @@
                 <syncfusion:GridNumericColumn x:Name="YColumn" MappingName="Y" HeaderText="Y"/>
                 <syncfusion:GridNumericColumn x:Name="AdjustedY" MappingName="AdjustedY" HeaderText="Y&#x0302;"/>
             </syncfusion:SfDataGrid.Columns>
-        </syncfusion:SfDataGrid>
+        </sfgrid:SfDataGrid>
         <syncfusion:SfChart Grid.Row="0" Grid.Column="1" Margin="10">
             <syncfusion:SfChart.PrimaryAxis>
                 <syncfusion:NumericalAxis x:Name="XAxis" Header="X"/>

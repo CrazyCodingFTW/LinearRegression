@@ -53,7 +53,7 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
             ExplainedDispersionOutput.Text = $"Explained dispersion: {calculations.ExplainedDispersion:F3}";
             ResidualDispersionOutput.Text = $"Residual dispersion: {calculations.ResidualDispersion:F3}";
 
-            NumberOfUnits.Text = $"Number of units (n): {analysisData.Data.Count:F3}";
+            NumberOfUnits.Text = $"Number of units (n): {analysisData.Data.Count}";
             NumberOfParameters.Text = "Number of parameters: 2";
 
             //5.
