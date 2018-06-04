@@ -57,18 +57,34 @@ namespace LinearRegression.App.ServiceAdapters
             var analysisInfo = controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId);
             var analysisData = analysisInfo.Data;
 
-            if (controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId) != null)
-            {
+            var xdata = rawAnalysisModel.Data.Select(d => d.X).ToArray();
+            var ydata = rawAnalysisModel.Data.Select(d => d.Y).ToArray();
 
-            }
-            else
-            {
+            var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(), ydata.ToList());
 
-            }
+            var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
+
+
+
+
+            //if (controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId) != null)
+            //{
+
+            //}
+            //else
+            //{
+
+            //}
+
+            int iterator = 0;
+            int numberOfValuesInData = rawAnalysisModel.Data.Count;
 
             var adjustedDataRows = new ObservableCollection<IAdjustedDataRow>();
             foreach (var row in rawAnalysisModel.Data)
-                adjustedDataRows.Add(new AdjustedDataRow(row.Index, row.X, row.Y, row.Y));
+            {
+                adjustedDataRows.Add(new AdjustedDataRow(row.Index, row.X, row.Y, adjustedYs[iterator]));
+                iterator++;
+            }
 
             var adjustedAnalysis = new AdjustedAnalysis(rawAnalysisModel.XMeaning, rawAnalysisModel.YMeaning, adjustedDataRows);
             return adjustedAnalysis;
