@@ -113,17 +113,57 @@
     <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.16.1.0.37\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Syncfusion.Data.WPF, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Data.WPF.16.1.0.37\lib\net46\Syncfusion.Data.WPF.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Wpf, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Grid.WPF.16.1.0.37\lib\net46\Syncfusion.Grid.Wpf.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.GridCommon.Wpf, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.GridCommon.WPF.16.1.0.37\lib\net46\Syncfusion.GridCommon.Wpf.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Linq.Base, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Linq.Base.16.1.0.37\lib\net46\Syncfusion.Linq.Base.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.Base.16.1.0.37\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.WPF, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.WPF.16.1.0.37\lib\net46\Syncfusion.Pdf.WPF.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Syncfusion.SfChart.WPF, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.SfChart.WPF.16.1.0.37\lib\net46\Syncfusion.SfChart.WPF.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Syncfusion.SfGrid.WPF, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.SfGrid.WPF.16.1.0.37\lib\net46\Syncfusion.SfGrid.WPF.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.SfGridConverter.WPF, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SfGridConverter.WPF.16.1.0.37\lib\net46\Syncfusion.SfGridConverter.WPF.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Syncfusion.Shared.Wpf, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Shared.WPF.16.1.0.37\lib\net46\Syncfusion.Shared.Wpf.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.Base.16.1.0.37\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Wpf, Version=16.1460.0.37, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.WPF.16.1.0.37\lib\net46\Syncfusion.XlsIO.Wpf.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -213,6 +253,9 @@
     <Compile Include="Contracts\Services\IAnalysisLogicService.cs" />
     <Compile Include="Contracts\Services\IDatabaseService.cs" />
     <Compile Include="Contracts\Services\IService.cs" />
+    <Compile Include="CustomControls\AnalysisListView.xaml.cs">
+      <DependentUpon>AnalysisListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomCommentCard.xaml.cs">
       <DependentUpon>CustomCommentCard.xaml</DependentUpon>
     </Compile>
@@ -221,6 +264,9 @@
     </Compile>
     <Compile Include="CustomControls\CustomXYMeaningPrompt.xaml.cs">
       <DependentUpon>CustomXYMeaningPrompt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomYesNoDialog.xaml.cs">
+      <DependentUpon>CustomYesNoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AdjustedAnalysis.cs" />
     <Compile Include="Models\AdjustedDataRow.cs" />
@@ -248,6 +294,9 @@
     <Compile Include="Views\ComputedAnalysisPages\DataAdequacyPage.xaml.cs">
       <DependentUpon>DataAdequacyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExportDataView.xaml.cs">
+      <DependentUpon>ExportDataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HistoryView.xaml.cs">
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
@@ -257,6 +306,10 @@
     <Compile Include="Views\NewAnalysis.xaml.cs">
       <DependentUpon>NewAnalysis.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\AnalysisListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CustomCommentCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -266,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\CustomXYMeaningPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomYesNoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -298,6 +355,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ComputedAnalysisPages\DataAdequacyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ExportDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

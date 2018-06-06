@@ -12,27 +12,9 @@ namespace LinearRegression.BusinessLogic
         private List<double> XValues;
         private List<double> YValues;
 
-        private double[,] XArray;
-        private double[,] YArray;
-
-        private Matrix XMatrix;
-        private Matrix YMatrix;
-
-        public double Parameter0
-        {
-            get
-            {
-                return this.GetRegressionEquation().firstParameter;
-            }
-        }
-
-        public double Parameter1
-        {
-            get
-            {
-                return this.GetRegressionEquation().secondParameter;
-            }
-        }
+        //This variable is used to check if the sum of Y^ is equal to Y.
+        //Because this is how we know that the regression equation is correct.
+        private bool areAdjustedYValuesAlright = false;
 
         public Regression()
         {
@@ -45,381 +27,338 @@ namespace LinearRegression.BusinessLogic
             this.YValues = YValues;
         }
 
-        private void ConvertXValuesToCorrectMatrix()
+        private int Count
         {
-            this.XArray = new double[this.XValues.Count, 2];
-
-            for (int i = 0; i < this.XValues.Count; i++)
+            get
             {
-                for (int j = 0; j < 2; j++)
-                {
-                    if (j == 0)
-                    {
-                        this.XArray[i, j] = 1;
-                    }
-                    else if (j == 1)
-                    {
-                        this.XArray[i, j] = this.XValues[i];
-                    }
-                }
+                return this.XValues.Count;
             }
         }
 
-        private double[,] GetXArray()
+        public double Parameter0
         {
-            this.ConvertXValuesToCorrectMatrix();
-            return this.XArray;
-        }
-
-        private void ConvertYValuesToCorrectMatrix()
-        {
-            this.YArray = new double[this.YValues.Count, 1];
-
-            for (int i = 0; i < this.YValues.Count; i++)
+            get
             {
-                this.YArray[i, 0] = this.YValues[i];
+                return this.GetRegressionEquation().firstParameter;
             }
         }
 
-        private double[,] GetYArray()
+
+        public double Parameter1
         {
-            this.ConvertYValuesToCorrectMatrix();
-            return this.YArray;
+            get
+            {
+                return this.GetRegressionEquation().secondParameter;
+            }
         }
 
         public (double firstParameter, double secondParameter) GetRegressionEquation()
         {
-            //Formula for the two parameters of the equation is: B = (X'X)^-1 * (X'Y)
 
-            //*** Initizlize the XArray and YArray using GetX/YArray()
-            //so that we can use it for X/YMatrix!!! ***
-            this.XArray = this.GetXArray();
-            this.YArray = this.GetYArray();
+            //Formula is: b1 = ((n * Sum(Xi*yi)) - (Sum(Xi) * Sum(Yi))) / ((n * Sum(xi^2)) - sum(Xi)^2 )
+            double b1 = ((this.Count * GetSumOfXiYi()) - (GetSumOfXi() * GetSumOfYi())) / ((this.Count * GetSumOfXiSquared()) - Math.Pow(GetSumOfXi(), 2));
+            double b0 = (GetSumOfYi() / this.Count) - (b1 * (GetSumOfXi() / this.Count));
 
-            //Initialize the X and Y matricies
-            //X's size is always nx2. Y's size is always nx1
-            this.XMatrix = Matrix.ConvertArrayToMatrix(this.XArray, this.XValues.Count, 2);
-            this.YMatrix = Matrix.ConvertArrayToMatrix(this.YArray, this.XValues.Count, 1);
+            if (Double.IsNaN(b0) || Double.IsInfinity(b0))
+            {
+                b0 = 0;
+            }
 
-            //1. Solve the first part of the equation: (X'X)^-1
+            if (Double.IsNaN(b1) || Double.IsInfinity(b1))
+            {
+                b1 = 0;
+            }
 
-            //Transponse the XMatrix and convert it to Matrix type because 
-            //TransponceMatrix() returns double [,]
-            //but we need Matrix type in order to make the multiplication!!!
-            Matrix XTransponedMatrix = Matrix.ConvertArrayToMatrix(
-                    Matrix.TransponceMatrix(this.XMatrix), 2, this.XValues.Count
-                );
-
-            //Multiplication of X'X . It's size is always 2x2.
-            double[,] multiplicationOfXPrimeX = Matrix.MultiplyMatrices(XTransponedMatrix, XMatrix);
-
-            //Getting the inverse of X'X. It's size is always 2x2!!!
-            double[,] invertedXPrimeX = Matrix.Inverse2By2Matrix(
-                Matrix.ConvertArrayToMatrix(multiplicationOfXPrimeX, 2, 2)
-                );
-
-            //2. Solving the second part of the equation: X'Y
-
-            //Multiplication of X'Y. It's size is always 2x1!!!
-            double[,] multiplicationOfXPrimeY = Matrix.MultiplyMatrices(XTransponedMatrix, this.YMatrix);
-
-            //3. Finally multiplication of (X'X)^-1 and (X'Y)
-            //It is saved in parametersOfEquation array. It's size is always 2x1.
-
-            double[,] parametersOfEquation = Matrix.MultiplyMatrices(
-                Matrix.ConvertArrayToMatrix(invertedXPrimeX, 2, 2),
-                Matrix.ConvertArrayToMatrix(multiplicationOfXPrimeY, 2, 1)
-                );
-
-            var B0 = parametersOfEquation[0, 0];
-            var B1 = parametersOfEquation[1, 0];
-
-            return (B0, B1);
-
+            return (b0, b1);
         }
 
-        //We need this method in order to use the parameters for the Matrix class methods.
-        private double[,] GetRegressionEquationParametersAsArray()
+        private double GetSumOfXiSquared()
         {
-            var firstParameterOfEquation = this.GetRegressionEquation().firstParameter;
-            var secondParameterOfEquation = this.GetRegressionEquation().secondParameter;
+            double sumOfXiSquared = 0.0D;
 
-            return new double[,]
+            for (int i = 0; i < XValues.Count; i++)
             {
-                {firstParameterOfEquation},
-                {secondParameterOfEquation }
-            };
+                sumOfXiSquared += Math.Pow(this.XValues[i], 2);
+            }
 
+            return sumOfXiSquared;
+        }
+
+        private double GetSumOfYi()
+        {
+            double sumOfYi = 0.0D;
+
+            for (int i = 0; i < YValues.Count; i++)
+            {
+                sumOfYi += this.YValues[i];
+            }
+
+            return sumOfYi;
+        }
+
+        private double GetSumOfXi()
+        {
+            double sumOfXi = 0.0D;
+
+            for (int i = 0; i < XValues.Count; i++)
+            {
+                sumOfXi += this.XValues[i];
+            }
+
+            return sumOfXi;
+        }
+
+        private double GetSumOfXiYi()
+        {
+            double sumOfXiYi = 0.0D;
+
+            for (int i = 0; i < XValues.Count; i++)
+            {
+                sumOfXiYi += (this.XValues[i] * this.YValues[i]);
+            }
+
+            return sumOfXiYi;
         }
 
         public List<double> GetAdjustedYsValues()
         {
-            var parametersOfEquation = this.GetRegressionEquation();
+            List<double> adjustedValues = new List<double>();
 
-            var parametersArray = new double[,] {
-                { parametersOfEquation.firstParameter },
-                {parametersOfEquation.secondParameter }
-            };
-
-            double[,] theoriticalValuesMatrix = Matrix.MultiplyMatrices(
-                this.XMatrix,
-                Matrix.ConvertArrayToMatrix(parametersArray, 2, 1)
-                );
-
-            List<double> theoriticalValues = new List<double>();
-
-            foreach (var item in theoriticalValuesMatrix)
+            for (int i = 0; i < this.XValues.Count; i++)
             {
-                theoriticalValues.Add(item);
+                adjustedValues.Add(this.Parameter0 + (this.Parameter1 * this.XValues[i]));
             }
 
-            return theoriticalValues;
+            if (Math.Round(adjustedValues.Sum(), 0) == Math.Round(this.GetSumOfYi(), 0))
+            {
+                areAdjustedYValuesAlright = true;
+                return adjustedValues;
+            }
+            else
+            {
+                areAdjustedYValuesAlright = false;
+                return new List<double>() { 0 };
+            }
         }
 
         public (double residualDispersion, double explainedDispersion, double fEmpirical, double fTheoretical, bool isModelAdecuate) CheckAdequacyOfModel()
         {
-            double alpha = 0.05D;
-
-            double residualDeviation = this.GetResidualDeviation();
-            double explainedDeviation = this.GetExplainedDeviation();
-
-            //Formula is S2 / (n - p); p -> the number of parameters of the regression equation. Always 2!!!
-            double residualDisperssion = residualDeviation / (this.XValues.Count - 2);
-
-            //Formula is S1 / (p-1); p -> the number of parameters of the regression equation. Always 2!!!
-            double explainedDisperssion = explainedDeviation / (2 - 1);
-
-            //Fem
-            double FEmpiricaly = (explainedDisperssion > residualDisperssion) ? (explainedDisperssion / residualDisperssion) : (residualDisperssion / explainedDisperssion);
-
-            //Calculating the degrees of freedom for the F-distribution theoritical value.
-            double firstDegreeOfFreedom = (explainedDisperssion > residualDisperssion) ? 1 : (this.XValues.Count - 2);
-            double secondDegreeOfFreedom = (explainedDisperssion > residualDisperssion) ? (this.XValues.Count - 2) : 1;
-
-            //Getting the F-Distiribution critical value.
-            FisherSnedecor fDistibution = new FisherSnedecor(1, 1);
-            double FTheoretically = FisherSnedecor.InvCDF(firstDegreeOfFreedom, secondDegreeOfFreedom, (1.00 - alpha));
-            //Console.WriteLine($"F-Test (df1 = {1}, df2 = {8}, alpha = {0.05}) = {FisherSnedecor.InvCDF(firstDegreeOfFreedom, secondDegreeOfFreedom, 1 - alpha)}");
-
-
-            if (residualDisperssion <= 0 || residualDisperssion == null)
+            //If the adjustedValues are correct continue with the analysis
+            if (areAdjustedYValuesAlright == true)
             {
-                residualDisperssion = 0;
+                double alpha = 0.05D;
+                double numberOfEquationParameters = 2.0D;
+
+                double explainedDeviation = this.GetExplainedDeviation();
+
+                double residualDeviation = this.GetResidualDeviation();
+
+                double explainedDisperssion = explainedDeviation / (numberOfEquationParameters - 1.0D);
+
+                if (Double.IsNaN(explainedDisperssion) || Double.IsInfinity(explainedDisperssion))
+                {
+                    explainedDisperssion = 1;
+                }
+
+                double residualDisperssion = residualDeviation / (this.YValues.Count - numberOfEquationParameters);
+
+                if (Double.IsNaN(residualDisperssion) || Double.IsInfinity(residualDisperssion))
+                {
+                    residualDisperssion = 1;
+                }
+
+                double FEmpirical = (explainedDisperssion >= residualDisperssion) ? (explainedDisperssion / residualDisperssion) : (residualDisperssion / explainedDisperssion);
+
+                if (Double.IsNaN(FEmpirical) || Double.IsInfinity(FEmpirical))
+                {
+                    FEmpirical = 1;
+                }
+
+                double firstDegreeOfFreedom = 0.0;
+                double secondDegreeOfFreedom = 0.0;
+
+                if (explainedDisperssion > residualDisperssion)
+                {
+                    firstDegreeOfFreedom = (numberOfEquationParameters - 1);
+                    secondDegreeOfFreedom = (this.Count - numberOfEquationParameters);
+                }
+                else if (residualDisperssion > explainedDisperssion)
+                {
+                    firstDegreeOfFreedom = (this.Count - numberOfEquationParameters);
+                    secondDegreeOfFreedom = (numberOfEquationParameters - 1);
+                }
+                else
+                {
+                    firstDegreeOfFreedom = (numberOfEquationParameters - 1);
+                    secondDegreeOfFreedom = (this.Count - numberOfEquationParameters);
+                }
+
+                if (firstDegreeOfFreedom <= 0)
+                {
+                    firstDegreeOfFreedom = 1;
+                }
+
+                if (secondDegreeOfFreedom <= 0)
+                {
+                    secondDegreeOfFreedom = 1;
+                }
+
+
+                FisherSnedecor fDistibution = new FisherSnedecor(1, 1);
+                double FTheoretical = FisherSnedecor.InvCDF(firstDegreeOfFreedom, secondDegreeOfFreedom, (1.00 - alpha));
+
+                bool isModelAdequate = false;
+
+                if (FEmpirical <= FTheoretical)
+                {
+                    isModelAdequate = false;
+                }
+                else if (FEmpirical > FTheoretical)
+                {
+                    isModelAdequate = true;
+                }
+
+                return (residualDisperssion, explainedDisperssion, FEmpirical, FTheoretical, isModelAdequate);
+            }
+            else
+            {
+                //Else return default values.
+                return (0.0, 0.0, 0.0, 0.0, false);
             }
 
-            if (explainedDisperssion <= 0 || explainedDisperssion == null)
-            {
-                explainedDisperssion = 0;
-            }
-
-            if (FEmpiricaly <= 0 || FEmpiricaly == null)
-            {
-                FEmpiricaly = 0;
-            }
-
-            if (FTheoretically <= 0 || FTheoretically == null)
-            {
-                FTheoretically = 0;
-            }
-
-            bool isModelAdecuate = (FEmpiricaly > FTheoretically) ? true : false;
-
-            return (residualDisperssion,explainedDisperssion,FEmpiricaly,FTheoretically,isModelAdecuate);
-            
-           // throw new NotImplementedException();
-
-            
-
-            //Checking to see which hypothesis is correct
-            //if (FEmpiricaly > FTheoretically)
-            //{
-            //    return true;//H1: model is adecuate.
-            //}
-            //else
-            //{
-            //    return false;//H0: model IS NOT adecuate.
-            //}
 
 
         }
 
         private double GetResidualDeviation()
         {
-            //The formula is this: Y'Y - B'X'Y
+            var adjustedYValues = this.GetAdjustedYsValues();
 
-            //The first part of the equation Y'Y:
+            double residualDeviation = 0.0D;
 
-            //Getting the Y'Y. It's size is always 1X1
-            double[,] YTransponsed = Matrix.TransponceMatrix(this.YMatrix);
+            for (int i = 0; i < this.YValues.Count; i++)
+            {
+                residualDeviation += Math.Pow((this.YValues[i] - adjustedYValues[i]), 2);
+            }
 
-            //It's size is always 1x1!! Y'Y
-            double[,] firstPartOfTheEquation = Matrix.MultiplyMatrices(
-                    Matrix.ConvertArrayToMatrix(YTransponsed, 1, this.YValues.Count),
-                    this.YMatrix
-                );
-
-            //Second part of the equation B'X'Y:
-
-            //Getting B matrix
-            //It was this.GetRegressionEquation() but it no longer returns double [,], so we need the method below;
-            double[,] parametersOfEquation = this.GetRegressionEquationParametersAsArray();
-
-            //Getting B' matrix 1x2 always
-            double[,] transponcedEquationParameters = Matrix.TransponceMatrix(
-                Matrix.ConvertArrayToMatrix(parametersOfEquation, 2, 1)
-            );
-
-            //Getting X' matrix
-
-            double[,] transponcedXArray = Matrix.TransponceMatrix(this.XMatrix);
-
-            //Although it is an 2-dimmentional array it consists of only 1 element at index [0,0]
-            //Second part of the equation B'X'Y
-            double[,] secondPartOfEquation =
-                Matrix.MultiplyMatrices(
-                //B' Matrix
-                (Matrix.ConvertArrayToMatrix(transponcedEquationParameters, 1, 2)),
-                 //X'Y multiplication
-                 Matrix.ConvertArrayToMatrix(
-                    // the size is always 2x1!!!
-                    Matrix.MultiplyMatrices(
-                        Matrix.ConvertArrayToMatrix(transponcedXArray, 2, this.XValues.Count),
-                        Matrix.ConvertArrayToMatrix(this.YArray, this.YValues.Count, 1)
-                        ), 2, 1
-                    )
-                );
-
-            //Finally the result
-            double expectedDeviation = firstPartOfTheEquation[0, 0] - secondPartOfEquation[0, 0];
-            return expectedDeviation;
+            return residualDeviation;
         }
+
 
         private double GetExplainedDeviation()
         {
-            //The formula is this: B'X'Y - (((SUM(Yi))^2)/n)
-            //The first part of the equation B'X'Y:
+            double averageY = this.GetAverageY();
 
-            //Getting B matrix
-            //It was this.GetRegressionEquation() but it no longer returns double [,], so we need the method below;
-            double[,] parametersOfEquation = this.GetRegressionEquationParametersAsArray();
+            var adjustedYValues = this.GetAdjustedYsValues();
 
-            //Getting B' matrix 1x2 always
-            double[,] transponcedEquationParameters = Matrix.TransponceMatrix(
-                Matrix.ConvertArrayToMatrix(parametersOfEquation, 2, 1)
-            );
+            double explainedDeviation = 0.0;
 
-            //Getting X' matrix
+            for (int i = 0; i < adjustedYValues.Count; i++)
+            {
+                explainedDeviation += Math.Pow((adjustedYValues[i] - averageY), 2);
+            }
 
-            double[,] transponcedXArray = Matrix.TransponceMatrix(this.XMatrix);
+            return explainedDeviation;
 
-            //Although it is an 2-dimmentional array it consists of only 1 element at index [0,0]
-            //Second part of the equation B'X'Y
-            double[,] firstPartOfEquation =
-                Matrix.MultiplyMatrices(
-                //B' Matrix
-                (Matrix.ConvertArrayToMatrix(transponcedEquationParameters, 1, 2)),
-                 //X'Y multiplication
-                 Matrix.ConvertArrayToMatrix(
-                    // the size is always 2x1!!!
-                    Matrix.MultiplyMatrices(
-                        Matrix.ConvertArrayToMatrix(transponcedXArray, 2, this.XValues.Count),
-                        Matrix.ConvertArrayToMatrix(this.YArray, this.YValues.Count, 1)
-                        ), 2, 1
-                    )
-                );
+        }
 
-            //Second part of the equation ((SUM(Yi)^2)/n):
-            double secondPartOfEquation = Math.Pow(
-                Matrix.SumOfElementsOf1ColumnedMatrices(this.YValues.ToArray())
-                , 2
-                ) / this.YValues.Count;
+        private double GetAverageY()
+        {
+            double sum = 0.0D;
 
-            //Finally the result
-            double expectedDisperssion = firstPartOfEquation[0, 0] - secondPartOfEquation;
+            for (int i = 0; i < this.YValues.Count; i++)
+            {
+                sum += this.YValues[i];
+            }
 
-            return expectedDisperssion;
-
+            return (sum / this.XValues.Count);
         }
 
         public (double averageErrorOfFirstParameter, double averageErrorOfSecondParameter) GetAverageErrorOfParameters()
         {
-            //getting the X' matrix
-
-            double[,] XTransponced = Matrix.TransponceMatrix(this.XMatrix);
-
-            //Getting the X'X matrix. Size: 2x2 always!!!
-            double[,] XTransponcedX = Matrix.MultiplyMatrices(
-                Matrix.ConvertArrayToMatrix(XTransponced, 2, this.XValues.Count),
-                this.XMatrix
-                );
-
-            //Inverting the X'X Matrix. Size is always 2x2!!!
-            double[,] invertedXTrX = Matrix.Inverse2By2Matrix(
-                Matrix.ConvertArrayToMatrix(XTransponcedX, 2, 2)
-                );
-
-            //If model is not adecuate 
-            if (!this.CheckAdequacyOfModel().isModelAdecuate)
+            //If regression model is adequate
+            if (this.CheckAdequacyOfModel().isModelAdecuate == true)
             {
-                //throw new InvalidOperationException();
-                return (0.0, 0.0);
+                //Random disperssion = residual disperssion if model is adecuate!!!
+                var randomDisperssion = this.CheckAdequacyOfModel().residualDispersion;
+
+                double averageErrorOfB0 = Math.Sqrt(randomDisperssion * (this.GetSumOfXiSquared() / (this.Count * this.GetSumOfDifferenceOfXiAndXAverageSquared())));
+
+                double averageErrorOfB1 = Math.Sqrt(randomDisperssion / this.GetSumOfDifferenceOfXiAndXAverageSquared());
+
+                return (averageErrorOfB0, averageErrorOfB1);
+
+            }
+            else
+            {
+                //If regression model is not adecuate return 0 as average error of both B0 and B1.
+                return (0.0D, 0.0D);
             }
 
-            //Getting the unexplained deviation in order to get the unexpected disperssion.
-            double residualDeviation = this.GetResidualDeviation();
+        }
 
-            // Formula is S2 / n - p->the number of parameters of the regression equation.
-            double residualDisperssion = residualDeviation / (this.XValues.Count - 2);
+        private double GetSumOfDifferenceOfXiAndXAverageSquared()
+        {
+            double sum = 0.0D;
 
-            //Calculating the averege error of first parameter: sqrt(σ2^2 * C00)
-            double averageErrorOfFirstParameter = Math.Sqrt(residualDisperssion * invertedXTrX[0, 0]);
+            for (int i = 0; i < this.Count; i++)
+            {
+                sum += Math.Pow((this.XValues[i] - this.GetAverageX()), 2);
+            }
 
-            //Calculating the averege error of second parameter: sqrt(σ2^2 * C11)
-            double averageErrorOfSecondParameter = Math.Sqrt(residualDisperssion * invertedXTrX[1, 1]);
+            return sum;
+        }
 
-            //Returning the two average errors
-            return (averageErrorOfFirstParameter, averageErrorOfSecondParameter);
+        private double GetAverageX()
+        {
+            double sum = 0.0;
+
+            for (int i = 0; i < this.XValues.Count; i++)
+            {
+                sum += this.XValues[i];
+            }
+
+            return (sum / this.XValues.Count);
         }
 
         public (double maximumErrorOfFirstParameter, double maximumErrorOfSecondParameter) GetMaximumErrorOfParameters()
         {
-            //Because Alpha is 5% => P(z) = 95% => z = 1.96
-            double zScore = 1.96;
+            //If regression model is adequate
+            if (this.CheckAdequacyOfModel().isModelAdecuate == true)
+            {
+                //Alpha is 0.05 => P(z) = 1 - alpha = 0.95. When P(z) is 0.95 the z-score is 1.96 form the z distribution table.
+                double zScore = 1.96D;
 
-            var averageErrorOfParameters = this.GetAverageErrorOfParameters();
+                double maximalErrorOfB0 = zScore * this.GetAverageErrorOfParameters().averageErrorOfFirstParameter;
+                double maximalErrorOfB1 = zScore * this.GetAverageErrorOfParameters().averageErrorOfSecondParameter;
 
-            ////The formula is average error of b0 *z; average error of b1 * z
-            var maximumErrorOfFirstParam = averageErrorOfParameters.averageErrorOfFirstParameter * zScore;
-            var maximumErrorOfSecondParam = averageErrorOfParameters.averageErrorOfSecondParameter * zScore;
-
-
-            return (maximumErrorOfFirstParam, maximumErrorOfSecondParam);
+                return (maximalErrorOfB0, maximalErrorOfB1);
+            }
+            else
+            {
+                //If regression model is not adecuate return 0 as average error of both B0 and B1.
+                return (0.0D, 0.0D);
+            }
         }
 
         public (double lowerBoundOfFirstParameter, double upperBoundOfFirstParameter, double lowerBoundOfSecondParameter, double upperBoundOfSecondParameter) GetIntervalsOfRegressionParameters()
         {
-            var regressionEquationParameters = this.GetRegressionEquation();
+            //If regression model is adequate
+            if (this.CheckAdequacyOfModel().isModelAdecuate == true)
+            {
+                var lowerBoundOfB0 = this.Parameter0 - this.GetMaximumErrorOfParameters().maximumErrorOfFirstParameter;
+                var upperBoundOfB0 = this.Parameter0 + this.GetMaximumErrorOfParameters().maximumErrorOfFirstParameter;
 
-            //double[] maximumErrorsOfParameters = this.GetMaximumErrorOfParameters();
+                var lowerBoundOfB1 = this.Parameter1 - this.GetMaximumErrorOfParameters().maximumErrorOfSecondParameter;
+                var upperBoundOfB1 = this.Parameter1 + this.GetMaximumErrorOfParameters().maximumErrorOfSecondParameter;
 
-            //Getting the maximumErrors of the parameters.
-            double maximumErrorOfFirstParameter = this.GetMaximumErrorOfParameters().maximumErrorOfFirstParameter;
-            double maximumErrorOfSecondParameter = this.GetMaximumErrorOfParameters().maximumErrorOfSecondParameter;
-
-            //Getting the lower bound of b0 = b0 - maxError(b0)
-            var lowerBoundOfFirstParam = this.GetRegressionEquation().firstParameter - maximumErrorOfFirstParameter;
-
-            //Getting the upper bound of b0 = b0 + maxError(b0)
-            var upperBoundOfFirstParam = this.GetRegressionEquation().firstParameter + maximumErrorOfFirstParameter;
-
-
-            //Getting the lower bound of b1 = b1 - maxError(b1)
-            var lowerBoundOfSecondParam = this.GetRegressionEquation().secondParameter - maximumErrorOfSecondParameter;
-
-            //Getting the lower bound of b1 = b1 + maxError(b1)
-            var upperBoundOfSecondParam = this.GetRegressionEquation().secondParameter + maximumErrorOfSecondParameter;
-
-            return (lowerBoundOfFirstParam, upperBoundOfFirstParam, lowerBoundOfSecondParam, upperBoundOfSecondParam);
+                return (lowerBoundOfB0, upperBoundOfB0, lowerBoundOfB1, upperBoundOfB1);
+            }
+            else
+            {
+                //If regression model is not adecuate return 0 as average error of both B0 and B1.
+                return (0.0D, 0.0D, 0.0D, 0.0D);
+            }
         }
     }
 }

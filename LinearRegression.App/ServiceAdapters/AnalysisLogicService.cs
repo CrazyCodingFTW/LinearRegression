@@ -19,36 +19,13 @@ namespace LinearRegression.App.ServiceAdapters
 
         private ModelController<LinearRegressionDbContext> controller = new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model");
 
-        private List<double> adjustedYsList = new List<double>();
-
-        private bool areAdjustedYsCalculated = false;
-
         public IAnalysisData<IAdjustedDataRow> GetAdjustedData(IAnalysisData<IAnalysisDataRow> rawAnalysisModel)
         {
             //Return X,Y and Y^ - adjusted Y.
 
             //TODO: First check if the database contains the analysis
-            //var xdata = rawAnalysisModel.Data.Select(d => d.X).ToArray();
-            //var ydata = rawAnalysisModel.Data.Select(d => d.Y).ToArray();
-
-            //List<double> ys = NikiService.GetAdjustedY(xdata, ydata);
-
-            //Creating business logic object to use the business logic methods!!!
-            //var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(),ydata.ToList());
-
-            //Getting the adjusted Y values.
-            // var adjustedYValues = businessLogicObject.GetAdjustedYsValues();
-
-            //Creating observable collection with Xs, Ys and adjusted Ys.
-            //var collection = new ObservableCollection<IAdjustedDataRow>();
-
-            //for (int i = 0; i < adjustedYValues.Count; i++)
-            //    collection.Add(new AdjustedDataRow(i + 1, xdata[i], ydata[i], adjustedYValues[i]));
-
-            //return new FullAnalysis<IAdjustedDataRow>(12, null, null, null, null, collection);
 
             //TODO: use calculations to get the adjusted data table or check if it already exists in the database
-            //throw new NotImplementedException();
 
             //TODO: Find adjusted values
 
@@ -62,27 +39,35 @@ namespace LinearRegression.App.ServiceAdapters
 
             var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(), ydata.ToList());
 
-            var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
+            var adjustedYValues = new List<double>();
 
+            //Checking if we already have this data in the database.
+            if (controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId) != null)
+            {
+                try
+                {
+                    //If we have this data, try to get the adjusted Y values from the analysis calculations.
+                    adjustedYValues = analysisData.AnalysisCalculations.AdjustedY.ToList();
+                }
+                catch (Exception)
+                {
+                    //If we can't get the already calculated adjusted values, calculate them. 
+                    adjustedYValues = businessLogicObject.GetAdjustedYsValues();
+                }
+            }
+            else
+            {
+                //Else if we don't have the data calculate the adjusted Y values.
+                adjustedYValues = businessLogicObject.GetAdjustedYsValues();
+            }
 
-
-
-            //if (controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId) != null)
-            //{
-
-            //}
-            //else
-            //{
-
-            //}
 
             int iterator = 0;
-            int numberOfValuesInData = rawAnalysisModel.Data.Count;
 
             var adjustedDataRows = new ObservableCollection<IAdjustedDataRow>();
             foreach (var row in rawAnalysisModel.Data)
             {
-                adjustedDataRows.Add(new AdjustedDataRow(row.Index, row.X, row.Y, adjustedYs[iterator]));
+                adjustedDataRows.Add(new AdjustedDataRow(row.Index, row.X, row.Y, adjustedYValues[iterator]));
                 iterator++;
             }
 
@@ -130,7 +115,7 @@ namespace LinearRegression.App.ServiceAdapters
                     var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
 
                     var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
-                    this.areAdjustedYsCalculated = true;
+                    //this.areAdjustedYsCalculated = true;
                     //adjustedYsList = adjustedYs.ToList();
 
                     double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
@@ -160,7 +145,7 @@ namespace LinearRegression.App.ServiceAdapters
                 var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
 
                 var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
-                this.areAdjustedYsCalculated = true;
+                //this.areAdjustedYsCalculated = true;
                 //adjustedYsList = adjustedYs.ToList();
 
 
