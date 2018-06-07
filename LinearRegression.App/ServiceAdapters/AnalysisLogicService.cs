@@ -21,14 +21,8 @@ namespace LinearRegression.App.ServiceAdapters
 
         public IAnalysisData<IAdjustedDataRow> GetAdjustedData(IAnalysisData<IAnalysisDataRow> rawAnalysisModel)
         {
-            //Return X,Y and Y^ - adjusted Y.
-
-            //TODO: First check if the database contains the analysis
-
-            //TODO: use calculations to get the adjusted data table or check if it already exists in the database
-
-            //TODO: Find adjusted values
-
+            //Returns X, Y and Y^ - adjusted Y.
+   
             var fullAnalysis = (FullAnalysis<IAnalysisDataRow>)rawAnalysisModel;
 
             var analysisInfo = controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId);
@@ -77,31 +71,19 @@ namespace LinearRegression.App.ServiceAdapters
 
         public IAnalysisCalculations GetAnalysisCalculations(IFullAnalysis<IAnalysisDataRow> analysis)
         {
-            //TODO: Check if the data had already been calculated or generate new calculations.
+           
             var xdata = analysis.Data.Select(d => d.X).ToArray();
             var ydata = analysis.Data.Select(d => d.Y).ToArray();
-
-            // var databaseId = analysis.DatabaseId;
-
-            controller = new ModelController<LinearRegressionDbContext>("LinearRegression.Database.Model");
-
-            //var analysisInfo = new AnalysisInformation(analysis.CreationDate,analysis.Title,analysis.Description,controller);
-
-            //var analysisData = new AnalysisData(analysis.XMeaning, xdata, analysis.YMeaning, ydata, analysisInfo, controller);
-
-            //analysisInfo.Data = analysisData;
 
             var fullAnalysis = (FullAnalysis<IAnalysisDataRow>)analysis;
 
             var analysisInfo = controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId);
             var analysisData = analysisInfo.Data;
 
-            //TODO: Check if the calculations has already been calculated and is in the database.
+            //Checking if we already have this data in the database.
             if (controller.GetEntityById<AnalysisInformation>(fullAnalysis.DatabaseId) != null)
             {
-                //var analysisCalculations = controller.GetEntityById<AnalysisCalculations>(fullAnalysis.DatabaseId);
-               // return analysisCalculations.Entity;
-
+                //If we have this data, try to get the calculations from the analysis calculations.
                 try
                 {
                     var calculations = analysisData.AnalysisCalculations;
@@ -109,15 +91,14 @@ namespace LinearRegression.App.ServiceAdapters
                 }
                 catch(Exception)
                 {
+                    //If we can't get the calculations, calculate them.
                     var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(), ydata.ToList());
 
-                    var b0 = businessLogicObject.Parameter0;//businessLogicObject.GetRegressionEquation().firstParameter;
-                    var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
+                    var b0 = businessLogicObject.Parameter0;
+                    var b1 = businessLogicObject.Parameter1;
 
                     var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
-                    //this.areAdjustedYsCalculated = true;
-                    //adjustedYsList = adjustedYs.ToList();
-
+                   
                     double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
                     double explainedDispersion = businessLogicObject.CheckAdequacyOfModel().explainedDispersion;
                     double fEmpirical = businessLogicObject.CheckAdequacyOfModel().fEmpirical;
@@ -138,16 +119,14 @@ namespace LinearRegression.App.ServiceAdapters
             }
             else
             {
-                
+                //Else if we don't have the data, make the calculatons.
+
                 var businessLogicObject = new LinearRegression.BusinessLogic.Regression(xdata.ToList(), ydata.ToList());
 
-                var b0 = businessLogicObject.Parameter0;//businessLogicObject.GetRegressionEquation().firstParameter;
-                var b1 = businessLogicObject.Parameter1;//businessLogicObject.GetRegressionEquation().secondParameter;
+                var b0 = businessLogicObject.Parameter0;
+                var b1 = businessLogicObject.Parameter1;
 
                 var adjustedYs = businessLogicObject.GetAdjustedYsValues().ToArray();
-                //this.areAdjustedYsCalculated = true;
-                //adjustedYsList = adjustedYs.ToList();
-
 
                 double residualDispersion = businessLogicObject.CheckAdequacyOfModel().residualDispersion;
                 double explainedDispersion = businessLogicObject.CheckAdequacyOfModel().explainedDispersion;
@@ -171,15 +150,13 @@ namespace LinearRegression.App.ServiceAdapters
 
 
             }
-
             
-
-            //throw new NotImplementedException();
         }
 
         public IFullAnalysis<IAdjustedDataRow> GetFullAnalysisAdjustedData(IFullAnalysis<IAnalysisDataRow> fullRawAnalysisModel)
         {
             //Returns all things from the regression analysis + adjusted Ys
+
             var adjustedData = GetAdjustedData(fullRawAnalysisModel);
             var fullAnalysisCast = (FullAnalysis<IAnalysisDataRow>)fullRawAnalysisModel;
             var fullAdjusted = new FullAnalysis<IAdjustedDataRow>(fullAnalysisCast.DatabaseId, fullRawAnalysisModel.Title, fullRawAnalysisModel.Description, fullRawAnalysisModel.XMeaning, fullRawAnalysisModel.YMeaning, adjustedData.Data);
