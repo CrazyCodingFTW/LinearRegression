@@ -37,8 +37,8 @@ namespace LinearRegression.App.Views.ComputedAnalysisPages
         private void GenerateStrings()
         {
             //1.
-            ZeroHypothesis.Text = $"H0: There is no statistically significant difference between the {analysisData.XMeaning} and {analysisData.YMeaning} and the model is indadequate.";
-            AlternativeHypothesis.Text = $"H1: There is statistically significant difference between the {analysisData.XMeaning} and {analysisData.YMeaning} and the model is indadequate";
+            ZeroHypothesis.Text = $"H0: There is no statistically significant difference between the {analysisData.XMeaning} and {analysisData.YMeaning} and the model is inadequate.";
+            AlternativeHypothesis.Text = $"H1: There is statistically significant difference between the {analysisData.XMeaning} and {analysisData.YMeaning} and the model is adequate";
             
             //2.
             AlphaLevel.Text = $"\x3b1 = 0.05";
